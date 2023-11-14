@@ -7,6 +7,9 @@ import { LoginComponent } from './pages/login/login.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LayoutComponent } from './pages/layout/layout.component';
 import { PagenotfoundComponent } from './pages/pagenotfound/pagenotfound.component';
+import { NavigationbarComponent } from './pages/navigationbar/navigationbar.component';
+
+import { MenubarModule } from 'primeng/menubar';
 
 @NgModule({
   declarations: [
@@ -14,11 +17,13 @@ import { PagenotfoundComponent } from './pages/pagenotfound/pagenotfound.compone
     LoginComponent,
     DashboardComponent,
     LayoutComponent,
-    PagenotfoundComponent
+    PagenotfoundComponent,
+    NavigationbarComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MenubarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
