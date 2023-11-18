@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-import api_handler
+from controller import api_handler
 
 server_api = Blueprint('server_api', __name__)
 
