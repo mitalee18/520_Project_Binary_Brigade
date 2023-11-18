@@ -15,3 +15,14 @@ class User(db.Model):
         self.email = email
         self.active = active
 
+class LoginDetails(db.Model):
+    __tablename__ = "login_details"
+
+    user_id = db.Column(db.Integer, primary_key=True)
+    email_id = db.Column(db.String(128), unique=True, nullable=False)
+    password = db.Column(db.String(128), nullable=False)
+    last_login_date = db.Column(db.Integer, nullable=False)
+
+    def __init__(self, email, password):
+        self.email = email
+

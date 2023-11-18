@@ -1,5 +1,7 @@
-from models import db
-from models import User
+import os, sys
+sys.path.append(os.path.dirname(__file__))
+
+from model.models import db
 
 
 def get_all(model):
