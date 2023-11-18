@@ -7,6 +7,12 @@ import { LoginComponent } from './pages/login/login.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LayoutComponent } from './pages/layout/layout.component';
 import { PagenotfoundComponent } from './pages/pagenotfound/pagenotfound.component';
+import { ProfilecreationComponent } from './pages/profilecreation/profilecreation.component';
+
+import { DropdownModule } from 'primeng/dropdown';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {FormsModule} from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -14,11 +20,15 @@ import { PagenotfoundComponent } from './pages/pagenotfound/pagenotfound.compone
     LoginComponent,
     DashboardComponent,
     LayoutComponent,
-    PagenotfoundComponent
+    PagenotfoundComponent,
+    ProfilecreationComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    DropdownModule,
+    BrowserAnimationsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

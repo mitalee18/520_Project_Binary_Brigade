@@ -1,0 +1,25 @@
+<div class="parent">
+    <div class="row" style="border: solid black;">
+        <label aria-hidden="true" class="page-title">Profile Creation</label>
+    </div>
+    <div class="row">
+        <div class="col">
+            <form>
+                <input type="text" name="txt" placeholder="First Name" required="true">
+                <input type="email" name="email" placeholder="Prefilled Email" required="true" disabled>
+                <p-dropdown [options]="genders"  [(ngModel)]="selectedGender" [showClear]="true" optionLabel="name" placeholder="Select a Gender"></p-dropdown>
+                <!-- <p-dropdown formControlName="gender" [options]="genders" optionLabel="name"></p-dropdown> -->
+            </form>
+        </div>
+        <div class="col">
+            <form>
+                <input type="text" name="txt" placeholder="Last Name" required="true">
+                <input type="text" name="txt" placeholder="Last Name" required="true">
+                <input type="email" name="email" placeholder="Prefilled Email" required="true" disabled>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <button>Save</button>
+    </div>
+</div>
