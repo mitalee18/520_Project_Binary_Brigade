@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 
 
 
-engine = create_engine('postgresql://hello_flask:hello_flask@localhost:5432/hello_flask_dev')
+engine = create_engine('postgresql://hello_flask:hello_flask@localhost:5434/hello_flask_dev')
 csv_file_path = '../data/login_details.csv'
 
 def read_csv_and_insert_to_db(csv_file_path):
