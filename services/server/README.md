@@ -19,3 +19,4 @@
 6. Run `docker-compose down -v ` to remove the containers and volumes
 7. Navigate to http://localhost:8000/fetch to fetch the data from the database
 8. Send post requests to http://localhost:8000/add to add entries to the database
+9. Test
