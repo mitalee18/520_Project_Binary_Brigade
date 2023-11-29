@@ -23,6 +23,38 @@ def add_login():
         return handle_error(e, f"Error[{type(e)}]{str(e)}", "server_api/add_login")
     return jsonify(ret_val), 200
 
+@server_api.route('/fetch_emergency_contact', methods=['GET'])
+def fetch_emergency_contact():
+    try:
+        all_cats = api_handler.fetch_emergency_contact()
+    except Exception as e:
+        return handle_error(e, f"Error[{type(e)}]{str(e)}", "server_api/fetch_emergency_contact")
+    return jsonify(all_cats), 200
+
+@server_api.route('/add_emergency_contact', methods=['POST'])
+def add_emergency_contact():
+    try:
+        ret_val = api_handler.add_emergency_contact()
+    except Exception as e:
+        return handle_error(e, f"Error[{type(e)}]{str(e)}", "server_api/add_emergency_contact")
+    return jsonify(ret_val), 200
+
+@server_api.route('/fetch_patient', methods=['GET'])
+def fetch_patient():
+    try:
+        all_cats = api_handler.fetch_patient()
+    except Exception as e:
+        return handle_error(e, f"Error[{type(e)}]{str(e)}", "server_api/fetch_patient")
+    return jsonify(all_cats), 200
+
+@server_api.route('/add_patient', methods=['POST'])
+def add_patient():
+    try:
+        ret_val = api_handler.add_patient()
+    except Exception as e:
+        return handle_error(e, f"Error[{type(e)}]{str(e)}", "server_api/add_patient")
+    return jsonify(ret_val), 200
+
 
 @server_api.app_errorhandler(Exception)
 def handle_error(error, messg="Unknown Error", api_name="server_api/", code=500):
