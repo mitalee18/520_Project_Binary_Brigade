@@ -34,7 +34,7 @@ class EmergencyContact(db.Model):
     user_id = db.Column(db.Integer, ForeignKey('patient.user_id'), primary_key=True)
     patient = relationship('Patient', back_populates='emergency_contact')
 
-    def __init__(self, name, phone, email):
+    def __init__(self, name, contact_no, email, user_id):
         self.name = name
         self.contact_no = contact_no
         self.email = email

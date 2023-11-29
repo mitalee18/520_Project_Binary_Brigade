@@ -27,13 +27,14 @@ def fetch_login():
 
 def add_login():
     data = json.loads(request.data.decode())
-    # print(data['name'])
-    name = data['user_id']
+    print("data: ", data)
+    user_id = data['user_id']
     email = data['email_id']
     password = data['password']
     last_login_date = data['last_login_date']
-    database.add_instance(LoginDetails, name=name, email=email, password=password, last_login_date=last_login_date)
+    database.add_instance(LoginDetails, user_id=user_id, email=email, password=password, last_login_date=last_login_date)
     print("inside api_handler.py add_login")
+    
     return 1
 
 
@@ -56,7 +57,7 @@ def add_emergency_contact():
     data = json.loads(request.data.decode())
 
     name = data['name']
-    phone = data['contact_no']
+    contact_no = data['contact_no']
     email = data['email']
     database.add_instance(EmergencyContact, name=name,contact_no=contact_no, email=email)
     print("inside api_handler.py add_emergency_contact")
@@ -108,6 +109,8 @@ def add_patient():
     return 1
 
 
+
+
 # def fetch_patient(Patient):
 #     users = database.get_all(Patient)
 #     all_users = []
@@ -121,3 +124,5 @@ def add_patient():
 
 #         all_users.append(new_cat)
 #     return all_users
+
+

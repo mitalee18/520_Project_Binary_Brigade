@@ -1,10 +1,12 @@
 from flask import Flask
+from flask_restful import Api
 from model.models import db
 import time
 from routes import server_api
 
 def create_app():
     app = Flask(__name__)
+    api = Api(app)
     app.config.from_object("config.config.Config")
     print(app.config)
     app.register_blueprint(server_api)
