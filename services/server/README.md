@@ -17,5 +17,6 @@
    * Run `\dt` to see the tables
    * Run `\q` to exit the database
 6. Run `docker-compose down -v ` to remove the containers and volumes
-7. Navigate to http://localhost:8000/fetch to fetch the data from the database
-8. Send post requests to http://localhost:8000/add to add entries to the database
+7. Navigate to http://localhost:8000/api/user/ for default route
+8. Navigate to http://localhost:8000/api/user/fetch for default route to fetch the data from the database
+8. Send post requests to http://localhost:8000/api/user/add to add entries to the database
