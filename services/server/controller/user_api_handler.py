@@ -28,7 +28,6 @@ class UserApiHandler:
 
     def add():
         data = json.loads(request.data.decode())
-        print(data['name'])
         name = data['name']
         email = data['email']
         active = data['active']
