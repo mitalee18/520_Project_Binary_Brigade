@@ -1,5 +1,10 @@
 from flask import Blueprint, jsonify
+from flask_swagger_ui import get_swaggerui_blueprint
 from controller.user_api_handler import UserApiHandler as user_api_handler
+
+SWAGGER_URL = '/api/docs'  # URL for exposing Swagger UI (without trailing '/')
+API_URL = 'http://patienttracker.swagger.io/v1/swagger.json'  # Our API url (can of course be a local resource)
+
 
 user_api = Blueprint('user_api', __name__, url_prefix='/api/user')
 
