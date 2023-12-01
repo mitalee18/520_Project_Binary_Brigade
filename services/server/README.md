@@ -20,3 +20,4 @@
 7. Navigate to http://localhost:8000/api/user/ for default route
 8. Navigate to http://localhost:8000/api/user/fetch for default route to fetch the data from the database
 8. Send post requests to http://localhost:8000/api/user/add to add entries to the database
+9. Navigate to http://localhost:8000/swagger/ to test all the apis
