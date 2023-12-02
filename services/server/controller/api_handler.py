@@ -29,10 +29,10 @@ def add_login():
     data = json.loads(request.data.decode())
     print("data: ", data)
     user_id = data['user_id']
-    email = data['email_id']
+    email_id = data['email_id']
     password = data['password']
     last_login_date = data['last_login_date']
-    database.add_instance(LoginDetails, user_id=user_id, email=email, password=password, last_login_date=last_login_date)
+    database.add_instance(LoginDetails, user_id=user_id, email_id=email_id, password=password, last_login_date=last_login_date)
     print("inside api_handler.py add_login")
     
     return 1
