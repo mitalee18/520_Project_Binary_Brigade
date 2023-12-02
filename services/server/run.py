@@ -8,6 +8,7 @@ from config.config import SwaggerConfig
 def create_app():
     app = Flask(__name__)
     app.config.from_object("config.config.DBConfig")
+    api = Api(app)
     print(app.config)
 
     #user blueprint registered
