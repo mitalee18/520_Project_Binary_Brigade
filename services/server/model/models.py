@@ -23,22 +23,22 @@ class LoginDetails(db.Model):
         self.last_login_date = last_login_date
 
 
-class EmergencyContact(db.Model):
-    __tablename__ = 'emergency_contact'
-
-    name = db.Column(db.String(50))
-    contact_no = db.Column(db.Integer)
-    email = db.Column(db.String(100))
-
-    # Define the foreign key relationship with the Patient table
-    user_id = db.Column(db.Integer, ForeignKey('patient.user_id'), primary_key=True)
-    patient = relationship('Patient', back_populates='emergency_contact')
-
-    def __init__(self, name, contact_no, email, user_id):
-        self.name = name
-        self.contact_no = contact_no
-        self.email = email
-        self.user_id = user_id
+# class EmergencyContact(db.Model):
+#     __tablename__ = 'emergency_contact'
+#
+#     name = db.Column(db.String(50))
+#     contact_no = db.Column(db.Integer)
+#     email = db.Column(db.String(100))
+#
+#     # Define the foreign key relationship with the Patient table
+#     user_id = db.Column(db.Integer, ForeignKey('patient.user_id'), primary_key=True)
+#     patient = relationship('Patient', back_populates='emergency_contact')
+#
+#     def __init__(self, name, contact_no, email, user_id):
+#         self.name = name
+#         self.contact_no = contact_no
+#         self.email = email
+#         self.user_id = user_id
 
 
 class Patient(db.Model):
@@ -52,19 +52,19 @@ class Patient(db.Model):
     address = db.Column(db.String(250))
     age = db.Column(db.Integer, nullable=False)  #can remove
     dob = db.Column(db.Date, nullable=False)
-    emergency_contact = db.Column(JSON, nullable=False)
+#     emergency_contact = db.Column(JSON, nullable=False)
     gender = db.Column(db.Integer) # Encode into int while inserting into db
     #health_insurance = db.Column(JSON)
     registration_date = db.Column(db.Integer, nullable=False)
     update_date = db.Column(db.Integer, nullable=False)
 
     # Define the back reference to the EmergencyContact table
-    emergency_contact_data = relationship('EmergencyContact', back_populates='patient', uselist=False)
+#     emergency_contact_data = relationship('EmergencyContact', back_populates='patient', uselist=False)
 
     def __init__(self, user_id, first_name,  last_name, email_id, contact_no, address,
-                 age, dob, emergency_contact_data, gender, registration_date, update_date):
-        
-        self.emergency_contact = emergency_contact_data
+                 age, dob, gender, registration_date, update_date):
+
+#         self.emergency_contact = emergency_contact_data
         self.user_id = user_id
         self.first_name = first_name
         self.last_name = last_name
@@ -80,9 +80,9 @@ class Patient(db.Model):
             raise ValueError("Contact number must contain only digits.")
         self.contact_no = contact_no
 
-        def get_emergency_contact(self):
-            return json.loads(self.emergency_contact)
-        
+#         def get_emergency_contact(self):
+#             return json.loads(self.emergency_contact)
+
         if not (isinstance(self.gender, int) and 0 <= self.gender <= 2):
             raise ValueError("gender must be encoded as 0,1,2")
         self.gender = gender
