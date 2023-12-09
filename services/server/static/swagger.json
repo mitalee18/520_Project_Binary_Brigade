@@ -1,106 +1,144 @@
 {
     "openapi": "3.0.0",
     "info": {
-      "description": "Binary Brigade",
-      "version": "1.0.0",
-      "title": "Patient Tracker application",
-      "license": {
-        "name": "MIT",
-        "url": "https://opensource.org/licenses/MIT"
-      }
+        "description": "Binary Brigade",
+        "version": "1.0.0",
+        "title": "Patient Tracker application",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
     },
-
     "tags": [
         {
-          "name": "Patient Tracker API",
-          "description": "Test API"
-        }
-      ],
-    "servers": [
-        {
-        "url": "/"
+            "name": "Patient Tracker API",
+            "description": "Test API"
         }
     ],
-
+    "servers": [
+        {
+            "url": "/"
+        }
+    ],
     "components": {
         "schemas": {
             "user_add": {
                 "type": "object",
-                "properties": {   
+                "properties": {
                     "name": {
-                    "type": "string"
+                        "type": "string"
                     },
                     "email": {
-                    "type": "string"
+                        "type": "string"
                     },
                     "active": {
                         "type": "integer"
                     }
                 }
             },
-            "user_fetch":{
+            "user_fetch": {
                 "type": "object"
             },
             "login_add": {
                 "type": "object",
-                "properties": {   
+                "properties": {
                     "user_id": {
-                    "type": "integer"
+                        "type": "integer"
                     },
                     "email_id": {
-                    "type": "string"
+                        "type": "string"
                     },
                     "password": {
                         "type": "string"
                     },
-                    "last_login_date":{
+                    "last_login_date": {
                         "type": "integer"
                     }
                 }
             },
-            "login_fetch":{
+            "login_fetch": {
+                "type": "object"
+            },
+            "patient_add": {
+                "type": "object",
+                "properties": {
+                    "user_id": {
+                        "type": "integer"
+                    },
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "email_id": {
+                        "type": "string"
+                    },
+                    "contact_no": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "age": {
+                        "type": "integer"
+                    },
+                    "dob": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "gender": {
+                        "type": "integer"
+                    },
+                    "registration_date": {
+                        "type": "integer"
+                    },
+                    "update_date": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "patient_fetch": {
                 "type": "object"
             }
         }
     },
-
-"paths": {
-    "/api/user/add": {
-        "post": {
-            "tags": [
-                "Add user"
-            ],
-            "summary": "Add user",
-            "requestBody": {
-                "description": "Post New user To User table in Database",
-                "required": true,
-                "content": {
-                    "application/json": {
-                    "schema": {
-                        "$ref": "#/components/schemas/user_add"
+    "paths": {
+        "/api/user/add": {
+            "post": {
+                "tags": [
+                    "Add user"
+                ],
+                "summary": "Add user",
+                "requestBody": {
+                    "description": "Post New user To User table in Database",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user_add"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/user_add"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/user_add"
                         }
                     }
                 }
-            },
-            "responses": {
-                "200": {
-                    "description": "OK",
-                    "schema": {
-                    "$ref": "#/components/schemas/user_add"
-                    }
-                },
-                "404": {
-                    "description": "NOT FOUND",
-                    "schema": {
-                    "$ref": "#/components/schemas/user_add"
-                    }
-                }
             }
-        }
-    },
-
-    "/api/user/fetch": {
-        "get": {
+        },
+        "/api/user/fetch": {
+            "get": {
                 "tags": [
                     "Get all users"
                 ],
@@ -109,54 +147,53 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                        "$ref": "#/components/schemas/user_fetch"
+                            "$ref": "#/components/schemas/user_fetch"
                         }
                     },
                     "404": {
                         "description": "NOT FOUND",
                         "schema": {
-                        "$ref": "#/components/schemas/user_fetch"
+                            "$ref": "#/components/schemas/user_fetch"
                         }
                     }
                 }
             }
         },
-        
-    "/api/login/add": {
-        "post": {
-            "tags": [
-                "Add login details"
-            ],
-            "summary": "Add login details",
-            "requestBody": {
-                "description": "Post New login To LoginDetails table in Database",
-                "required": true,
-                "content": {
-                    "application/json": {
-                    "schema": {
-                        "$ref": "#/components/schemas/login_add"
+        "/api/login/add": {
+            "post": {
+                "tags": [
+                    "Add login details"
+                ],
+                "summary": "Add login details",
+                "requestBody": {
+                    "description": "Post New login To LoginDetails table in Database",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/login_add"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/login_add"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/login_add"
                         }
                     }
                 }
-            },
-            "responses": {
-                "200": {
-                    "description": "OK",
-                    "schema": {
-                    "$ref": "#/components/schemas/login_add"
-                    }
-                },
-                "404": {
-                    "description": "NOT FOUND",
-                    "schema": {
-                    "$ref": "#/components/schemas/login_add"
-                    }
-                }
             }
-        }
-    },
-    "/api/login/fetch": {
-        "get": {
+        },
+        "/api/login/fetch": {
+            "get": {
                 "tags": [
                     "Get all login details"
                 ],
@@ -165,19 +202,74 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                        "$ref": "#/components/schemas/login_fetch"
+                            "$ref": "#/components/schemas/login_fetch"
                         }
                     },
                     "404": {
                         "description": "NOT FOUND",
                         "schema": {
-                        "$ref": "#/components/schemas/login_fetch"
+                            "$ref": "#/components/schemas/login_fetch"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/patient/add": {
+            "post": {
+                "tags": [
+                    "Add patient"
+                ],
+                "summary": "Add patient",
+                "requestBody": {
+                    "description": "Post New patient To Patient table in Database",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/patient_add"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/patient_add"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/patient_add"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/patient/fetch": {
+            "get": {
+                "tags": [
+                    "Get all patient details"
+                ],
+                "summary": "Get all patient details",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/patient_fetch"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/patient_fetch"
                         }
                     }
                 }
             }
         }
-    }
-}
 
-   
+
+
+    }}

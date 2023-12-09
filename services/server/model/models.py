@@ -83,8 +83,10 @@ class Patient(db.Model):
         self.last_name = last_name
         self.email_id = email_id
         self.address = address
+        self.contact_no = contact_no
         self.age = age
         self.dob = dob
+        self.gender = gender
 #         self.health_insuarance = health_insuarance
         self.registration_date = registration_date
         self.update_date = update_date
@@ -100,45 +102,44 @@ class Patient(db.Model):
             raise ValueError("gender must be encoded as 0,1,2")
         self.gender = gender
 
-# class PatientMedicalHistory(db.Model):
-#     __tablename__ = "patient_medical_history"
+class PatientMedicalHistory(db.Model):
+    __tablename__ = "patient_medical_history"
 
-#     #allergies = db.Column(JSON, nullable=False)  # can be replaced by list
-#     allergies = db.Column(ARRAY(db.String))
-#     medical_conditions = db.Column(ARRAY(db.String))
-#     prescribed_medication =  db.Column(JSON)
-#     surgical_history = db.Column(JSON)
-#     family_medical_history = db.Column(ARRAY(db.String))
-#     user_id = db.Column(db.Integer, db.ForeignKey('patient.user_id'), nullable=False)
-#     update_date = db.Column(db.Integer, nullable=False)
+    allergies = db.Column(ARRAY(db.String))
+    medical_conditions = db.Column(ARRAY(db.String))
+    prescribed_medication =  db.Column(ARRAY(db.String))
+    surgical_history = db.Column(ARRAY(db.String))
+    family_medical_history = db.Column(ARRAY(db.String))
+    user_id = db.Column(db.Integer, db.ForeignKey('patient.user_id'), primary_key=True,nullable=False)
+    update_date = db.Column(db.Integer, nullable=False)
 
-#     def __init__(self, allergies, medical_conditions, prescribed_medication, 
-#                  surgical_history, family_medical_history, user_id, update_date):
-        
-#         self.allergies = allergies
-#         self.medical_conditions = medical_conditions
-#         self.prescribed_medication = prescribed_medication
-#         self.surgical_history = surgical_history
-#         self.family_medical_history = family_medical_history     
-#         self.user_id = user_id
-#         self.update_date = update_date
+    def __init__(self, allergies, medical_conditions, prescribed_medication,
+                 surgical_history, family_medical_history, user_id, update_date):
 
-# class PatientDocument(db.Model):
-#     __tablename__ = "patient_document"
+        self.allergies = allergies
+        self.medical_conditions = medical_conditions
+        self.prescribed_medication = prescribed_medication
+        self.surgical_history = surgical_history
+        self.family_medical_history = family_medical_history
+        self.user_id = user_id
+        self.update_date = update_date
 
-#     user_id = db.Column(db.Integer, db.ForeignKey('patient.user_id'), nullable=False)
-#     file_link = db.Column(db.String(255))
-#     file_id = db.Column(db.Integer, unique=True, autoincrement=True)
-#     file_name = db.Column(db.String(255))
-#     description =  db.Column(db.String(255))
+class PatientDocument(db.Model):
+    __tablename__ = "patient_document"
 
-#     def __init__(self, user_id, file_link, file_id, file_name, description):
+    user_id = db.Column(db.Integer, db.ForeignKey('patient.user_id'), primary_key=True, nullable=False)
+    file_link = db.Column(db.String(255))
+    file_id = db.Column(db.Integer, unique=True, autoincrement=True)
+    file_name = db.Column(db.String(255))
+    description =  db.Column(db.String(255))
+
+    def __init__(self, user_id, file_link, file_id, file_name, description):
        
-#         self.user_id = user_id
-#         self.file_link = file_link
-#         self.file_id = file_id
-#         self.file_name = file_name
-#         self.description = description
+        self.user_id = user_id
+        self.file_link = file_link
+        self.file_id = file_id
+        self.file_name = file_name
+        self.description = description
 
 
 # class Doctor(db.Model):

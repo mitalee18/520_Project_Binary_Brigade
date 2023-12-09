@@ -4,6 +4,7 @@ from model.models import db
 import time
 from blueprint.user_blueprint import user_api
 from blueprint.login_blueprint import login_api
+from blueprint.patient_blueprint import patient_api
 from config.config import SwaggerConfig
 
 def create_app():
@@ -15,6 +16,7 @@ def create_app():
     #user blueprint registered
     app.register_blueprint(user_api)
     app.register_blueprint(login_api)
+    app.register_blueprint(patient_api)
 
     #swagger blueprint registered
     app.register_blueprint(SwaggerConfig.SWAGGER_BLUEPRINT, url_prefix = SwaggerConfig.SWAGGER_URL)
