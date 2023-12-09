@@ -7,6 +7,10 @@ API_URL = 'http://patienttracker.swagger.io/v1/swagger.json'  # Our API url (can
 
 login_api = Blueprint('login_api', __name__, url_prefix='/api/login' )
 
+@login_api.route("/")
+def hello():
+    return jsonify(login_api_handler.default())
+
 @login_api.route('/fetch', methods=['GET'])
 def fetch():
     try:
