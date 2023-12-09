@@ -9,6 +9,7 @@
         "url": "https://opensource.org/licenses/MIT"
       }
     },
+
     "tags": [
         {
           "name": "Patient Tracker API",
@@ -20,11 +21,12 @@
         "url": "/"
         }
     ],
+
     "components": {
         "schemas": {
-            "add": {
+            "user_add": {
                 "type": "object",
-                "properties": {
+                "properties": {   
                     "name": {
                     "type": "string"
                     },
@@ -36,7 +38,27 @@
                     }
                 }
             },
-            "fetch":{
+            "user_fetch":{
+                "type": "object"
+            },
+            "login_add": {
+                "type": "object",
+                "properties": {   
+                    "user_id": {
+                    "type": "integer"
+                    },
+                    "email_id": {
+                    "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "last_login_date":{
+                        "type": "integer"
+                    }
+                }
+            },
+            "login_fetch":{
                 "type": "object"
             }
         }
@@ -55,7 +77,7 @@
                 "content": {
                     "application/json": {
                     "schema": {
-                        "$ref": "#/components/schemas/add"
+                        "$ref": "#/components/schemas/user_add"
                         }
                     }
                 }
@@ -64,18 +86,19 @@
                 "200": {
                     "description": "OK",
                     "schema": {
-                    "$ref": "#/components/schemas/add"
+                    "$ref": "#/components/schemas/user_add"
                     }
                 },
                 "404": {
                     "description": "NOT FOUND",
                     "schema": {
-                    "$ref": "#/components/schemas/add"
+                    "$ref": "#/components/schemas/user_add"
                     }
                 }
             }
         }
     },
+
     "/api/user/fetch": {
         "get": {
                 "tags": [
@@ -86,13 +109,69 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                        "$ref": "#/components/schemas/fetch"
+                        "$ref": "#/components/schemas/user_fetch"
                         }
                     },
                     "404": {
                         "description": "NOT FOUND",
                         "schema": {
-                        "$ref": "#/components/schemas/add"
+                        "$ref": "#/components/schemas/user_fetch"
+                        }
+                    }
+                }
+            }
+        },
+        
+    "/api/login/add": {
+        "post": {
+            "tags": [
+                "Add login details"
+            ],
+            "summary": "Add login details",
+            "requestBody": {
+                "description": "Post New login To LoginDetails table in Database",
+                "required": true,
+                "content": {
+                    "application/json": {
+                    "schema": {
+                        "$ref": "#/components/schemas/login_add"
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "schema": {
+                    "$ref": "#/components/schemas/login_add"
+                    }
+                },
+                "404": {
+                    "description": "NOT FOUND",
+                    "schema": {
+                    "$ref": "#/components/schemas/login_add"
+                    }
+                }
+            }
+        }
+    },
+    "/api/login/fetch": {
+        "get": {
+                "tags": [
+                    "Get all login details"
+                ],
+                "summary": "Get all login details",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                        "$ref": "#/components/schemas/login_fetch"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                        "$ref": "#/components/schemas/login_fetch"
                         }
                     }
                 }
