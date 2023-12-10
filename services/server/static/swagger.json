@@ -100,6 +100,77 @@
             },
             "patient_fetch": {
                 "type": "object"
+            },
+            "doctor_add": {
+                "type": "object",
+                "properties": {
+                    "user_id": {
+                        "type": "integer"
+                    },
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "email_id": {
+                        "type": "string"
+                    },
+                    "contact_no": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "age": {
+                        "type": "integer"
+                    },
+                    "dob": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "gender": {
+                        "type": "integer"
+                    },
+                    "registration_date": {
+                        "type": "integer"
+                    },
+                    "update_date": {
+                        "type": "integer"
+                    },
+                    "qualifications": {
+                        "type": "string"
+                    }
+                }
+            },
+            "doctor_fetch": {
+                "type": "object"
+            },
+            "admin_add": {
+                "type": "object",
+                "properties": {
+                    "user_id": {
+                        "type": "integer"
+                    },
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "email_id": {
+                        "type": "string"
+                    },
+                    "contact_no": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    }
+                }
+            },
+            "admin_fetch": {
+                "type": "object"
             }
         }
     },
@@ -142,7 +213,7 @@
                 "tags": [
                     "Get all users"
                 ],
-                "summary": "Get all user",
+                "summary": "Get all users",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -268,8 +339,116 @@
                     }
                 }
             }
+        },
+        "/api/doctor/add": {
+            "post": {
+                "tags": [
+                    "Add doctor"
+                ],
+                "summary": "Add doctor",
+                "requestBody": {
+                    "description": "Post New doctor To Doctor table in Database",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/doctor_add"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/doctor_add"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/doctor_add"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/doctor/fetch": {
+            "get": {
+                "tags": [
+                    "Get all doctor details"
+                ],
+                "summary": "Get all doctor details",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/doctor_fetch"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/doctor_fetch"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/admin/add": {
+            "post": {
+                "tags": [
+                    "Add admin details"
+                ],
+                "summary": "Add admin details",
+                "requestBody": {
+                    "description": "Post New admin To Admin table in Database",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/admin_add"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/admin_add"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/admin_add"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/admin/fetch": {
+            "get": {
+                "tags": [
+                    "Get all admin details"
+                ],
+                "summary": "Get all admin details",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/admin_fetch"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/admin_fetch"
+                        }
+                    }
+                }
+            }
         }
-
-
-
-    }}
+    }
+}

@@ -142,70 +142,75 @@ class PatientDocument(db.Model):
         self.description = description
 
 
-# class Doctor(db.Model):
-#     __tablename__ = "doctor"
+class Doctor(db.Model):
+    __tablename__ = "doctor"
 
-#     user_id = db.Column(db.Integer, primary_key=True)
-#     first_name = db.Column(db.String(128), nullable=False)
-#     last_name = db.Column(db.String(128), nullable=False)
-#     email_id = db.Column(db.String(128), unique=True, nullable=False)
-#     contact_no = db.Column(db.String(10), unique=True, nullable=False)
-#     qualifications = db.Column(db.String(128), nullable=False) # cane be list
-#     address = db.Column(db.String(250))
-#     registration_date = db.Column(db.Integer, nullable=False)
-#     update_date = db.Column(db.Integer, nullable=False)
-#     age = db.Column(db.Integer, nullable=False)  #can remove 
-#     dob = db.Column(db.Integer, nullable=False)
-#     gender = db.Column(db.Integer) # Encode into int while inserting into db
+    user_id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(128), nullable=False)
+    last_name = db.Column(db.String(128), nullable=False)
+    email_id = db.Column(db.String(128), unique=True, nullable=False)
+    contact_no = db.Column(db.String(12), unique=True, nullable=False)
+    qualifications = db.Column(db.String(128), nullable=False) # cane be list
+    address = db.Column(db.String(250))
+    registration_date = db.Column(db.Integer, nullable=False)
+    update_date = db.Column(db.Integer, nullable=False)
+    age = db.Column(db.Integer, nullable=False)  #can remove 
+    dob = db.Column(db.Date, nullable=False)
+    gender = db.Column(db.Integer) # Encode into int while inserting into db
     
     
 
-#     def __init__(self, user_id, first_name,  last_name, email_id, contact_no, qualifications, address,
-#                  age, dob, gender, registration_date, update_date):
+    def __init__(self, user_id, first_name,  last_name, email_id, contact_no, qualifications, address,
+                 age, dob, gender, registration_date, update_date):
         
-#         self.user_id = user_id
-#         self.first_name = first_name
-#         self.last_name = last_name
-#         self.email_id = email_id
-#         self.address = address
-#         self.qualifications = qualifications
-#         self.age = age
-#         self.dob = dob
-#         self.registration_date = registration_date
-#         self.update_date = update_date
+        self.user_id = user_id
+        self.first_name = first_name
+        self.last_name = last_name
+        self.email_id = email_id
+        self.address = address
+        self.qualifications = qualifications
+        self.age = age
+        self.dob = dob
+        self.registration_date = registration_date
+        self.update_date = update_date
+        self.contact_no = contact_no
+        self.gender = gender
 
-#         if not self.contact_no.isdigit():
-#             raise ValueError("Contact number must contain only digits.")      
-#         self.contact_no = contact_no
+        if self.contact_no==None:
+            print("null contact")
+        if not self.contact_no.isdigit():
+            raise ValueError("Contact number must contain only digits.")      
+        self.contact_no = contact_no
         
-#         if not (isinstance(self.gender, int) and 0 <= self.gender <= 2):
-#             raise ValueError("gender must be encoded as 0,1,2")
-#         self.gender = gender
+        if not (isinstance(self.gender, int) and 0 <= self.gender <= 2):
+            raise ValueError("gender must be encoded as 0,1,2")
+        self.gender = gender
 
 
 
 
-# class Admin(db.Model):
-#     __tablename__ = "admin"
+class Admin(db.Model):
+    __tablename__ = "admin"
 
-#     user_id = db.Column(db.Integer, primary_key=True)
-#     first_name = db.Column(db.String(128), nullable=False)
-#     last_name = db.Column(db.String(128), nullable=False)
-#     email_id = db.Column(db.String(128), unique=True, nullable=False)
-#     contact_no = db.Column(db.String(10), unique=True, nullable=False)
-#     address = db.Column(db.String(250))
+    user_id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(128), nullable=False)
+    last_name = db.Column(db.String(128), nullable=False)
+    email_id = db.Column(db.String(128), unique=True, nullable=False)
+    contact_no = db.Column(db.String(10), unique=True, nullable=False)
+    address = db.Column(db.String(250))
 
-#     def __init__(self, user_id, first_name,  last_name, email_id, contact_no, address):
+    def __init__(self, user_id, first_name,  last_name, email_id, contact_no, address):
         
-#         self.user_id = user_id
-#         self.first_name = first_name
-#         self.last_name = last_name
-#         self.email_id = email_id
-#         self.address = address
+        self.user_id = user_id
+        self.first_name = first_name
+        self.last_name = last_name
+        self.email_id = email_id
+        self.address = address
+        self.contact_no = contact_no
 
-#         if not self.contact_no.isdigit():
-#             raise ValueError("Contact number must contain only digits.")      
-#         self.contact_no = contact_no
+        if not self.contact_no.isdigit():
+            raise ValueError("Contact number must contain only digits.")      
+        self.contact_no = contact_no
         
 
 # class Appointments(db.Model):
