@@ -1,10 +1,10 @@
-from flask import Blueprint, jsonify
-import requests
+from flask import Blueprint, jsonify, request
 from flask_swagger_ui import get_swaggerui_blueprint
 from controller.user_api_handler import UserApiHandler as user_api_handler
 from controller.patient_api_handler import PatientApiHandler as patient_api_handler
 from controller.doctor_api_handler import DoctorApiHandler as doctor_api_handler
 from controller.admin_api_handler import AdminApiHandler as admin_api_handler
+from controller.login_api_handler import LoginApiHandler as login_api_handler
 
 SWAGGER_URL = '/api/docs'  # URL for exposing Swagger UI (without trailing '/')
 API_URL = 'http://patienttracker.swagger.io/v1/swagger.json'  # Our API url (can of course be a local resource)
@@ -35,7 +35,9 @@ def add():
 @user_api.route('/create-profile', methods=['POST'])
 def create_profile():
     try:
-        user_type = requests.args.get('user_type')
+        login_api_handler.add()
+        user_type = request.json.get('user_type')
+        print(user_type, type(user_type))
         if user_type==0:
             profile = patient_api_handler.add()
         elif user_type==1:

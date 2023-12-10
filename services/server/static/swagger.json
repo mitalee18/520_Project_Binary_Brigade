@@ -69,6 +69,9 @@
                     "dob": {
                         "type": "string"
                     },
+                    "age": {
+                        "type": "integer"
+                    },
                     "gender": {
                         "type": "integer"
                     },
@@ -76,6 +79,15 @@
                         "type": "string"
                     },
                     "keywords": {
+                        "type": "integer"
+                    },
+                    "last_login_date": {
+                        "type": "integer"
+                    },
+                    "registration_date": {
+                        "type": "integer"
+                    },
+                    "update_date": {
                         "type": "integer"
                     }
                 }
@@ -290,6 +302,39 @@
                         "description": "NOT FOUND",
                         "schema": {
                             "$ref": "#/components/schemas/user_fetch"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/create-profile": {
+            "post": {
+                "tags": [
+                    "Create profile"
+                ],
+                "summary": "Create profile",
+                "requestBody": {
+                    "description": "Create User profile in Database for doctor and patient",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user_create-profile"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/user_create-profile"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/user_create-profile"
                         }
                     }
                 }
