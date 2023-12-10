@@ -7,6 +7,7 @@ from blueprint.login_blueprint import login_api
 from blueprint.patient_blueprint import patient_api
 from blueprint.doctor_blueprint import doctor_api
 from blueprint.admin_blueprint import admin_api
+from blueprint.appointment_blueprint import appointment_api
 from config.config import SwaggerConfig
 
 def create_app():
@@ -20,6 +21,7 @@ def create_app():
     app.register_blueprint(patient_api)
     app.register_blueprint(doctor_api)
     app.register_blueprint(admin_api)
+    app.register_blueprint(appointment_api)
 
     #swagger blueprint registered
     app.register_blueprint(SwaggerConfig.SWAGGER_BLUEPRINT, url_prefix = SwaggerConfig.SWAGGER_URL)

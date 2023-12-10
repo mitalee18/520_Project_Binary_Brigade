@@ -171,6 +171,26 @@
             },
             "admin_fetch": {
                 "type": "object"
+            },
+            "appointment_add": {
+                "type": "object",
+                "properties": {
+                    "appointment_id": {
+                        "type": "integer"
+                    },
+                    "patient_id": {
+                        "type": "integer"
+                    },
+                    "doctor_id": {
+                        "type": "integer"
+                    },
+                    "datetime": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "appointment_fetch": {
+                "type": "object"
             }
         }
     },
@@ -449,6 +469,62 @@
                     }
                 }
             }
+        },
+        "/api/appointment/add": {
+            "post": {
+                "tags": [
+                    "Add appointment details"
+                ],
+                "summary": "Add appointment details",
+                "requestBody": {
+                    "description": "Post New appointment To Appointments table in Database",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/appointment_add"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/appointment_add"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/appointment_add"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/appointment/fetch": {
+            "get": {
+                "tags": [
+                    "Get all appointment details"
+                ],
+                "summary": "Get all appointment details",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/appointment_fetch"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/appointment_fetch"
+                        }
+                    }
+                }
+            }
         }
+
     }
 }
