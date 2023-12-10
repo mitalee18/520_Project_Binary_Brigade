@@ -39,6 +39,47 @@
             "user_fetch": {
                 "type": "object"
             },
+            "user_create-profile": {
+                "type": "object",
+                "properties": {
+                    "email_id": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "user_type": {
+                        "type": "integer"
+                    },
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "user_id": {
+                        "type": "integer"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "contact_no": {
+                        "type": "string"
+                    },
+                    "dob": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "integer"
+                    },
+                    "qualifications": {
+                        "type": "string"
+                    },
+                    "keywords": {
+                        "type": "integer"
+                    }
+                }
+            },
             "login_add": {
                 "type": "object",
                 "properties": {
@@ -140,7 +181,11 @@
                     },
                     "qualifications": {
                         "type": "string"
+                    },
+                    "keywords": {
+                        "type": "string"
                     }
+
                 }
             },
             "doctor_fetch": {
@@ -250,7 +295,7 @@
                 }
             }
         },
-        "/api/login/add": {
+        "/api/user/login/add": {
             "post": {
                 "tags": [
                     "Add login details"
@@ -283,7 +328,7 @@
                 }
             }
         },
-        "/api/login/fetch": {
+        "/api/user/login/fetch": {
             "get": {
                 "tags": [
                     "Get all login details"

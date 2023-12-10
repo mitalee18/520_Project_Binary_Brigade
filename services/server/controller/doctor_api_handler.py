@@ -27,7 +27,8 @@ class DoctorApiHandler:
                 "gender": doctor.gender,
                 "registration_date": doctor.registration_date,
                 "update_date": doctor.update_date,
-                "qualifications": doctor.qualifications
+                "qualifications": doctor.qualifications,
+                "keywords": doctor.keywords
             }
 
             doctors.append(new_doctor)
@@ -47,11 +48,13 @@ class DoctorApiHandler:
         registration_date = data['registration_date']
         update_date = data['update_date']
         qualifications = data['qualifications']
+        keywords = data['keywords']
 
         print("inside add method doctor", print(user_id, contact_no))
 
         database.add_instance(Doctor, user_id=user_id, first_name=first_name, last_name=last_name,
                               email_id=email_id, contact_no=contact_no,
                               address=address, age=age, dob=dob,
-                              gender=gender, registration_date=registration_date, update_date=update_date, qualifications=qualifications)
+                              gender=gender, registration_date=registration_date, update_date=update_date, 
+                              qualifications=qualifications, keywords=keywords)
         return 1

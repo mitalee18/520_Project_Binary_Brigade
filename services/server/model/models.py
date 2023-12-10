@@ -157,11 +157,12 @@ class Doctor(db.Model):
     age = db.Column(db.Integer, nullable=False)  #can remove 
     dob = db.Column(db.Date, nullable=False)
     gender = db.Column(db.Integer) # Encode into int while inserting into db
+    keywords = db.Column(db.String(250))
     
     
 
     def __init__(self, user_id, first_name,  last_name, email_id, contact_no, qualifications, address,
-                 age, dob, gender, registration_date, update_date):
+                 age, dob, gender, registration_date, update_date, keywords):
         
         self.user_id = user_id
         self.first_name = first_name
@@ -175,6 +176,7 @@ class Doctor(db.Model):
         self.update_date = update_date
         self.contact_no = contact_no
         self.gender = gender
+        self.keywords = keywords
 
         if self.contact_no==None:
             print("null contact")
@@ -238,3 +240,4 @@ class Appointments(db.Model):
 
 
 
+### medical history and documents
