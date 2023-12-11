@@ -3,20 +3,20 @@
         <input type="checkbox" id="chk" aria-hidden="true">
     
             <div class="signup">
-                <form>
+                <form #userForm = "ngForm" (ngSubmit)="onLogin(userForm)">
                     <label for="chk" aria-hidden="true">Sign up</label>
-                    <input type="email" name="email" placeholder="Email" required="true">
-                    <input type="password" name="password" placeholder="Password" required="true">
-                    <input type="password" name="confirm_password" placeholder="Confirm Password" required="true">
+                    <input type="email" ngModel name="email" placeholder="Email" required="true">
+                    <input type="password" ngModel name="password" placeholder="Password" required="true">
+                    <input type="password" ngModel name="confirm_password" placeholder="Confirm Password" required="true">
                     <button>Sign up</button>
                 </form>
             </div>
     
             <div class="login">
-                <form>
+                <form #userLogin = "ngForm" (ngSubmit)="onLogin(userLogin)">
                     <label for="chk" aria-hidden="true">Login</label>
-                    <input type="email" name="EmailId" placeholder="Email" required="true">
-                    <input type="password" name="Password" placeholder="Password" required="true">
+                    <input type="email"  ngModel name="email" placeholder="Email" required="true">
+                    <input type="password" ngModel name="password" placeholder="Password" required="true">
                     <button>Login</button>
                 </form>
             </div>

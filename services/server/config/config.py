@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from flask_swagger_ui import get_swaggerui_blueprint
+import secrets
 
 load_dotenv()
 
@@ -22,4 +23,9 @@ class SwaggerConfig():
             'app_name': "Patient Tracker APIs"
         }
     )
-   
+
+class JwtSecretKey():
+    """
+    Generating random bits each time
+    """
+    JWT_SECRET_KEY = str(secrets.SystemRandom().getrandbits(128))

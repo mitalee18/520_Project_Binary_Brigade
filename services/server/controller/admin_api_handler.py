@@ -5,6 +5,7 @@ from flask import request
 import database_handler as database
 from model.models import *
 import json
+import time
 
 
 class AdminApiHandler:
@@ -39,4 +40,14 @@ class AdminApiHandler:
         database.add_instance(Admin, user_id=user_id, first_name=first_name, last_name=last_name, 
                               email_id=email_id, contact_no=contact_no, address=address)
         return 1
+
+    def signup():
+        data = json.loads(request.data.decode())
+        email_id = data["email_id"]
+
+        database.add_instance(Admin, email_id=email_id, first_name = None, last_name = None, contact_no = None, address = None)
+        query_response = database.query(Admin,email_id)
+        print(query_response)
+        return query_response
+
 

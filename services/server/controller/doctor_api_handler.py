@@ -5,6 +5,7 @@ from flask import request
 import database_handler as database
 from model.models import *
 import json
+import time
 
 class DoctorApiHandler:
     def default():
@@ -58,3 +59,12 @@ class DoctorApiHandler:
                               gender=gender, registration_date=registration_date, update_date=update_date, 
                               qualifications=qualifications, keywords=keywords)
         return 1
+
+    def signup():
+        data = json.loads(request.data.decode())
+        email_id = data["email_id"]
+        registration_date = int(time.time())
+
+        database.add_instance(Doctor, email_id=email_id, registration_date=registration_date, update_date=registration_date, first_name = None, last_name = None, contact_no = None, address = None, age = None, dob = None, gender = None, qualifications= None, keywords = None)
+        query_response = database.query(Doctor,email_id)
+        return query_response

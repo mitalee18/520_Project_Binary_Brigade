@@ -9,6 +9,9 @@ from blueprint.doctor_blueprint import doctor_api
 from blueprint.admin_blueprint import admin_api
 from blueprint.appointment_blueprint import appointment_api
 from config.config import SwaggerConfig
+from flask_jwt_extended import JWTManager
+from flask_cors import CORS, cross_origin
+
 
 def create_app():
     app = Flask(__name__)
@@ -25,6 +28,13 @@ def create_app():
 
     #swagger blueprint registered
     app.register_blueprint(SwaggerConfig.SWAGGER_BLUEPRINT, url_prefix = SwaggerConfig.SWAGGER_URL)
+
+    #for signing the JWT
+    app.config.from_object("config.config.JwtSecretKey") 
+    CORS(app)
+    app.config['CORS_HEADERS'] = 'Content-Type'
+    
+    jwt = JWTManager(app)
 
     app.app_context().push()
     time.sleep(5)
