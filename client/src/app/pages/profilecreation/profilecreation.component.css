@@ -26,6 +26,13 @@
 	cursor: pointer;
 	transition: .5s ease-in-out;
 }
+
+.page-label{
+	color: #fff;
+	justify-content: center;
+	display: flex;
+}
+
 input{
 	width: 80%;
 	height: 20px;
@@ -33,7 +40,7 @@ input{
 	justify-content: center;
 	display: flex;
 	margin: 20px auto;
-	padding: 10px;
+	padding: 20px;
 	border: none;
 	outline: none;
 	border-radius: 5px;
@@ -65,4 +72,11 @@ button:hover{
 
 .row {
     display: flex;
+}
+
+
+.page-hr-line {
+    position: relative;
+    left: -15px;
+	width: 50%;
 }
