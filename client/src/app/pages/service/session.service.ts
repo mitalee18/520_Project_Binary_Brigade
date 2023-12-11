@@ -3,7 +3,7 @@ import { apiEndPoints } from './constants/apiEndPoints';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from "rxjs/operators";
-import { LoginResponse } from 'src/app/model/loginResponse';
+import { LoginResponse } from '../../model/loginResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,7 @@ export class SessionService {
         "password":password
       }
     return this.http.post<LoginResponse>(`${apiEndPoints.userApi}/login`, post)
-            .pipe(tap(res => this.setSession(res)));
+            .pipe(tap(res =>this.setSession(res)));
   }
 
   private setSession(sessionInfo: LoginResponse) {
