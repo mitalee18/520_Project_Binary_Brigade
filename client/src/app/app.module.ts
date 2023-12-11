@@ -11,6 +11,7 @@ import { ProfilecreationComponent } from './pages/profilecreation/profilecreatio
 
 import { DropdownModule } from 'primeng/dropdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { CalendarModule } from 'primeng/calendar';
@@ -20,6 +21,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+
 
 
 @NgModule({

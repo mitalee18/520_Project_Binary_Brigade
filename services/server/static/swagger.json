@@ -1,104 +1,620 @@
 {
     "openapi": "3.0.0",
     "info": {
-      "description": "Binary Brigade",
-      "version": "1.0.0",
-      "title": "Patient Tracker application",
-      "license": {
-        "name": "MIT",
-        "url": "https://opensource.org/licenses/MIT"
-      }
+        "description": "Binary Brigade",
+        "version": "1.0.0",
+        "title": "Patient Tracker application",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
     },
     "tags": [
         {
-          "name": "Patient Tracker API",
-          "description": "Test API"
+            "name": "Patient Tracker API",
+            "description": "Test API"
         }
-      ],
+    ],
     "servers": [
         {
-        "url": "/"
+            "url": "/"
         }
     ],
     "components": {
         "schemas": {
-            "add": {
+            "user_add": {
                 "type": "object",
                 "properties": {
                     "name": {
-                    "type": "string"
+                        "type": "string"
                     },
                     "email": {
-                    "type": "string"
+                        "type": "string"
                     },
                     "active": {
                         "type": "integer"
                     }
                 }
             },
-            "fetch":{
+            "user_fetch": {
+                "type": "object"
+            },
+            "user_create-profile": {
+                "type": "object",
+                "properties": {
+                    "email_id": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "user_type": {
+                        "type": "integer"
+                    },
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "user_id": {
+                        "type": "integer"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "contact_no": {
+                        "type": "string"
+                    },
+                    "dob": {
+                        "type": "string"
+                    },
+                    "age": {
+                        "type": "integer"
+                    },
+                    "gender": {
+                        "type": "integer"
+                    },
+                    "qualifications": {
+                        "type": "string"
+                    },
+                    "keywords": {
+                        "type": "integer"
+                    },
+                    "last_login_date": {
+                        "type": "integer"
+                    },
+                    "registration_date": {
+                        "type": "integer"
+                    },
+                    "update_date": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "login_add": {
+                "type": "object",
+                "properties": {
+                    "user_id": {
+                        "type": "integer"
+                    },
+                    "email_id": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "last_login_date": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "login_fetch": {
+                "type": "object"
+            },
+            "patient_add": {
+                "type": "object",
+                "properties": {
+                    "user_id": {
+                        "type": "integer"
+                    },
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "email_id": {
+                        "type": "string"
+                    },
+                    "contact_no": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "age": {
+                        "type": "integer"
+                    },
+                    "dob": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "gender": {
+                        "type": "integer"
+                    },
+                    "registration_date": {
+                        "type": "integer"
+                    },
+                    "update_date": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "patient_fetch": {
+                "type": "object"
+            },
+            "doctor_add": {
+                "type": "object",
+                "properties": {
+                    "user_id": {
+                        "type": "integer"
+                    },
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "email_id": {
+                        "type": "string"
+                    },
+                    "contact_no": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "age": {
+                        "type": "integer"
+                    },
+                    "dob": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "gender": {
+                        "type": "integer"
+                    },
+                    "registration_date": {
+                        "type": "integer"
+                    },
+                    "update_date": {
+                        "type": "integer"
+                    },
+                    "qualifications": {
+                        "type": "string"
+                    },
+                    "keywords": {
+                        "type": "string"
+                    }
+
+                }
+            },
+            "doctor_fetch": {
+                "type": "object"
+            },
+            "admin_add": {
+                "type": "object",
+                "properties": {
+                    "user_id": {
+                        "type": "integer"
+                    },
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "email_id": {
+                        "type": "string"
+                    },
+                    "contact_no": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    }
+                }
+            },
+            "admin_fetch": {
+                "type": "object"
+            },
+            "appointment_add": {
+                "type": "object",
+                "properties": {
+                    "appointment_id": {
+                        "type": "integer"
+                    },
+                    "patient_id": {
+                        "type": "integer"
+                    },
+                    "doctor_id": {
+                        "type": "integer"
+                    },
+                    "datetime": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "appointment_fetch": {
                 "type": "object"
             }
         }
     },
-
-"paths": {
-    "/api/user/add": {
-        "post": {
-            "tags": [
-                "Add user"
-            ],
-            "summary": "Add user",
-            "requestBody": {
-                "description": "Post New user To User table in Database",
-                "required": true,
-                "content": {
-                    "application/json": {
-                    "schema": {
-                        "$ref": "#/components/schemas/add"
+    "paths": {
+        "/api/user/add": {
+            "post": {
+                "tags": [
+                    "Add user"
+                ],
+                "summary": "Add user",
+                "requestBody": {
+                    "description": "Post New user To User table in Database",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user_add"
+                            }
                         }
                     }
-                }
-            },
-            "responses": {
-                "200": {
-                    "description": "OK",
-                    "schema": {
-                    "$ref": "#/components/schemas/add"
-                    }
                 },
-                "404": {
-                    "description": "NOT FOUND",
-                    "schema": {
-                    "$ref": "#/components/schemas/add"
-                    }
-                }
-            }
-        }
-    },
-    "/api/user/fetch": {
-        "get": {
-                "tags": [
-                    "Get all users"
-                ],
-                "summary": "Get all user",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                        "$ref": "#/components/schemas/fetch"
+                            "$ref": "#/components/schemas/user_add"
                         }
                     },
                     "404": {
                         "description": "NOT FOUND",
                         "schema": {
-                        "$ref": "#/components/schemas/add"
+                            "$ref": "#/components/schemas/user_add"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/fetch": {
+            "get": {
+                "tags": [
+                    "Get all users"
+                ],
+                "summary": "Get all users",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/user_fetch"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/user_fetch"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/create-profile": {
+            "post": {
+                "tags": [
+                    "Create profile"
+                ],
+                "summary": "Create profile",
+                "requestBody": {
+                    "description": "Create User profile in Database for doctor and patient",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user_create-profile"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/user_create-profile"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/user_create-profile"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/login/add": {
+            "post": {
+                "tags": [
+                    "Add login details"
+                ],
+                "summary": "Add login details",
+                "requestBody": {
+                    "description": "Post New login To LoginDetails table in Database",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/login_add"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/login_add"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/login_add"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/login/fetch": {
+            "get": {
+                "tags": [
+                    "Get all login details"
+                ],
+                "summary": "Get all login details",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/login_fetch"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/login_fetch"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/patient/add": {
+            "post": {
+                "tags": [
+                    "Add patient"
+                ],
+                "summary": "Add patient",
+                "requestBody": {
+                    "description": "Post New patient To Patient table in Database",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/patient_add"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/patient_add"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/patient_add"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/patient/fetch": {
+            "get": {
+                "tags": [
+                    "Get all patient details"
+                ],
+                "summary": "Get all patient details",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/patient_fetch"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/patient_fetch"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/doctor/add": {
+            "post": {
+                "tags": [
+                    "Add doctor"
+                ],
+                "summary": "Add doctor",
+                "requestBody": {
+                    "description": "Post New doctor To Doctor table in Database",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/doctor_add"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/doctor_add"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/doctor_add"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/doctor/fetch": {
+            "get": {
+                "tags": [
+                    "Get all doctor details"
+                ],
+                "summary": "Get all doctor details",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/doctor_fetch"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/doctor_fetch"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/admin/add": {
+            "post": {
+                "tags": [
+                    "Add admin details"
+                ],
+                "summary": "Add admin details",
+                "requestBody": {
+                    "description": "Post New admin To Admin table in Database",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/admin_add"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/admin_add"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/admin_add"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/admin/fetch": {
+            "get": {
+                "tags": [
+                    "Get all admin details"
+                ],
+                "summary": "Get all admin details",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/admin_fetch"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/admin_fetch"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/appointment/add": {
+            "post": {
+                "tags": [
+                    "Add appointment details"
+                ],
+                "summary": "Add appointment details",
+                "requestBody": {
+                    "description": "Post New appointment To Appointments table in Database",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/appointment_add"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/appointment_add"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/appointment_add"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/appointment/fetch": {
+            "get": {
+                "tags": [
+                    "Get all appointment details"
+                ],
+                "summary": "Get all appointment details",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/appointment_fetch"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/appointment_fetch"
                         }
                     }
                 }
             }
         }
+
     }
 }
-
-   
