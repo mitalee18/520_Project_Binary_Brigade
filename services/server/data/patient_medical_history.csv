@@ -1,0 +1,21 @@
+user_id,allergies,medical_conditions,prescribed_medication,surgical_history,family_medical_history,update_date
+30001,"{""allergen1"": ""soy"", ""allergen2"": ""wheat""}",sprained ankle,"{""acetaminophen"": ""500mg""}","""1604188800"": [""Dr. Smith"", ""Appendix Removal""]",diabetes,1689934383
+30002,"{""allergen1"": ""tree nuts"", ""allergen2"": ""eggs""}",bronchitis,"{""acetaminophen"": ""500mg""}","""1618550400"": [""Dr. Johnson"", ""Knee Surgery""]",arthritis,1677529913
+30003,"{""allergen1"": ""fish"", ""allergen2"": ""shellfish""}",asthma,"{""lisinopril"": ""10mg""}","""1638691200"": [""Dr. Davis"", ""Cataract Surgery""]",allergies,1674298078
+30004,"{""allergen1"": ""sesame"", ""allergen2"": ""sulfites""}",kidney stones,"{""levothyroxine"": ""50mcg""}","""1645406400"": [""Dr. Miller"", ""Hip Replacement""]",osteoporosis,1693078531
+30005,"{""allergen1"": ""mustard"", ""allergen2"": ""lupin""}",allergies,"{""metformin"": ""1000mg""}"," ""1685846400"": [""Dr. Lee"", ""Breast Biopsy""]",allergies,1685498348
+30006,"{""allergen1"": ""celery"", ""allergen2"": ""gluten""}",hypertension,"{""atorvastatin"": ""20mg""}",,arthritis,1683326425
+30007,"{""allergen1"": ""mollusks"", ""allergen2"": ""corn""}",diabetes,"{""albuterol"": ""2 puffs""}",,allergies,1686625738
+30008,"{""allergen1"": ""peas"", ""allergen2"": ""carrots""}",arthritis,"{""omeprazole"": ""40mg""}",,hypertension,1673665220
+30009,"{""allergen1"": ""almonds"", ""allergen2"": ""cocoa""}",ulcer,"{""fluoxetine"": ""20mg""}","""1604188800"": [""Dr. Smith"", ""Appendix Removal""]",heart disease,1685064640
+30010,"{""allergen1"": ""soy""}",hypertension,"{""acetaminophen"": ""500mg""}","""1618550400"": [""Dr. Johnson"", ""Knee Surgery""]",osteoporosis,1693268946
+30011,"{""allergen1"": ""soy"", ""allergen2"": ""wheat""}",ulcer,"{""acetaminophen"": ""500mg""}","""1638691200"": [""Dr. Davis"", ""Cataract Surgery""]",allergies,1687462233
+30012,"{""allergen1"": ""tree nuts"", ""allergen2"": ""eggs""}",ulcer,"{""lisinopril"": ""10mg""}","""1645406400"": [""Dr. Miller"", ""Hip Replacement""]",diabetes,1676622994
+30013,"{""allergen1"": ""fish"", ""allergen2"": ""shellfish""}",migraine,"{""levothyroxine"": ""50mcg""}"," ""1685846400"": [""Dr. Lee"", ""Breast Biopsy""]",hypertension,1686575063
+30014,"{""allergen1"": ""sesame"", ""allergen2"": ""sulfites""}",arthritis,"{""metformin"": ""1000mg""}",,osteoporosis,1688957180
+30015,"{""allergen1"": ""mustard"", ""allergen2"": ""lupin""}",headache,"{""atorvastatin"": ""20mg""}",,migraine,1676515650
+30016,"{""allergen1"": ""celery"", ""allergen2"": ""gluten""}",hypertension,"{""albuterol"": ""2 puffs""}",,hypertension,1697683816
+30017,"{""allergen1"": ""mollusks"", ""allergen2"": ""corn""}",gout,"{""omeprazole"": ""40mg""}",,migraine,1689023137
+30018,"{""allergen1"": ""peas"", ""allergen2"": ""carrots""}",diabetes,"{""fluoxetine"": ""20mg""}","""1638691200"": [""Dr. Davis"", ""Cataract Surgery""]",osteoporosis,1690850578
+30019,"{""allergen1"": ""almonds"", ""allergen2"": ""cocoa""}",asthma,"{""omeprazole"": ""40mg""}","""1645406400"": [""Dr. Miller"", ""Hip Replacement""]",migraine,1678586408
+30020,"{""allergen1"": ""soy""}",allergies,"{""fluoxetine"": ""20mg""}"," ""1685846400"": [""Dr. Lee"", ""Breast Biopsy""]",migraine,1677358213
