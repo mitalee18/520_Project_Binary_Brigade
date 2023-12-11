@@ -5,9 +5,9 @@ import { SessionService } from '../service/session.service';
 import { Subscription } from 'rxjs';
 import { OnInit } from '@angular/core';
 import { FormBuilder, NgForm } from '@angular/forms';
-import { Login } from 'src/app/model/login';
+import { Login } from '../../model/login';
 import { FormGroup } from '@angular/forms';
-import { Signup } from 'src/app/model/signup';
+import { Signup } from '../../model/signup';
 
 
 
