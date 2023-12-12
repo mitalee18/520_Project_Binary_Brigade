@@ -35,7 +35,7 @@ label{
 }
 input{
 	width: 60%;
-	height: 20px;
+	height: 30px;
 	background: #e0dede;
 	justify-content: center;
 	display: flex;
@@ -44,6 +44,9 @@ input{
 	border: none;
 	outline: none;
 	border-radius: 5px;
+}
+mat-radio-group{
+	justify-content: center;
 }
 button{
 	width: 60%;
@@ -85,4 +88,20 @@ button:hover{
 }
 #chk:checked ~ .signup label{
 	transform: scale(.6);
+}
+.example-radio-button{
+	color: 'accent';
+}
+:host ::ng-deep .mdc-form-field>label {
+	color:white !important;
+}
+:host ::ng-deep .mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{
+	background: #e0dede;
+  }
+.mat-radio-button.mat-accent .mat-radio-inner-circle{
+	background: #e0dede;
+}
+
+.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+	background: #e0dede;
 }
