@@ -46,41 +46,27 @@ class Patient(db.Model):
     contact_no = db.Column(db.String(12), unique=True)
     address = db.Column(db.String(250))
     age = db.Column(db.Integer)  #can remove
-    dob = db.Column(db.Date)
+    dob = db.Column(db.Integer)
     emergency_contact = db.Column(JSON, nullable=False)
     gender = db.Column(db.Integer) # Encode into int while inserting into db
-    health_insurance = db.Column(JSON)
+    health_insurance = db.Column(db.Integer)
     registration_date = db.Column(db.Integer)
     update_date = db.Column(db.Integer)
 
-    # Define the back reference to the EmergencyContact table
-#     emergency_contact_data = relationship('EmergencyContact', back_populates='patient', uselist=False)
-
-    def __init__(self, first_name,  last_name, email_id, contact_no, address,
-                 age, dob, gender, registration_date, update_date):
-
-#         self.emergency_contact = emergency_contact_data
+    def __init__(self, user_id, first_name, last_name, email_id, contact_no, address, age, dob,
+                 emergency_contact, gender, health_insurance, update_date):
+        self.user_id = user_id
         self.first_name = first_name
         self.last_name = last_name
         self.email_id = email_id
-        self.address = address
         self.contact_no = contact_no
+        self.address = address
         self.age = age
         self.dob = dob
+        self.emergency_contact = emergency_contact
         self.gender = gender
-        self.registration_date = registration_date
+        self.health_insurance = health_insurance
         self.update_date = update_date
-
-        if self.contact_no != None and not self.contact_no.isdigit():
-            raise ValueError("Contact number must contain only digits.")
-        self.contact_no = contact_no
-
-#         def get_emergency_contact(self):
-#             return json.loads(self.emergency_contact)
-
-        if self.gender!=None and not (isinstance(self.gender, int) and 0 <= self.gender <= 2):
-            raise ValueError("gender must be encoded as 0,1,2")
-        self.gender = gender
 
 class PatientMedicalHistory(db.Model):
     __tablename__ = "patient_medical_history"
@@ -95,7 +81,6 @@ class PatientMedicalHistory(db.Model):
 
     def __init__(self, allergies, medical_conditions, prescribed_medication,
                  surgical_history, family_medical_history, user_id, update_date):
-
         self.allergies = allergies
         self.medical_conditions = medical_conditions
         self.prescribed_medication = prescribed_medication
@@ -107,19 +92,19 @@ class PatientMedicalHistory(db.Model):
 class PatientDocument(db.Model):
     __tablename__ = "patient_document"
 
-    user_id = db.Column(db.Integer, db.ForeignKey('patient.user_id'), primary_key=True, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('patient.user_id'), nullable=False)
     file_link = db.Column(db.String(255))
-    file_id = db.Column(db.Integer, unique=True, autoincrement=True)
+    file_id = db.Column(db.Integer, db.Sequence('file_seq_reg_id', start=21, increment=1), primary_key=True)
     file_name = db.Column(db.String(255))
-    description =  db.Column(db.String(255))
+    description = db.Column(db.String(255))
+    update_date = db.Column(db.Integer, nullable=False)
 
-    def __init__(self, user_id, file_link, file_id, file_name, description):
-       
+    def __init__(self, user_id, file_link, file_name, description, update_date):
         self.user_id = user_id
         self.file_link = file_link
-        self.file_id = file_id
         self.file_name = file_name
         self.description = description
+        self.update_date = update_date
 
 
 class Doctor(db.Model):
@@ -135,7 +120,7 @@ class Doctor(db.Model):
     registration_date = db.Column(db.Integer, nullable=False)
     update_date = db.Column(db.Integer, nullable=False)
     age = db.Column(db.Integer)  #can remove 
-    dob = db.Column(db.Date)
+    dob = db.Column(db.Integer)
     gender = db.Column(db.Integer) # Encode into int while inserting into db
     keywords = db.Column(db.String(250))
     
