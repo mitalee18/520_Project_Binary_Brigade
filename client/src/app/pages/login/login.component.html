@@ -3,11 +3,17 @@
         <input type="checkbox" id="chk" aria-hidden="true">
     
             <div class="signup">
-                <form #userForm = "ngForm" (ngSubmit)="onLogin(userForm)">
+                <form #userForm = "ngForm" (ngSubmit)="onSignUp(userForm)">
                     <label for="chk" aria-hidden="true">Sign up</label>
                     <input type="email" ngModel name="email" placeholder="Email" required="true">
                     <input type="password" ngModel name="password" placeholder="Password" required="true">
                     <input type="password" ngModel name="confirm_password" placeholder="Confirm Password" required="true">
+                    <mat-radio-group
+                        aria-labelledby="example-radio-group-label"
+                        class="example-radio-group"
+                        ngModel name="userType" *ngFor="let userType of userTypeOptions; index as i;">              
+                            <mat-radio-button class="mat-accent mat-radio-checked mat-radio-outer-circle" [value]="i">{{userType}}</mat-radio-button>
+                    </mat-radio-group>
                     <button>Sign up</button>
                 </form>
             </div>

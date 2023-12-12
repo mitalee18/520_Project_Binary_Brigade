@@ -21,6 +21,9 @@ export class LoginComponent implements OnInit{
   loginValues: Login;
   signupValues: Signup;
   loginForm: FormGroup;
+  userFrom:FormGroup;
+  user_type: string;
+  userTypeOptions: string[] = ["Paitent", "Doctor"]
   
 
   constructor(
@@ -32,28 +35,30 @@ export class LoginComponent implements OnInit{
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      email: ['',],
+      email: [''],
       password: ['']
+    });
+    this.userFrom = this.formBuilder.group({
+      email: [''],
+      password: [''],
+      confirmPassword: [''],
+      userType:""
     });
 
   }
 
-  // onSignUp(userForm: NgForm){
-  //   this.signupValues = userForm.value;
-  //   console.log(this.signupValues);
-  //   for (const key in this.signupValues)
-  //   {
-  //     const indexedItem = this.signupValues[key];
-  //     console.log(indexedItem);
-  //   }
+  onSignUp(userForm: NgForm){
+    this.signupValues = userForm.value;
+    console.log(this.signupValues);
 
-  // }
+  }
   get f() { return this.loginForm.controls; }
 
   onLogin(userLogin: NgForm){
     const val = userLogin.value;
     console.log(userLogin.value);
     console.log(val.email);
+    console.log(val.user_type);
     if (val.email && val.password) {
         this.sessionService.login(val.email, val.password)
             .subscribe( 
