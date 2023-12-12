@@ -1,17 +1,25 @@
 import { EmergencyContact } from "./emergencyContact"
-import { MedicalHistory } from "./medicalHistory"
 
 export interface Patient{
-    id ?: string,
-    first_name ?: string,
-    last_name ?: string,
-    address ?: string,
-    contact ?: string,
-    dob ?: string,
-    gender ?: string
-    emergency_contact ?:EmergencyContact[],
-    medical_history ?: MedicalHistory,
-    health_insurance_number ?: string,
-    email?: string
-
+    address?: string,
+    age?: number,
+    allergies?:string,
+    contact_no:string,
+    description?: string,
+    dob?: number,
+    email_id?: string,
+    emergency_contact?:EmergencyContact,
+    family_medical_history?: string,
+    file_id?: number,
+    file_link?: string,
+    first_name?: string,
+    last_name?: string,
+    gender?: string,
+    health_insaurance?: number,
+    medical_conditions?: string,
+    prescribe_medication: string,
+    registration_date?: number,
+    surgical_history?: number,
+    update_date?: number,
+    user_id?: number
 }

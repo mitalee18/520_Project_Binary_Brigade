@@ -11,7 +11,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { InputTextModule } from 'primeng/inputtext';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FileUploadModule } from 'primeng/fileupload';
@@ -19,11 +18,8 @@ import {HttpClientModule} from '@angular/common/http';
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-
-
 import { DoctorDashboardComponent } from './pages/doctor-dashboard/doctor-dashboard.component';
 import { NavBarComponent } from './pages/nav-bar/nav-bar.component';
-import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import { OrderListModule } from 'primeng/orderlist';
 import { DoctorProfileComponent } from './pages/doctor-profile/doctor-profile.component';
@@ -60,9 +56,7 @@ import { PatientProfileComponent } from './pages/patient-profile/patient-profile
     HttpClientModule,
     CardModule,
     DividerModule,
-    ConfirmDialogModule
-
-    MatToolbarModule,
+    ConfirmDialogModule,
     MatButtonModule,
     NavBarComponent,
     OrderListModule,
