@@ -16,6 +16,10 @@ def query_by_user_id(model, user_id):
     data = model.query.filter_by(user_id=user_id).all()[0]
     return data
 
+def query_multiple_by_user_id(model, user_id):
+    data = model.query.filter_by(user_id=user_id).all()
+    return data
+
 
 def add_instance(model, **kwargs):
     try:
