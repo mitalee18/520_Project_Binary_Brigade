@@ -35,23 +35,6 @@ class LoginDetails(db.Model):
         self.last_login_date = last_login_date
 
 
-# class EmergencyContact(db.Model):
-#     __tablename__ = 'emergency_contact'
-#
-#     name = db.Column(db.String(50))
-#     contact_no = db.Column(db.Integer)
-#     email = db.Column(db.String(100))
-#
-#     # Define the foreign key relationship with the Patient table
-#     user_id = db.Column(db.Integer, ForeignKey('patient.user_id'), primary_key=True)
-#     patient = relationship('Patient', back_populates='emergency_contact')
-#
-#     def __init__(self, name, contact_no, email, user_id):
-#         self.name = name
-#         self.contact_no = contact_no
-#         self.email = email
-#         self.user_id = user_id
-
 
 class Patient(db.Model):
     __tablename__ = "patient"
@@ -64,9 +47,9 @@ class Patient(db.Model):
     address = db.Column(db.String(250))
     age = db.Column(db.Integer)  #can remove
     dob = db.Column(db.Date)
-#     emergency_contact = db.Column(JSON, nullable=False)
+    emergency_contact = db.Column(JSON, nullable=False)
     gender = db.Column(db.Integer) # Encode into int while inserting into db
-    #health_insurance = db.Column(JSON)
+    health_insurance = db.Column(JSON)
     registration_date = db.Column(db.Integer)
     update_date = db.Column(db.Integer)
 
@@ -85,7 +68,6 @@ class Patient(db.Model):
         self.age = age
         self.dob = dob
         self.gender = gender
-#         self.health_insuarance = health_insuarance
         self.registration_date = registration_date
         self.update_date = update_date
 
@@ -103,11 +85,11 @@ class Patient(db.Model):
 class PatientMedicalHistory(db.Model):
     __tablename__ = "patient_medical_history"
 
-    allergies = db.Column(ARRAY(db.String))
-    medical_conditions = db.Column(ARRAY(db.String))
-    prescribed_medication =  db.Column(ARRAY(db.String))
-    surgical_history = db.Column(ARRAY(db.String))
-    family_medical_history = db.Column(ARRAY(db.String))
+    allergies = db.Column(db.String)
+    medical_conditions = db.Column(db.String)
+    prescribed_medication =  db.Column(db.String)
+    surgical_history = db.Column(db.String)
+    family_medical_history = db.Column(db.String(255))
     user_id = db.Column(db.Integer, db.ForeignKey('patient.user_id'), primary_key=True,nullable=False)
     update_date = db.Column(db.Integer, nullable=False)
 
@@ -192,7 +174,7 @@ class Admin(db.Model):
     first_name = db.Column(db.String(128))
     last_name = db.Column(db.String(128))
     email_id = db.Column(db.String(128), unique=True, nullable=False)
-    contact_no = db.Column(db.String(10))
+    contact_no = db.Column(db.String(15))
     address = db.Column(db.String(250))
 
     def __init__(self, first_name,  last_name, email_id, contact_no, address):
@@ -213,7 +195,7 @@ class Appointments(db.Model):
     appointment_id = db.Column(db.Integer, primary_key=True)
     patient_id = db.Column(db.Integer, db.ForeignKey('patient.user_id'), nullable=False)
     doctor_id = db.Column(db.Integer, db.ForeignKey('doctor.user_id'), nullable=False)
-    datetime = db.Column(db.Integer)
+    datetime = db.Column(db.Integer, nullable=False)
 
     def __init__(self, appointment_id, patient_id,  doctor_id, datetime):
         self.appointment_id = appointment_id
