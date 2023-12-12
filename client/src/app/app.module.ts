@@ -8,11 +8,21 @@ import { PagenotfoundComponent } from './pages/pagenotfound/pagenotfound.compone
 import { ProfilecreationComponent } from './pages/profilecreation/profilecreation.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {FormsModule} from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+
+
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { FileUploadModule } from 'primeng/fileupload';
+import {HttpClientModule} from '@angular/common/http';
+import { CardModule } from 'primeng/card';
+import { DividerModule } from 'primeng/divider';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+
+
 import { DoctorDashboardComponent } from './pages/doctor-dashboard/doctor-dashboard.component';
 import { NavBarComponent } from './pages/nav-bar/nav-bar.component';
-import { CardModule } from 'primeng/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import { OrderListModule } from 'primeng/orderlist';
@@ -42,17 +52,25 @@ import { PatientProfileComponent } from './pages/patient-profile/patient-profile
     DropdownModule,
     BrowserAnimationsModule,
     FormsModule,
+    InputTextModule,
+    CalendarModule,
+    InputTextareaModule,
+    ReactiveFormsModule,
+    FileUploadModule,
     HttpClientModule,
     CardModule,
+    DividerModule,
+    ConfirmDialogModule
+
     MatToolbarModule,
     MatButtonModule,
     NavBarComponent,
     OrderListModule,
     MatFormFieldModule,
-    InputTextModule,
     MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
