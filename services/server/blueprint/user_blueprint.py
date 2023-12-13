@@ -1,10 +1,9 @@
 from flask import Blueprint, jsonify, request
 from flask_swagger_ui import get_swaggerui_blueprint
 from controller.user_api_handler import UserApiHandler as user_api_handler
-from controller.patient_api_handler import PatientApiHandler as patient_api_handler
+from controller.patient_api_handler import PatientApiHandler
 from controller.doctor_api_handler import DoctorApiHandler as doctor_api_handler
 from controller.admin_api_handler import AdminApiHandler as admin_api_handler
-from controller.login_api_handler import LoginApiHandler as login_api_handler
 from flask_cors import cross_origin
 
 
@@ -14,6 +13,7 @@ API_URL = 'http://patienttracker.swagger.io/v1/swagger.json'  # Our API url (can
 
 
 user_api = Blueprint('user_api', __name__, url_prefix='/api/user')
+patient_api_handler = PatientApiHandler()
 
 @user_api.route("/")
 @cross_origin(origin='localhost')
@@ -60,34 +60,47 @@ def create_profile():
         user_type = request.json.get('user_type')
         print(user_type, type(user_type))
         if user_type==0:
-            profile = patient_api_handler.add()
+            profile = patient_api_handler.create_profile()
         elif user_type==1:
-            profile = doctor_api_handler.add()
+            profile = doctor_api_handler.create_profile()
         else:
-            profile = admin_api_handler.add()
-        
+            profile = admin_api_handler.create_profile()
     except Exception as e:
-        return handle_error(e, f"Error[{type(e)}]{str(e)}", "api/user/create-profile")
+        return handle_error(e,
+                            "Internal Server Error: Profile creation unsuccessful.",
+                            f"Error[{type(e)}]{str(e)}",
+                            "api/user/create-profile")
     return jsonify(profile), 200
 
-# @user_api.route('/getUserInfo/<email>', methods=["GET"])
-# def get_user_info(email):
-#     try:
-#         user = user_api_handler.get_user_info(email)
-#         print(user)
-#     except Exception as e:
-#         return handle_error(e, f"Error[{type(e)}]{str(e)}", "api/user/getUserInfo")
-#     return jsonify(user), 200
-
+@user_api.route('/get-profile', methods=["GET"])
+@cross_origin(origin='localhost')
+def get_profile():
+    try:
+        user_id = int(request.args.get('user_id')) # read into integer type
+        user_type = int(request.args.get('user_type')) # read into integer type
+        print(user_id, user_type, type(user_id), type(user_type))
+        if user_type==0:
+            profile = patient_api_handler.get_profile(user_id)
+        elif user_type==1:
+            profile = doctor_api_handler.get_profile(user_id)
+        else:
+            profile = admin_api_handler.get_profile(user_id)
+    except Exception as e:
+        return handle_error(e,
+                            "Internal Server Error: Profile could not be found.",
+                            f"Error[{type(e)}]{str(e)}",
+                            "api/user/get-profile")
+    return jsonify(profile), 200
 
 @user_api.app_errorhandler(Exception)
-def handle_error(error, messg="Unknown Error", api_name="user_api/", code=500):
+def handle_error(error, messg="Unknown Error", error_trace="Unknown Error", api_name="user_api/", code=500):
     response = {
         'status': code,
         'api': api_name,
         'error': {
             'type': error.__class__.__name__,
-            'message': messg
+            'trace': error_trace,
+            'message': messg,
         }
     }
     return jsonify(response), code

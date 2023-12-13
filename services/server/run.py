@@ -3,7 +3,6 @@ from flask_restful import Api
 from model.models import db
 import time
 from blueprint.user_blueprint import user_api
-from blueprint.login_blueprint import login_api
 from blueprint.patient_blueprint import patient_api
 from blueprint.doctor_blueprint import doctor_api
 from blueprint.admin_blueprint import admin_api
@@ -20,7 +19,6 @@ def create_app():
 
     #blueprint registered
     app.register_blueprint(user_api)
-    app.register_blueprint(login_api)
     app.register_blueprint(patient_api)
     app.register_blueprint(doctor_api)
     app.register_blueprint(admin_api)

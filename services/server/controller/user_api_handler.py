@@ -54,27 +54,5 @@ class UserApiHandler:
             return {"message": "Invalid Password", "status": 400}
         return {"message": "Invalid email id or password", "status": 400}
 
-
-
-
-
-# class patientApiHandler:
-#     def default():
-#         print("default")
-#         return "SUCCESS"
-    
-#     def fetch():
-#         patients = database.get_all(Patient)
-#         all_patients = []
-#         for user in patients:
-#             patient = {
-#                 "user_id": user.user_id,
-#                 "email_id": user.email_id,
-#                 "password": user.password,
-#                 "last_login_date": user.last_login_date
-#             }
-
-#             all_patients.append(patient)
-#         return all_patients
     
     
