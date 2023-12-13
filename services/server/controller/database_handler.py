@@ -12,14 +12,26 @@ def query(model, email):
     data = model.query.filter_by(email_id=email).all()[0]
     return data
 
+def query_by_user_id(model, user_id):
+    data = model.query.filter_by(user_id=user_id).all()[0]
+    return data
+
+def query_multiple_by_user_id(model, user_id):
+    data = model.query.filter_by(user_id=user_id).all()
+    return data
+
 
 def add_instance(model, **kwargs):
-    instance = model(**kwargs)
-    db.session.add(instance)
-    commit_changes()
+    try:
+        instance = model(**kwargs)
+        db.session.add(instance)
+        commit_changes()
+    except Exception as e:
+        print(e)
+        raise e
 
 
-def delete_instance(model, id):
+def delete_instance_by_user_id(model, id):
     model.query.filter_by(id=id).delete()
     commit_changes()
 
