@@ -15,7 +15,6 @@ export class SessionService {
   constructor(private http: HttpClient) { }
 
   userSignup(email: string, password: string, user_type: number){
-    console.log(user_type)
     const post = {
       "email_id":email,
       "password":password,
@@ -63,10 +62,6 @@ export class SessionService {
     logout() {
         localStorage.removeItem("id_token");
         localStorage.removeItem("expires_at");
-     
-        localStorage.removeItem("id_token");
-        localStorage.removeItem("expires_at");
-     
   }
 
   /**
