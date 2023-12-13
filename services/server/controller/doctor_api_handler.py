@@ -29,7 +29,7 @@ class DoctorApiHandler:
         qualifications = data['qualifications']
         keywords = data['keywords']
         print('add_doctor:: inserting to db')
-        database.add_instance(Doctor, user_id=user_id, first_name=first_name, last_name=last_name,
+        database.edit_instance(Doctor, user_id=user_id, first_name=first_name, last_name=last_name,
                               email_id=email_id, contact_no=contact_no,
                               address=address, age=age, dob=dob,
                               gender=gender, update_date=update_date,
@@ -53,11 +53,11 @@ class DoctorApiHandler:
             "address": doctor.address,
             "age": doctor.age,
             "dob": doctor.dob,
-            "gender": 'Male' if doctor.gender==0 else 'Female',
+            "gender": doctor.gender,
             "registration_date": doctor.registration_date,
             "update_date": doctor.update_date,
-            "qualifications": qualifications,
-            "keywords": keywords
+            "qualifications": doctor.qualifications,
+            "keywords": doctor.keywords
         }
         print('get_doctor:: end')
         return doctor_details
@@ -74,7 +74,10 @@ class DoctorApiHandler:
         email_id = data["email_id"]
         registration_date = int(time.time())
 
-        database.add_instance(Doctor, email_id=email_id, registration_date=registration_date, update_date=registration_date, first_name = None, last_name = None, contact_no = None, address = None, age = None, dob = None, gender = None, qualifications= None, keywords = None)
+        database.add_instance(Doctor, email_id=email_id, update_date=registration_date,
+                              first_name = None, last_name = None, contact_no = None,
+                              address = None, age = None, dob = None, gender = None,
+                              qualifications= None, keywords = None, user_id = None)
         query_response = database.query(Doctor,email_id)
         return query_response
 
