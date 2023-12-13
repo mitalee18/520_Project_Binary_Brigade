@@ -20,6 +20,15 @@ def query_multiple_by_user_id(model, user_id):
     data = model.query.filter_by(user_id=user_id).all()
     return data
 
+def query_multiple_by_id(model, id_type, id_value):
+    if id_type == 'doctor_id':
+        data = model.query.filter_by(doctor_id=id_value).all()
+    elif id_type == 'patient_id':
+        data = model.query.filter_by(patient_id=id_value).all()
+    elif id_type == 'appointment_id':
+        data = model.query.filter_by(appointment_id=id_value).all()
+    return data
+
 
 def add_instance(model, **kwargs):
     try:
