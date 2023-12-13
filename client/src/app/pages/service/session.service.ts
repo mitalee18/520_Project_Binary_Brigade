@@ -30,6 +30,12 @@ export class SessionService {
    * @param password user's password
    * @returns returns response 
    */
+  /**
+   * 
+   * @param email user's email
+   * @param password user's password
+   * @returns returns response 
+   */
   login(email: string, password: string){
       const post = {
         "email_id":email,
@@ -39,6 +45,10 @@ export class SessionService {
             .pipe(tap(res =>this.setSession(res)));
   }
 
+  /**
+   * 
+   * @param sessionInfo for setting JWT token
+   */
   /**
    * 
    * @param sessionInfo for setting JWT token
@@ -54,8 +64,15 @@ export class SessionService {
         localStorage.removeItem("id_token");
         localStorage.removeItem("expires_at");
      
+        localStorage.removeItem("id_token");
+        localStorage.removeItem("expires_at");
+     
   }
 
+  /**
+   * 
+   * @returns True if the token has not expired else logs user out and returns False
+   */
   /**
    * 
    * @returns True if the token has not expired else logs user out and returns False
@@ -68,8 +85,13 @@ export class SessionService {
         return true
       }
       this.logout();
+      this.logout();
       return false;
   }
+  /**
+   * 
+   * @returns checks if users is logged in
+   */
   /**
    * 
    * @returns checks if users is logged in
@@ -78,6 +100,10 @@ export class SessionService {
   isLoggedOut() {
       return !this.isLoggedIn();
   }
+
+  /**
+   * @returns returns token's expiry time
+   */
 
   /**
    * @returns returns token's expiry time

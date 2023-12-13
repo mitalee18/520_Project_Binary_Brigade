@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FAKE_DOCTOR_DATA } from 'src/app/mocks/doctorMock';
-import { Doctor } from 'src/app/model/doctor';
+import { DoctorGetProfile } from 'src/app/model/doctor';
 
 @Component({
   selector: 'app-doctor-profile',
@@ -9,7 +9,7 @@ import { Doctor } from 'src/app/model/doctor';
 })
 export class DoctorProfileComponent implements OnInit{
 
-  doctorData: Doctor;
+  doctorData: DoctorGetProfile;
 
 
   ngOnInit(): void {

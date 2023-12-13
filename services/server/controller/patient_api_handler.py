@@ -30,7 +30,7 @@ class PatientApiHandler:
         gender = data['gender']
         update_date = int(datetime.datetime.utcnow().strftime('%s'))
         print('add_patient:: inserting to db')
-        database.add_instance(Patient, user_id = user_id, first_name=first_name, last_name=last_name,
+        database.edit_instance(Patient, user_id = user_id, first_name=first_name, last_name=last_name,
                               email_id=email_id, contact_no=contact_no,
                               emergency_contact=emergency_contact,
                               address=address, age=age, dob=dob, health_insurance=health_insurance,

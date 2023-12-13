@@ -1,0 +1,46 @@
+<p-card header="Doctor Registration">
+    <div class="content">
+        <form  [formGroup] = "doctorDataForm">
+            <div class="row">
+                <div class="row-item">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" pInputText class="form-control" formControlName="first_name"/>
+                </div>
+                <div class="row-item">
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" pInputText class="form-control" formControlName="last_name"/>
+                </div>
+                <div class="row-item">
+                    <label for="email_id">Email:</label>
+                    <input type="text" pInputText class="form-control" formControlName="email_id" />
+                </div>
+                <div class="row-item">
+                    <label for="address">Address:</label>
+                    <input type="text" pInputText class="form-control" formControlName="address" />
+                </div>
+                <div class="row-item">
+                    <label for="contact">Contact:</label>
+                    <input type="text" pInputText  class="form-control" formControlName="contact" />
+                </div>
+                <div class="row-item">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="text" pInputText class="form-control" formControlName="dob" />
+                </div>
+                <div class="row-item">
+                    <label for="gender">Gender:</label>
+                    <input type="text" pInputText nclass="form-control" formControlName="gender"/>
+                </div>
+                <div class="row-item">
+                    <label for="qualifications">Qualifications:</label>
+                    <input type="text" pInputText nclass="form-control" formControlName="qualifications"/>
+                </div>
+                <div class="row-item">
+                    <label for="keywords">Keywords:</label>
+                    <input type="text" pInputText nclass="form-control" formControlName="keywords" />
+                </div>
+            </div>
+            <button mat-flat-button color="primary" (click)="onSubmitbtnClick()">Submit</button>
+        </form>
+    </div>
+</p-card>
+

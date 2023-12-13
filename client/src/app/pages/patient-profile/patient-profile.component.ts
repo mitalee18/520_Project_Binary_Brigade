@@ -3,6 +3,7 @@ import { Patient } from 'src/app/model/patient';
 import { FAKE_PATIENT_DATA } from 'src/app/mocks/patientMock';
 import { FormGroup, FormArray, FormControl} from '@angular/forms';
 import { Router } from '@angular/router';
+import { ProfileService } from '../service/profile.service';
 
 
 @Component({
@@ -15,31 +16,41 @@ export class PatientProfileComponent implements OnInit{
   patientData: Patient;
   patientDataForm: FormGroup;
   emergencyContactList!: FormGroup;
-  medicalConditionList!: FormGroup;
-  medicationList!: FormGroup;
-  surgeryList!: FormGroup;
+  surgicalHistoryList!: FormGroup;
+  prescribedMedicationList!: FormGroup;
+  patientDocumentsList!: FormGroup;
 
 
-  constructor(private router: Router){
-    this.patientData = FAKE_PATIENT_DATA;
+
+  constructor(private router: Router,
+    private profileService: ProfileService){
+      const userString = localStorage.getItem("user_id") ?? "30000";
+      const user_id = Math.floor(parseFloat(userString))
+      this.profileService.getPatientProfile(user_id)
+      .subscribe( 
+        (response) => {
+          this.patientData = response;
+          console.log(this.patientData);
+      }
+  );
   }
 
   ngOnInit(): void {
       this.patientDataForm = new FormGroup({
-        first_name: new FormControl(FAKE_PATIENT_DATA.first_name),
-        last_name: new FormControl(FAKE_PATIENT_DATA.last_name),
-        address: new FormControl(FAKE_PATIENT_DATA.address),
-        dob: new FormControl(FAKE_PATIENT_DATA.dob),
-        age: new FormControl(FAKE_PATIENT_DATA.age),
-        email_id: new FormControl(FAKE_PATIENT_DATA.email_id),
-        gender: new FormControl(FAKE_PATIENT_DATA.gender),
-        family_medical_history: new FormControl(FAKE_PATIENT_DATA.family_medical_history),
-        health_insurance: new FormControl(FAKE_PATIENT_DATA.health_insurance),
-        registration_date: new FormControl(FAKE_PATIENT_DATA.registration_date),
-        update_date: new FormControl(FAKE_PATIENT_DATA.update_date),
-        allergies: new FormControl([FAKE_PATIENT_DATA.allergies]),
-        medical_conditions: new FormControl([FAKE_PATIENT_DATA.medical_conditions]),
-        contact_no: new FormControl(FAKE_PATIENT_DATA.contact_no)
+        first_name: new FormControl(this.patientData.first_name),
+        last_name: new FormControl(this.patientData.last_name),
+        address: new FormControl(this.patientData.address),
+        dob: new FormControl(this.patientData.dob),
+        age: new FormControl(this.patientData.age),
+        email_id: new FormControl(this.patientData.email_id),
+        gender: new FormControl(this.patientData.gender),
+        family_medical_history: new FormControl(this.patientData.family_medical_history),
+        health_insurance: new FormControl(this.patientData.health_insurance),
+        registration_date: new FormControl(this.patientData.registration_date),
+        update_date: new FormControl(this.patientData.update_date),
+        allergies: new FormControl([this.patientData.allergies]),
+        medical_conditions: new FormControl([this.patientData.medical_conditions]),
+        contact_no: new FormControl(this.patientData.contact_no)
       })
 
       this.emergencyContactList = new FormGroup({
@@ -47,52 +58,90 @@ export class PatientProfileComponent implements OnInit{
               new FormGroup({
                 name:  new FormControl(''),
                 contact_no: new FormControl(''),
-                email: new FormControl('')
+                email_id: new FormControl('')
               })
             ])
           });
       
-      this.emergencyContactList.get('emergencyContact')?.setValue(FAKE_PATIENT_DATA.emergency_contact);
+      this.emergencyContactList.get('emergencyContact')?.setValue(this.patientData.emergency_contact);
+      console.log('Form Data:', this.emergencyContactList.value);
 
-    this.medicationList = new FormGroup({
-      medication: new FormArray([
+    this.prescribedMedicationList = new FormGroup({
+      prescribedMedication: new FormArray([
         new FormGroup({
-          medicationName: new FormControl(''),
-          medicationDosage: new FormControl('')
+          medicine_name: new FormControl(''),
+          medicine_dosage: new FormControl('')
         })
       ])
     });
 
-    this.medicationList.get('medication')?.setValue(FAKE_PATIENT_DATA.prescribed_medication);
+    this.prescribedMedicationList.get('prescribedMedication')?.setValue(this.patientData.prescribed_medication);
+    console.log('Form Data:', this.prescribedMedicationList.value);
 
-    this.surgeryList = new FormGroup({
-      surgery: new FormArray([
+
+    this.surgicalHistoryList = new FormGroup({
+      surgicalHistory: new FormArray([
         new FormGroup({
-          surgeryName: new FormControl(''),
-          surgeryDate: new FormControl(''),
-          doctorName: new FormControl('')
+          surgery_name: new FormControl(''),
+          surgery_date: new FormControl(''),
+          doctor_name: new FormControl('')
         })
       ])  
     });
 
-    this.surgeryList.get('surgery')?.setValue(FAKE_PATIENT_DATA.surgical_history);
+    this.surgicalHistoryList.get('surgicalHistory')?.setValue(this.patientData.surgical_history);
+
+    this.patientDocumentsList = new FormGroup({
+      patientDocuments: new FormArray([
+        new FormGroup({
+          description: new FormControl(''),
+          file_id: new FormControl(''),
+          file_link: new FormControl(''),
+          file_name: new FormControl(''),
+          update_date: new FormControl(''),
+          user_id: new FormControl(this.patientDataForm.get('user_id')),
+        })
+      ])  
+    });
+    this.patientDocumentsList.get('patientDocuments')?.setValue(this.patientData.documents);
+    console.log('Form Data:', this.patientDocumentsList.value);
+
   }
 
   get emergencyContact(): FormArray {
     return this.emergencyContactList?.get('emergencyContact') as FormArray;
   }
 
-  get medicalCondition(): FormArray {
-    return this.medicalConditionList?.get('medicalCondition') as FormArray;
+  get surgicalHistory(): FormArray {
+    return this.surgicalHistoryList?.get('surgicalHistory') as FormArray;
   }
 
-  get medication(): FormArray {
-    return this.medicationList?.get('medication') as FormArray;
+  get prescribedMedication(): FormArray {
+    return this.prescribedMedicationList?.get('prescribedMedication') as FormArray;
   }
 
-  get surgery(): FormArray {
-    return this.surgeryList?.get('surgery') as FormArray;
+  get patientDocuments(): FormArray{
+    return this.patientDocumentsList?.get('patientDocuments') as FormArray;
   }
+
+  save(event: any): void{
+    let selectFile = event.target.files;
+    for(let i=0; i> selectFile.length; i++){
+      let file_name = selectFile[i].name;
+      let file_type =  selectFile[i].type;
+      this.patientDocuments.push(
+        new FormGroup({
+          description: new FormControl(file_name),
+          file_id: new FormControl(file_name+'_'+i),
+          file_link: new FormControl(file_name+'.'+file_type),
+          file_name: new FormControl(file_name),
+          update_date: new FormControl(''),
+          user_id: new FormControl(this.patientDataForm.get('user_id'))
+        })
+      )
+    }
+  }
+
 
   addEmergencyContact() {
     this.emergencyContact.push(
@@ -103,8 +152,8 @@ export class PatientProfileComponent implements OnInit{
     );
   }
 
-  addMedicalCondition() {
-    this.medicalCondition.push(
+  addSurgicalHistory() {
+    this.surgicalHistory.push(
       new FormGroup({
         conditionName: new FormControl('')
       })
@@ -112,29 +161,43 @@ export class PatientProfileComponent implements OnInit{
   }
 
   addMedication() {
-    this.medication.push(
+    this.prescribedMedication.push(
       new FormGroup({
-        medicationName: new FormControl(''),
-        medicationDosage: new FormControl('')
+        medicine_name: new FormControl(''),
+        medicine_dosage: new FormControl('')
       })
     );
   }
 
-  addSurgery() {
-    this.surgery.push(
-      new FormGroup({
-        surgeryDate: new FormControl(''),
-        surgeryName: new FormControl(''),
-        doctorName: new FormControl('')
-      })
-    );
+  removeEmergencyContact(index: number){
+    this.emergencyContact.removeAt(index);
+  }
+
+  removeMedicine(index: number){
+    this.prescribedMedication.removeAt(index);
+  }
+
+  removeSurgicalHistory(index: number){
+    this.surgicalHistory.removeAt(index);
   }
 
   onSaveUser(){
-
+    const obj = this.patientDocumentsList.value;
   }
 
   onSaveEmergencyContact(){
-    
+
   }
+  onSavePrescibedMedication(){
+
+  }
+  onSaveSurgicalInformation(){
+
+  }
+
+  onSavePatientDocuments(){
+
+  }
+
+  
 }

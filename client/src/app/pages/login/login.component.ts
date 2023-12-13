@@ -49,18 +49,19 @@ export class LoginComponent implements OnInit{
 
   onSignUp(userForm: NgForm){
     this.signupValues = userForm.value;
-    console.log(this.signupValues);
     if (this.signupValues.password === this.signupValues.confirm_password) {
       this.sessionService.userSignup( this.signupValues.email, this.signupValues.password, this.signupValues.user_type)
           .subscribe( 
            (response) => {
-                  console.log("User is logged in");
+                  console.log("User is signedup in");
                   console.log(response)
                   if(this.signupValues.user_type == 0){
-                    localStorage.setItem('user_type', String(this.signupValues.user_type));
-                    localStorage.setItem('email', response.email);
                     this.router.navigateByUrl('/profilecreation');
                   }
+
+                  localStorage.setItem('user_id', String(response.user_id));
+                  localStorage.setItem('user_type', String(this.signupValues.user_type));
+                  localStorage.setItem('email_id', response.email);
                  
               }
           );
@@ -74,9 +75,9 @@ export class LoginComponent implements OnInit{
     if (val.email && val.password) {
         this.sessionService.login(val.email, val.password)
             .subscribe( 
-             () => {
+             (response) => {
                     console.log("User is logged in");
-                    this.router.navigateByUrl('/');
+                    this.router.navigateByUrl('/patient');
                 }
             );
     }

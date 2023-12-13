@@ -1,18 +1,18 @@
 export interface Patient{
     address?: string,
     age?: number,
-    allergies?:string[],
+    allergies?:string,
     contact_no:string,
     description?: string,
     dob?: number,
     email_id?: string,
-    emergency_contact:EmergencyContact[],
+    emergency_contact:EmergencyContact,
     family_medical_history?: string,
     first_name?: string,
     last_name?: string,
     gender?: string,
     health_insurance?: number,
-    medical_conditions?: string[],
+    medical_conditions?: string,
     prescribed_medication: PrescribedMedication[],
     registration_date?: number | null;
     surgical_history?: SurgicalHistory[];
@@ -45,4 +45,28 @@ export interface EmergencyContact{
     name ?: string,
     email_id ?: string,
     contact_no ?: string
+}
+
+export interface CreatePatientRequest{
+    address?: string,
+    age?: number,
+    allergies?:string,
+    contact_no:string,
+    description?: string,
+    dob?: number,
+    email_id?: string,
+    emergency_contact:EmergencyContact,
+    family_medical_history?: string,
+    first_name: string,
+    last_name?: string,
+    gender?: number,
+    health_insurance?: number,
+    medical_conditions?: string,
+    prescribed_medication: string,
+    registration_date?: number | null;
+    surgical_history?: string;
+    update_date?: number;
+    user_id?: number;
+    documents?: string;
+    user_type?: number;
 }

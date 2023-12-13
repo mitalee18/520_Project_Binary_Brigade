@@ -26,6 +26,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import {MatRadioModule} from '@angular/material/radio';
 import { PatientDashboardComponent } from './pages/patient-dashboard/patient-dashboard.component';
 import { PatientProfileComponent } from './pages/patient-profile/patient-profile.component';
+import { DoctorProfileCreationComponent } from './pages/doctor-profile-creation/doctor-profile-creation.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { PatientProfileComponent } from './pages/patient-profile/patient-profile
     DoctorDashboardComponent,
     DoctorProfileComponent,
     PatientDashboardComponent,
-    PatientProfileComponent
+    PatientProfileComponent,
+    DoctorProfileCreationComponent
   ],
   imports: [
     BrowserModule,

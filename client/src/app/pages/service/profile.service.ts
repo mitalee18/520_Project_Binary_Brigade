@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { apiEndPoints } from './constants/apiEndPoints';
 import { HttpClient } from '@angular/common/http';
-import { Doctor } from 'src/app/model/doctor';
 import { Patient } from 'src/app/model/patient';
 
 @Injectable({
@@ -9,8 +8,8 @@ import { Patient } from 'src/app/model/patient';
 })
 export class ProfileService {
 
-  createDoctor: Doctor;
-  getDoctor: Doctor;
+  // createDoctor: Doctor;
+  // getDoctor: Doctor;
   createPatient:Patient;
   getPatient: Patient;
   constructor(private http: HttpClient) { }
@@ -19,15 +18,18 @@ export class ProfileService {
     return this.http.post<Patient>(`${apiEndPoints.patientApi}/createPatientProfile`, this.createPatient);
   }
 
-  createDoctorProfile(){
-    return this.http.post<Doctor>(`${apiEndPoints.doctorApi}/createDoctorProfile`, this.createDoctor);
+
+  // createDoctorProfile(){
+  //   return this.http.post<Doctor>(`${apiEndPoints.doctorApi}/createDoctorProfile`, this.createDoctor);
+  // }
+
+  getPatientProfile(user_id: number){
+    const params = { user: user_id , user_type: 0};
+    return this.http.get<Patient>(`${apiEndPoints.userApi}/get-profile`, {params: params});
   }
 
-  getPatientProfile(){
-    return this.http.get<Patient>(`${apiEndPoints.patientApi}/getPatientProfile`);
-  }
+  // getDoctorProfile(){
+  //   return this.http.get<Patient>(`${apiEndPoints.doctorApi}/getDoctorProfile`);
+  // }
 
-  getDoctorProfile(){
-    return this.http.get<Patient>(`${apiEndPoints.doctorApi}/getDoctorProfile`);
-  }
 }

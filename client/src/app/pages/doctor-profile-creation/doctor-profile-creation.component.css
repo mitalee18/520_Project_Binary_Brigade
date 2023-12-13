@@ -20,7 +20,12 @@ label{
 p-card{
     display: flex;
     flex-direction: row;
-    float: left;
-    margin-right: 2%;
     margin-top: 2%;
+    margin-left: 35%;
+}
+.content{
+    justify-content: center;
+}
+button{
+    margin-left:38%;
 }
