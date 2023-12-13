@@ -153,13 +153,13 @@ class Admin(db.Model):
     address = db.Column(db.String(250))
     registration_date = db.Column(db.Integer)
 
-    def __init__(self, first_name,  last_name, email_id, contact_no, address, registration_date):
+    def __init__(self, user_id, first_name,  last_name, email_id, contact_no, address):
+        self.user_id = user_id
         self.first_name = first_name
         self.last_name = last_name
         self.email_id = email_id
         self.address = address
         self.contact_no = contact_no
-        self.registration_date = registration_date
         
 
 class Appointments(db.Model):
