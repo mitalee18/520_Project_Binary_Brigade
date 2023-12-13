@@ -30,7 +30,7 @@ class PatientApiHandler:
         gender = data['gender']
         update_date = int(datetime.datetime.utcnow().strftime('%s'))
         print('add_patient:: inserting to db')
-        database.add_instance(Patient, user_id = user_id, first_name=first_name, last_name=last_name,
+        database.edit_instance(Patient, user_id = user_id, first_name=first_name, last_name=last_name,
                               email_id=email_id, contact_no=contact_no,
                               emergency_contact=emergency_contact,
                               address=address, age=age, dob=dob, health_insurance=health_insurance,
@@ -104,8 +104,8 @@ class PatientApiHandler:
         surgical_history = hf.convert_string_of_list_of_json_to_list_of_json(patient_medical_history.surgical_history)
         patient_medical_history_details = {
             "user_id": patient_medical_history.user_id,
-            "allergies": allergies,
-            "medical_conditions": medical_conditions,
+            "allergies": patient_medical_history.allergies,
+            "medical_conditions": patient_medical_history.medical_conditions,
             "prescribed_medication": prescribed_medication,
             "surgical_history": surgical_history,
             "family_medical_history": patient_medical_history.family_medical_history,
@@ -116,28 +116,37 @@ class PatientApiHandler:
 
     def delete_patient_medical_history(self, user_id):
         print('delete_patient_medical_history:: start')
-        database.delete_instance_by_user_id(PatientMedicalHistory, user_id)
+        try:
+            database.delete_instance_by_user_id(PatientMedicalHistory, user_id)
+        except Exception as e:
+            raise e
         print('delete_patient_medical_history:: end')
         return 1
 
     def add_patient_document(self, data):
         print('add_patient_document:: start')
-        user_id = data['user_id']
-        file_link = data['file_link']
-        file_name = data['file_name']
-        description = data['description']
-        update_date = int(datetime.datetime.utcnow().strftime('%s'))
-        print('add_patient_document:: inserting to db')
-        database.add_instance(PatientDocument, user_id=user_id, file_link=file_link,
-                              file_name=file_name, description=description, update_date=update_date)
-        print('add_patient_document:: inserted to db')
-        print('add_patient_document:: end')
+        try:
+            # get the documents from the payload
+            print(data['documents'], type(data['documents']))
+            documents = hf.convert_string_of_list_of_json_to_list_of_json(data['documents'])
+            print(documents)
+            for document in documents:
+                print(document)
+                user_id = document['user_id']
+                file_link = document['file_link']
+                file_name = document['file_name']
+                description = document['description']
+                update_date = int(datetime.datetime.utcnow().strftime('%s'))
+                print('add_patient_document:: inserting to db')
+                database.add_instance(PatientDocument, user_id=user_id, file_link=file_link,
+                                      file_name=file_name, description=description, update_date=update_date)
+                print('add_patient_document:: inserted to db')
+            print('add_patient_document:: end')
+        except Exception as e:
+            raise e
         return 1
     # Dummy payload for testing
-    # patient_document_payload = {'file_id': '30030',
-    #                             'file_link': 'http://dummyimage.com/image1.pdf',
-    #                             'file_name': 'image1.pdf',
-    #                             'description': 'A pdf file for testing'}
+    # patient_document_payload = {"documents" : "[{'file_id': '30030', 'file_link': 'http://dummyimage.com/image1.pdf','file_name': 'image1.pdf','description': 'A pdf file for testing', 'user_id': 30030}]"}
 
     def get_patient_document(self, user_id):
         print('get_patient_document:: start')
@@ -164,26 +173,25 @@ class PatientApiHandler:
     def signup(self):
         data = json.loads(request.data.decode())
         email_id = data["email_id"]
-        registration_date = int(time.time())
+        update_date = int(time.time())
 
-        database.add_instance(Patient, email_id=email_id, registration_date=registration_date, update_date=registration_date, first_name = None, last_name = None, contact_no = None, address = None, age = None, dob = None, gender = None)
-        query_response = database.query(Patient,email_id)
+        database.add_instance(Patient, email_id=email_id, update_date=update_date, first_name=None, last_name=None,
+                              contact_no=None, address=None, age=None, dob=None, gender=None, user_id=None,
+                              emergency_contact='{}', health_insurance=None)
+
+        query_response = database.query(Patient, email_id)
         print(query_response)
         return query_response
 
     def create_profile(self):
         print('create_profile:: start')
         data = json.loads(request.data.decode())
-        # Get user_id from email_id
-        # implement later
-        # user_id = self.get_patient_user_id(data['email_id'])
-        # data['user_id'] = user_id
         # Add to patient table
         self.add_patient(data)
         try:
             # Add to patient medical history table
             self.add_patient_medical_history(data)
-            if data['file_link'] is not None:
+            if data['documents'] is not None:
                 try:
                     # Add to patient document table
                     self.add_patient_document(data)
