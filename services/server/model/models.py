@@ -39,7 +39,7 @@ class LoginDetails(db.Model):
 class Patient(db.Model):
     __tablename__ = "patient"
 
-    user_id = db.Column(db.Integer, db.Sequence('seq_reg_id', start=30000, increment=1),primary_key=True)
+    user_id = db.Column(db.Integer, db.Sequence('patient_seq_reg_id', start=30000, increment=1),primary_key=True)
     first_name = db.Column(db.String(128))
     last_name = db.Column(db.String(128))
     email_id = db.Column(db.String(128), unique=True, nullable=False)
@@ -110,24 +110,23 @@ class PatientDocument(db.Model):
 class Doctor(db.Model):
     __tablename__ = "doctor"
 
-    user_id = db.Column(db.Integer, db.Sequence('seq_reg_id', start=600, increment=1),primary_key=True)
+    user_id = db.Column(db.Integer, db.Sequence('doctor_seq_reg_id', start=600, increment=1),primary_key=True)
     first_name = db.Column(db.String(128))
     last_name = db.Column(db.String(128))
     email_id = db.Column(db.String(128), unique=True, nullable=False)
     contact_no = db.Column(db.String(12))
     qualifications = db.Column(db.String(128)) # cane be list
     address = db.Column(db.String(250))
-    registration_date = db.Column(db.Integer, nullable=False)
+    registration_date = db.Column(db.Integer)
     update_date = db.Column(db.Integer, nullable=False)
     age = db.Column(db.Integer)  #can remove 
     dob = db.Column(db.Integer)
     gender = db.Column(db.Integer) # Encode into int while inserting into db
     keywords = db.Column(db.String(250))
-    
-    
 
-    def __init__(self, first_name,  last_name, email_id, contact_no, qualifications, address,
-                 age, dob, gender, registration_date, update_date, keywords):
+    def __init__(self, user_id, first_name,  last_name, email_id, contact_no, qualifications, address,
+                 age, dob, gender, update_date, keywords):
+        self.user_id = user_id
         self.first_name = first_name
         self.last_name = last_name
         self.email_id = email_id
@@ -135,19 +134,10 @@ class Doctor(db.Model):
         self.qualifications = qualifications
         self.age = age
         self.dob = dob
-        self.registration_date = registration_date
         self.update_date = update_date
         self.contact_no = contact_no
         self.gender = gender
         self.keywords = keywords
-
-        if self.contact_no != None and not self.contact_no.isdigit():
-            raise ValueError("Contact number must contain only digits.")      
-        self.contact_no = contact_no
-        
-        if self.gender != None and not (isinstance(self.gender, int) and 0 <= self.gender <= 2):
-            raise ValueError("gender must be encoded as 0,1,2")
-        self.gender = gender
 
 
 
@@ -161,16 +151,14 @@ class Admin(db.Model):
     email_id = db.Column(db.String(128), unique=True, nullable=False)
     contact_no = db.Column(db.String(15))
     address = db.Column(db.String(250))
+    registration_date = db.Column(db.Integer)
 
-    def __init__(self, first_name,  last_name, email_id, contact_no, address):
+    def __init__(self, user_id, first_name,  last_name, email_id, contact_no, address):
+        self.user_id = user_id
         self.first_name = first_name
         self.last_name = last_name
         self.email_id = email_id
         self.address = address
-        self.contact_no = contact_no
-
-        if self.contact_no!=None and not self.contact_no.isdigit():
-            raise ValueError("Contact number must contain only digits.")      
         self.contact_no = contact_no
         
 
@@ -188,15 +176,3 @@ class Appointments(db.Model):
         self.doctor_id = doctor_id
         self.datetime = datetime
 
-# class DoctorSchedule(db.Model):
-#     __tablename__ = "doctor_schedule"
-
-#     user_id = db.Column(db.Integer, db.ForeignKey('doctor.user_id'), nullable=False)
-#     schedule = db.Column(JSON)
-
-#     def __init__(self, user_id, schedule):
-#         self.user_id = user_id
-
-
-
-### medical history and documents
