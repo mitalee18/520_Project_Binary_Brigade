@@ -69,7 +69,7 @@ class DoctorApiHandler:
         return 1
 
 
-    def signup():
+    def signup(self):
         data = json.loads(request.data.decode())
         email_id = data["email_id"]
         registration_date = int(time.time())
