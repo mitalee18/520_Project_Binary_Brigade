@@ -2,8 +2,8 @@ from flask import Blueprint, jsonify, request
 from flask_swagger_ui import get_swaggerui_blueprint
 from controller.user_api_handler import UserApiHandler as user_api_handler
 from controller.patient_api_handler import PatientApiHandler
-from controller.doctor_api_handler import DoctorApiHandler as doctor_api_handler
-from controller.admin_api_handler import AdminApiHandler as admin_api_handler
+from controller.doctor_api_handler import DoctorApiHandler
+from controller.admin_api_handler import AdminApiHandler
 from flask_cors import cross_origin
 
 
@@ -14,6 +14,8 @@ API_URL = 'http://patienttracker.swagger.io/v1/swagger.json'  # Our API url (can
 
 user_api = Blueprint('user_api', __name__, url_prefix='/api/user')
 patient_api_handler = PatientApiHandler()
+doctor_api_handler = DoctorApiHandler()
+admin_api_handler = AdminApiHandler()
 
 @user_api.route("/")
 @cross_origin(origin='localhost')
@@ -63,7 +65,7 @@ def create_profile():
             profile = patient_api_handler.create_profile()
         elif user_type==1:
             profile = doctor_api_handler.create_profile()
-        else:
+        elif user_type==2:
             profile = admin_api_handler.create_profile()
     except Exception as e:
         return handle_error(e,
@@ -83,7 +85,7 @@ def get_profile():
             profile = patient_api_handler.get_profile(user_id)
         elif user_type==1:
             profile = doctor_api_handler.get_profile(user_id)
-        else:
+        elif user_type==2:
             profile = admin_api_handler.get_profile(user_id)
     except Exception as e:
         return handle_error(e,
