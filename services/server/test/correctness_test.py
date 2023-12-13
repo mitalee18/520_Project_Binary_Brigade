@@ -1,12 +1,32 @@
 import requests
 
-def test_create_profile():
+def test_signup():
     print('______________ Starting Test #1 ______________')
+    signup_base_url = 'http://localhost:8000/api/user/signup'
+    signup_payload = {"email_id": "mitalee8@patient.com",
+                      "password": "abc",
+                      "user_type": 0
+                      }
+    try:
+        # test 1: patient
+        response = requests.post(signup_base_url, json=signup_payload)
+        print(response.json())
+        assert response.status_code == 200
+        assert response.json()['email'] == signup_payload['email_id']
+        assert response.json()['user_id'] > 30000
+        return print('______________ Test #1 Passed ______________')
+    except AssertionError as e:
+        print(e)
+        print('______________ Test #1 Failed ______________')
+        return
+
+def test_create_profile():
+    print('______________ Starting Test #2 ______________')
     create_profile_base_url = 'http://localhost:8000/api/user/create-profile'
-    patient_payload = {'user_id': '30400',
+    patient_payload = {'user_id': '30009',
                        'first_name': 'Sahima',
                        'last_name': 'Srivastava',
-                       'email_id': 'temp@gmail.com',
+                       'email_id': 'mitalee8@patient.com',
                        'contact_no': '999999',
                        'address': 'djkb vf..jgnf',
                        'age': 18,
@@ -20,9 +40,7 @@ def test_create_profile():
                        'prescribed_medication': "[{'medicine_name': 'acetaminophen', 'medicine_dosage': '500mg'}]",
                        'surgical_history': "[{'surgery_date': 1604188800, 'doctor_name': 'Dr. Smith', 'surgery_name': 'Appendix Removal'}]",
                        'family_medical_history': 'Has a case of diabetes',
-                       'file_link': 'http://dummyimage.com/image1.pdf',
-                       'file_name': 'image1.pdf',
-                       'description': 'A pdf file for testing'}
+                       "documents" : "[{'file_link': 'http://dummyimage.com/image1.pdf','file_name': 'image1.pdf','description': 'A pdf file for testing', 'user_id': 30030}]"}
     doctor_payload = {'user_id': 800,
                       'user_type': 1,
                       'first_name': 'Raj',
@@ -47,6 +65,7 @@ def test_create_profile():
     try:
         # test 1: patient
         response = requests.post(create_profile_base_url, json=patient_payload)
+        print(response.json())
         assert response.status_code == 200
         assert response.json() == 1
         print('test 1 passed')
@@ -60,9 +79,39 @@ def test_create_profile():
         assert response.status_code == 200
         assert response.json() == 1
         print('test 3 passed')
-        return print('_______ Test Passed for create_profile _______')
+        return print('______________ Test #2 Passed ______________')
     except AssertionError as e:
-        return f'Test failed for create_profile: {e}'
+        print(e)
+        print('______________ Test #2 Failed ______________')
+        return
 
 if __name__ == "__main__":
-    print(test_create_profile())
+    # print(test_create_profile())
+    print(test_signup())
+
+# postman_patient_payload = {
+# "address": "129 Commercial Street",
+# "age": 40,
+# "allergies": "soy,eggs",
+# "contact_no": "570-112-4812",
+# "dob": 1577816800,
+# "documents": "[{'description': 'Age-rel osteopor w current path fx, unsp femur, sequela', 'file_link': 'lehttp://dunnyimage.com/image7-png','file_name': 'xray', 'update_date': 1622678627, 'user_id': 30000}]",
+# "email_id": "mitalee@patient.com",
+# "emergency_contact":{
+# "contact_no": "1234567890",
+# "email_id": "abc@gamil.com",
+# "name": "James Hall"
+# },
+# "family_medical_history": "diabetes",
+# "first_name": "Meris ",
+# "gender": 0,
+# "health_insurance": 45678901,
+# "last_name": "Airlie",
+# "medical_conditions": "hypertension",
+# "prescribed_medication": "[{'medicine_name' :'staminophen','medicine_dosage': '500mg'}]",
+# "registration_date": 1577836800,
+# "surgical_history": "[{'doctor_name': 'Dr. Smith','surgery_date': 1604188800,'surgery_name': 'Appendix Removal'}]",
+# "update_date": 1686625738,
+# "user_id": "30000",
+# "user_type":0
+# }
