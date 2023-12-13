@@ -10,11 +10,8 @@ from passlib.hash import pbkdf2_sha256
 from flask_jwt_extended import (create_access_token)
 
 class UserApiHandler:
-    def default():
-        print("default")
-        return "SUCCESS"
 
-    def fetch():
+    def fetch(self):
         users = database.get_all(User)
         all_users = []
         for user in users:
@@ -27,7 +24,7 @@ class UserApiHandler:
             all_users.append(new_cat)
         return all_users
 
-    def add(user_id):
+    def add(self,user_id):
         data = json.loads(request.data.decode())
         email_id = data['email_id']
         password = pbkdf2_sha256.hash(data['password'])
@@ -40,17 +37,17 @@ class UserApiHandler:
         }
         return response
 
-    def login():
+    def login(self):
         data = json.loads(request.data.decode())
         email_id = data['email_id']
         password = data['password']
-
         if email_id and password:
             query_response = database.query(LoginDetails, email_id)
             password_db = query_response.password
+            user_id_db = query_response.user_id
             if pbkdf2_sha256.verify(password, password_db):
                 access_token = create_access_token(identity=query_response.email_id)
-                return {"access_token": access_token, "message": "success", "status": 200}
+                return {"access_token": access_token, "user_id": user_id_db, "message": "success", "status": 200}
             return {"message": "Invalid Password", "status": 400}
         return {"message": "Invalid email id or password", "status": 400}
 

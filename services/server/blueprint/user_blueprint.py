@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_swagger_ui import get_swaggerui_blueprint
-from controller.user_api_handler import UserApiHandler as user_api_handler
+from controller.user_api_handler import UserApiHandler
 from controller.patient_api_handler import PatientApiHandler
 from controller.doctor_api_handler import DoctorApiHandler
 from controller.admin_api_handler import AdminApiHandler
@@ -13,6 +13,7 @@ API_URL = 'http://patienttracker.swagger.io/v1/swagger.json'  # Our API url (can
 
 
 user_api = Blueprint('user_api', __name__, url_prefix='/api/user')
+user_api_handler = UserApiHandler()
 patient_api_handler = PatientApiHandler()
 doctor_api_handler = DoctorApiHandler()
 admin_api_handler = AdminApiHandler()
@@ -48,7 +49,6 @@ def login():
 
     except Exception as e:
         return handle_error(e, f"Error[{type(e)}]{str(e)}", "api/user/login")
-    
     if login_response["status"] == 200:
         return jsonify(login_response), 200
     elif login_response["status"] == 400:
