@@ -53,7 +53,7 @@ class PatientApiHandler:
             "age": patient.age,
             "emergency_contact": emergency_contact,
             "dob": patient.dob,
-            "gender": 'Male' if patient.gender==0 else 'Female',
+            "gender": patient.gender,
             "registration_date": patient.registration_date,
             "update_date": patient.update_date,
             "health_insurance": patient.health_insurance
