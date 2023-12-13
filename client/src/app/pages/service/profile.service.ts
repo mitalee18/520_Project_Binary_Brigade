@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { apiEndPoints } from './constants/apiEndPoints';
 import { HttpClient } from '@angular/common/http';
-import { Patient } from 'src/app/model/patient';
+import { Patient, CreatePatientRequest } from 'src/app/model/patient';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +14,9 @@ export class ProfileService {
   getPatient: Patient;
   constructor(private http: HttpClient) { }
 
-  createPatientProfile(){
-    return this.http.post<Patient>(`${apiEndPoints.patientApi}/createPatientProfile`, this.createPatient);
+  createPatientProfile(postRequestData: CreatePatientRequest){
+    console.log(postRequestData)
+    return this.http.post<CreatePatientRequest>(`${apiEndPoints.userApi}/create-profile`, postRequestData);
   }
 
 

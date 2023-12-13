@@ -1,4 +1,4 @@
-<p-card class="patient-personal-information" header="Edit your Personal Information">
+<p-card class="patient-personal-information" header="Personal Information">
     <div class="content">
         <form  [formGroup] = "patientDataForm" class="justify-content-center">
             <div class="row">
@@ -12,7 +12,7 @@
                 </div>
                 <div class="row-item">
                     <label for="email_id">Email:</label>
-                    <input type="text" pInputText class="form-control" formControlName="email_id" />
+                    <input type="email" pInputText class="form-control" formControlName="email_id" />
                 </div>
                 <div class="row-item">
                     <label for="address">Address:</label>
@@ -20,27 +20,35 @@
                 </div>
                 <div class="row-item">
                     <label for="contact_no">Contact:</label>
-                    <input type="text" pInputText  class="form-control" formControlName="contact_no" />
+                    <input type="number" pInputText  class="form-control" formControlName="contact_no" />
                 </div>
                 <div class="row-item">
-                    <label for="dob">Date of Birth:</label>
-                    <input type="text" pInputText class="form-control" formControlName="dob" />
+                    <label for="dob">Birth Date:</label>
+                    <p-calendar formControlName="dob"></p-calendar>
                 </div>
                 <div class="row-item">
                     <label for="gender">Gender:</label>
-                    <input type="text" pInputText nclass="form-control" formControlName="gender"/>
+                    <input type="text" pInputText class="form-control" formControlName="gender"/>
                 </div>
                 <div class="row-item">
                     <label for="family_medical_history">Family Medical History:</label>
-                    <input type="text" pInputText nclass="form-control" formControlName="family_medical_history"/>
+                    <input type="text" pInputText class="form-control" formControlName="family_medical_history"/>
                 </div>
                 <div class="row-item">
                     <label for="health_insurance">Health Insaurance number:</label>
-                    <input type="text" pInputText nclass="form-control" formControlName="health_insurance"/>
+                    <input type="text" pInputText class="form-control" formControlName="health_insurance"/>
                 </div>
                 <div class="row-item">
                     <label for="allergies">Allergies:</label>
-                    <input type="text" pInputText nclass="form-control" formControlName="allergies" />
+                    <input type="text" pInputText class="form-control" formControlName="allergies" />
+                </div>
+                <div class="row-item">
+                    <label for="medical_conditions">Medical Conditions:</label>
+                    <input type="text" pInputText class="form-control" formControlName="medical_conditions" />
+                </div>
+                <div class="row-item">
+                    <label for="prescribed_medication">Medical Conditions:</label>
+                    <input type="text" pInputText class="form-control" formControlName="prescribed_medication" />
                 </div>
             </div>
         </form>
@@ -62,11 +70,11 @@
                             </div>
                             <div class="row-item">
                                 <label for="contact_no">Contact number:</label>
-                                <input type="text" pInputText formControlName="contact_no"/>
+                                <input type="number" pInputText formControlName="contact_no"/>
                             </div>
                             <div class="row-item">
                                 <label for="email_id">Email:</label>
-                                <input type="text" pInputText formControlName="email_id"/>
+                                <input type="email" pInputText formControlName="email_id"/>
                             </div>
                         </div>
                     </div>
@@ -112,7 +120,7 @@
                             <button (click)="removeMedicine(i)" color="warn">-</button>
                             <div class="row-item">
                                 <label for="surgery_date">Surgery Date:</label>
-                                <input type="text" pInputText formControlName="surgery_date"/>
+                                <p-calendar type="text" pInputText formControlName="surgery_date"></p-calendar>
                             </div>
                             <div class="row-item">
                                 <label for="doctor_name">Doctor Name:</label>

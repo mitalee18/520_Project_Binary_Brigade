@@ -24,7 +24,7 @@ const FAKE_PATIENT_DATA: Patient = {
             },
         family_medical_history: "Has a case of diabetes",
         first_name: "Sahima",
-        gender: "Male",
+        gender: 0,
         health_insurance: 87456321,
         last_name: "Srivastava",
         medical_conditions: "hypertension, arithiritis",
@@ -69,3 +69,13 @@ const FAKE_PATIENT_REQUEST_DATE: CreatePatientRequest = {
         "user_id": 30001,
         "user_type":0
     }
+
+
+ export  const FAKE_DOCUMENTS = {
+        "documents": "[{'description': 'Age-rel osteopor w current path fx, unsp femur, sequela', 'file_link': 'http://dunnyimage.com/image7-png','file_name': 'xray', 'user_id': 30008}]",
+        "surgical_history": "[{'doctor_name': 'Dr. Smith','surgery_date': 1604188800,'surgery_name': 'Appendix Removal'}]",
+    }
+
+
+
+

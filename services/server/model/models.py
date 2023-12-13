@@ -44,7 +44,7 @@ class Patient(db.Model):
     first_name = db.Column(db.String(128))
     last_name = db.Column(db.String(128))
     email_id = db.Column(db.String(128), unique=True, nullable=False)
-    contact_no = db.Column(db.String(12), unique=True)
+    contact_no = db.Column(db.String(12))
     address = db.Column(db.String(250))
     age = db.Column(db.Integer)  #can remove
     dob = db.Column(db.Integer)

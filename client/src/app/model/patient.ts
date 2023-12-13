@@ -10,7 +10,7 @@ export interface Patient{
     family_medical_history?: string,
     first_name?: string,
     last_name?: string,
-    gender?: string,
+    gender?: number,
     health_insurance?: number,
     medical_conditions?: string,
     prescribed_medication: PrescribedMedication[],

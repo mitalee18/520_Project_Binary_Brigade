@@ -23,7 +23,7 @@ class AdminApiHandler:
         contact_no = data['contact_no']
         address = data['address']
         print('add_admin:: inserting to db')
-        database.add_instance(Admin, user_id=user_id, first_name=first_name, last_name=last_name,
+        database.edit_instance(Admin, user_id=user_id, first_name=first_name, last_name=last_name,
                               email_id=email_id, contact_no=contact_no,
                               address=address)
         print('add_admin:: inserted to db')
@@ -50,7 +50,8 @@ class AdminApiHandler:
         data = json.loads(request.data.decode())
         email_id = data["email_id"]
 
-        database.add_instance(Admin, email_id=email_id, first_name = None, last_name = None, contact_no = None, address = None)
+        database.add_instance(Admin, email_id=email_id, first_name = None, last_name = None,
+                              contact_no = None, address = None, user_id=None)
         query_response = database.query(Admin,email_id)
         print(query_response)
         return query_response

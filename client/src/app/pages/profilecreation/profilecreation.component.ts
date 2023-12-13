@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
 import { EmergencyContact, CreatePatientRequest, PatientDocuments, PrescribedMedication, SurgicalHistory } from 'src/app/model/patient';
 import { ProfileService } from '../service/profile.service';
+import { isEmpty } from 'rxjs';
+import { FAKE_DOCUMENTS } from '../../mocks/patientMock'
 
 @Component({
   selector: 'app-profilecreation',
@@ -27,7 +29,6 @@ export class ProfilecreationComponent implements OnInit{
   patientSurgicalHistory: SurgicalHistory;
 
 
-
   constructor(private router: Router,
     private profileService: ProfileService,
     private formBuilder: FormBuilder){
@@ -40,7 +41,7 @@ export class ProfilecreationComponent implements OnInit{
           address: [''],
           dob: [''],
           age: [''],
-          email_id: [''],
+          email_id: localStorage.getItem('email'),
           gender: [''],
           family_medical_history: [''],
           health_insurance:[''],
@@ -49,7 +50,9 @@ export class ProfilecreationComponent implements OnInit{
           allergies: [''],
           medical_conditions: [''],
           contact_no: [''],
+          prescribed_medication: ['']
       })
+      this.patientDataForm.get('email_id')?.setValue(localStorage.getItem('email_id'));
 
       this.emergencyContactList = new FormGroup({
             emergencyContact: new FormArray([
@@ -197,46 +200,74 @@ export class ProfilecreationComponent implements OnInit{
   }
 
   dateStringToEpoch(dateString: string): number {
-    const parts = dateString.split('-');
-  
-    // Ensure the string has three parts (month, day, and year)
-    if (parts.length === 3) {
-      // Note: JavaScript months are 0-based, so we subtract 1 from the month
-      const month = parseInt(parts[0], 10) - 1;
-      const day = parseInt(parts[1], 10);
-      const year = parseInt(parts[2], 10);
-  
-      // Create a new Date object using the parsed values
-      const date = new Date(year, month, day);
-  
-      // Check if the date is valid
-      if (!isNaN(date.getTime())) {
+    console.log(dateString);
+      if (dateString.length !== 0) {
         // Return the epoch time in milliseconds
-        return date.getTime();
+        return  Math.floor(new Date(dateString).getTime() / 1000);
       }
-    }
       const currentEpochTimeInSeconds = Math.floor(new Date().getTime() / 1000);
       return currentEpochTimeInSeconds;
   }
+
+  calculateAge(dateString: string): number {
+    const birthdate = new Date(dateString);
+
+    // Calculate the current date
+    const currentDate = new Date();
+
+    // Calculate the age in milliseconds
+    const ageInMilliseconds = currentDate.getTime() - birthdate.getTime();
+
+    // Convert the age to years
+    const ageInYears = ageInMilliseconds / (1000 * 60 * 60 * 24 * 365.25);
+
+    // Round down to the nearest whole year
+    const roundedAge = Math.floor(ageInYears);
+
+    return roundedAge
+  }
+
+  getGender(gender: string): number{
+    if(gender === "Female"){
+      return 1;
+    }
+    return 0;
+  }
+
+
 
   onSubmitbtnClick(){
     //create a request to api
 
     this.patientData = this.patientDataForm.value;
-    console.log(this.patientData);
-    console.log(this.patientData.first_name);
-    console.log(typeof(this.patientDataForm.value.first_name));
-    console.log(typeof(this.patientData.first_name));
     const user_id = localStorage.getItem("user_id") ?? "30001";
     this.patientData.user_id = parseInt(user_id); 
 
     const date = this.patientDataForm.value.dob;
     this.patientData.dob = this.dateStringToEpoch(date);
-
     this.patientData.emergency_contact = this.emergencyContactList.value;
-    this.patientData.documents = this.patientDocumentsList.value;
+    this.patientData.documents = FAKE_DOCUMENTS.documents;
+    this.patientData.surgical_history = FAKE_DOCUMENTS.surgical_history;
+    this.patientData.registration_date =Math.floor(new Date().getTime() / 1000);
+    this.patientData.update_date = Math.floor(new Date().getTime() / 1000);
+    this.patientData.age = this.calculateAge(date);
 
-    console.log(this.patientData)
+
+    this.patientData.gender = this.getGender(this.emergencyContactList.value.gender);
+
+    this.patientData.user_type = 0;
+    this.profileService.createPatientProfile(this.patientData)
+    .subscribe( 
+      response => {
+             console.log("User is created in");
+             console.log(response)
+            
+         },
+      error =>{
+        console.log(error);
+      }
+      
+     );
 
   }
 }
