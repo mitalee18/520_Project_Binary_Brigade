@@ -27,13 +27,25 @@ def fetch():
 
 @doctor_api.route('/get-available-time', methods=['GET'])
 @cross_origin(origin='localhost')
-def add():
+def get_available_time():
     try:
         user_id = int(request.args.get('user_id'))  # read into integer type
         ret_val = appointment_api_handler.get_available_time(user_id)
     except Exception as e:
         return handle_error(e, f"Error[{type(e)}]{str(e)}", "api/doctor/get-available-time")
     return jsonify(ret_val), 200
+
+@doctor_api.route('/book-appointment', methods=['POST'])
+@cross_origin(origin='localhost')
+def book_appointment():
+    try:
+        ret_val = appointment_api_handler.book_appointment()
+        if ret_val == 0:
+            return jsonify({"status": 400, "message": "Appointment already booked"}), 400
+    except Exception as e:
+        return handle_error(e, f"Error[{type(e)}]{str(e)}", "api/doctor/book-appointment")
+    return jsonify(ret_val), 200
+
 
 @doctor_api.app_errorhandler(Exception)
 def handle_error(error, messg="Unknown Error", api_name="doctor_api/", code=500):
