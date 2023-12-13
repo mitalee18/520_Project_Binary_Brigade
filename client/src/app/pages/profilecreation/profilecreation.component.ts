@@ -1,6 +1,7 @@
 import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
+import { Patient } from 'src/app/model/patient';
 
 interface Gender {
   name: string;
@@ -21,6 +22,7 @@ interface UploadEvent {
 
 
 export class ProfilecreationComponent implements OnInit{
+  patientRequestData: Patient;
   genders: Gender[] | undefined;
   firstNameValue: string | undefined;
   emailValue: string | undefined;
@@ -38,43 +40,10 @@ export class ProfilecreationComponent implements OnInit{
   surgeryList!: FormGroup;
 
   // private messageService!: MessageService;
-
-  constructor(private messageService: MessageService, private submitConfirmationService: ConfirmationService, private submitMessageService: MessageService){
-    this.emergencyContactList = new FormGroup({
-      emergencyContact: new FormArray([
-        new FormGroup({
-          name: new FormControl(''),
-          number: new FormControl('')
-        })
-      ])
-    });
-
-    this.medicalConditionList = new FormGroup({
-      medicalCondition: new FormArray([
-        new FormGroup({
-          conditionName: new FormControl('')
-        })
-      ])
-    });
-
-    this.medicationList = new FormGroup({
-      medication: new FormArray([
-        new FormGroup({
-          medicationName: new FormControl(''),
-          medicationDosage: new FormControl('')
-        })
-      ])
-    });
-
-    this.surgeryList = new FormGroup({
-      surgery: new FormArray([
-        new FormGroup({
-          surgeryName: new FormControl(''),
-          surgeryDate: new FormControl(''),
-          doctorName: new FormControl('')
-        })
-      ])
-    });
+  constructor(
+    private messageService: MessageService, 
+    private submitConfirmationService: ConfirmationService, 
+    private submitMessageService: MessageService){
 
   }
 
@@ -84,6 +53,41 @@ export class ProfilecreationComponent implements OnInit{
           { name: 'Female', val: 'female' },
           { name: 'Other', val: 'other' }
       ];   
+      this.emergencyContactList = new FormGroup({
+        emergencyContact: new FormArray([
+          new FormGroup({
+            name: new FormControl(''),
+            number: new FormControl('')
+          })
+        ])
+      });
+  
+      this.medicalConditionList = new FormGroup({
+        medicalCondition: new FormArray([
+          new FormGroup({
+            conditionName: new FormControl('')
+          })
+        ])
+      });
+  
+      this.medicationList = new FormGroup({
+        medication: new FormArray([
+          new FormGroup({
+            medicationName: new FormControl(''),
+            medicationDosage: new FormControl('')
+          })
+        ])
+      });
+  
+      this.surgeryList = new FormGroup({
+        surgery: new FormArray([
+          new FormGroup({
+            surgeryName: new FormControl(''),
+            surgeryDate: new FormControl(''),
+            doctorName: new FormControl('')
+          })
+        ])
+      });
   }
 
   get emergencyContact(): FormArray {
@@ -150,12 +154,14 @@ export class ProfilecreationComponent implements OnInit{
   }
 
   confirmSubmit() {
+    console.log(this.emergencyContactList.value)
     this.submitConfirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.submitMessageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' });
+
       },
       reject: (type: ConfirmEventType) => {
         switch (type) {

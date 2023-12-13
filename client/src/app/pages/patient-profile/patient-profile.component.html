@@ -1,38 +1,79 @@
 <app-nav-bar></app-nav-bar>
-<p-card class="doctor-profile">
-    <h4 class="card-title">Edit Profile</h4>
-    <p class="card-category">Complete your profile</p>
+<p-card class="patient-personal-information" header="Edit your Personal Information">
+    <p class="card-category"></p>
     <div class="content">
-        <form class="patient-form" #userForm="ngForm" class="justify-content-center" (ngSubmit)="onSubmit(userForm.value)">
+        <form  [formGroup] = "patientDataForm" class="justify-content-center" (submit)="onSaveUser()">
             <div class="row">
                 <div class="row-item">
                     <label for="first_name">First Name:</label>
-                    <input type="text" pInputText name="patientData.first_name" [ngModel]="patientData.first_name" />
+                    <input type="text" pInputText class="form-control" formControlName="first_name"/>
                 </div>
                 <div class="row-item">
                     <label for="last_name">Last Name:</label>
-                    <input type="text" pInputText name="patientData.last_name" [ngModel]="patientData.last_name" />
+                    <input type="text" pInputText class="form-control" formControlName="last_name"/>
                 </div>
                 <div class="row-item">
-                    <label for="email">Email:</label>
-                    <input type="text" pInputText name="patientData.email" [ngModel]="patientData.email" />
+                    <label for="email_id">Email:</label>
+                    <input type="text" pInputText class="form-control" formControlName="email_id" />
                 </div>
                 <div class="row-item">
                     <label for="address">Address:</label>
-                    <input type="text" pInputText name="patientData.address" [ngModel]="patientData.address" />
+                    <input type="text" pInputText class="form-control" formControlName="address" />
                 </div>
                 <div class="row-item">
-                    <label for="contact">Contact:</label>
-                    <input type="text" pInputText name="patientData.contact" [ngModel]="patientData.contact" />
+                    <label for="email_id">Contact:</label>
+                    <input type="text" pInputText class="form-control" formControlName="contact_no" />
                 </div>
                 <div class="row-item">
                     <label for="dob">Date of Birth:</label>
-                    <input type="text" pInputText name="patientData.dob" [ngModel]="patientData.dob" />
+                    <input type="text" pInputText class="form-control" formControlName="dob" />
                 </div>
                 <div class="row-item">
                     <label for="gender">Gender:</label>
-                    <input type="text" pInputText name="patientData.gender" [ngModel]="patientData.gender" />
+                    <input type="text" pInputText nclass="form-control" formControlName="gender"/>
                 </div>
+                <div class="row-item">
+                    <label for="family_medical_history">Family Medical History:</label>
+                    <input type="text" pInputText nclass="form-control" formControlName="family_medical_history"/>
+                </div>
+                <div class="row-item">
+                    <label for="health_insurance">Health Insaurance number:</label>
+                    <input type="text" pInputText nclass="form-control" formControlName="health_insurance"/>
+                </div>
+            </div>
+            <div class="row-item">
+                <label for="allergies">Allergies:</label>
+                <input type="text" pInputText name="patientData.allergies" [ngModel]="patientData.allergies" />
+            </div>
+            <button mat-flat-button color="primary" type="submit">Save</button>
+            
+        </form>
+    </div>
+</p-card>
+
+<p-card header="Medical Information" class="medical-infomation" class="col-md-4">
+    <div class="content">
+        <form class="patient-medical-information" [formGroup] = "patientDataForm" (submit)="onSaveE,()">
+            <div class="row">
+                <form class="patient-emergency-information" [formGroup]="emergencyContactList">
+                    <div style="display: inline-flex; align-items: center;">
+                        <label class="page-label">Emergency Contact </label><button mat-raised-button (click)="addEmergencyContact()" color="primary">+</button>
+                    </div>
+                    <div formArrayName="emergencyContact">
+                        <div *ngFor="let emergencyContactGroup of emergencyContact?.controls; let i = index" [formGroupName]="i">
+                            <div class="row" style="float: left;"><button (click)="removeEmergencyContact(i)" color="warn">-</button>
+                                <div class="row-item">
+                                    <label for="name">Name:</label>
+                                    <input type="text" pInputText formControlName="emergencyContactList.name"/>
+                                </div>
+                                <div class="row-item">
+                                    <label for="contact_no">Contact number:</label>
+                                    <input type="text" pInputText [ [control]="emergencyContactList.contact_no"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
             <button mat-flat-button color="primary" type="submit">Save</button>
         </form>

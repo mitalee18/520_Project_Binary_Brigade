@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit{
       email: [''],
       password: [''],
       confirmPassword: [''],
-      userType:""
+      userType:['']
     });
 
   }
@@ -50,15 +50,27 @@ export class LoginComponent implements OnInit{
   onSignUp(userForm: NgForm){
     this.signupValues = userForm.value;
     console.log(this.signupValues);
+    if (this.signupValues.password === this.signupValues.confirm_password) {
+      this.sessionService.userSignup( this.signupValues.email, this.signupValues.password, this.signupValues.user_type)
+          .subscribe( 
+           (response) => {
+                  console.log("User is logged in");
+                  console.log(response)
+                  if(this.signupValues.user_type == 0){
+                    localStorage.setItem('user_type', String(this.signupValues.user_type));
+                    localStorage.setItem('email', response.email);
+                    this.router.navigateByUrl('/profilecreation');
+                  }
+                 
+              }
+          );
+  }
 
   }
   get f() { return this.loginForm.controls; }
 
   onLogin(userLogin: NgForm){
     const val = userLogin.value;
-    console.log(userLogin.value);
-    console.log(val.email);
-    console.log(val.user_type);
     if (val.email && val.password) {
         this.sessionService.login(val.email, val.password)
             .subscribe( 

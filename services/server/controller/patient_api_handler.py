@@ -17,7 +17,6 @@ class PatientApiHandler:
 
     def add_patient(self, data):
         print('add_patient:: start')
-        print(data)
         user_id = data['user_id']
         first_name = data['first_name']
         last_name = data['last_name']
@@ -42,7 +41,6 @@ class PatientApiHandler:
 
     def get_patient(self, user_id):
         print('get_patient:: start')
-        print(user_id)
         patient = database.query_by_user_id(Patient, user_id)
         emergency_contact = hf.convert_dict_to_list_of_json(patient.emergency_contact)
         patient_details = {
@@ -166,9 +164,10 @@ class PatientApiHandler:
     def signup(self):
         data = json.loads(request.data.decode())
         email_id = data["email_id"]
-        registration_date = int(time.time())
+        update_date = int(time.time())
 
-        database.add_instance(Patient, email_id=email_id, registration_date=registration_date, update_date=registration_date, first_name = None, last_name = None, contact_no = None, address = None, age = None, dob = None, gender = None)
+        database.add_instance(Patient, email_id=email_id, update_date=update_date, first_name = None, last_name = None, contact_no = None, address = None, age = None, dob = None, gender = None,  user_id=None, emergency_contact='{}', health_insurance=None)
+
         query_response = database.query(Patient,email_id)
         print(query_response)
         return query_response
@@ -199,6 +198,16 @@ class PatientApiHandler:
             raise e
         print('create_profile:: end')
         return 1
+
+    # Dummy payload for testing
+    # {'user_id': '30030', 'first_name': 'Sahima', 'last_name': 'Srivastava', 'email_id': 'temp@gmail.com',
+    #  'contact_no': '999999', 'address': 'djkb vf..jgnf', 'age': 18,
+    #  'emergency_contact': {'name': 'Mitalee', 'contact_no': '9999', 'email_id': 'temp@yahoo.com'}, 'dob': 1644531028,
+    #  'health_insurance': 87456321, 'gender': 0, 'user_type': 0, 'allergies': 'peanuts,sesame',
+    #  'medical_conditions': 'hypertension, arithiritis', 'prescribed_medication': "[{'medicine_name': 'acetaminophen', 'medicine_dosage': '500mg'}]",
+    #  'surgical_history': "[{'surgery_date': 1604188800, 'doctor_name': 'Dr. Smith', 'surgery_name': 'Appendix Removal'}]",
+    #  'family_medical_history': 'Has a case of diabetes', 'file_link': 'http://dummyimage.com/image1.pdf',
+    #  'file_name': 'image1.pdf', 'description': 'A pdf file for testing'}
 
     def get_profile(self, user_id):
         print('get_profile:: start')

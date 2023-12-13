@@ -8,8 +8,6 @@ import { PagenotfoundComponent } from './pages/pagenotfound/pagenotfound.compone
 import { ProfilecreationComponent } from './pages/profilecreation/profilecreation.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextareaModule } from 'primeng/inputtextarea';
