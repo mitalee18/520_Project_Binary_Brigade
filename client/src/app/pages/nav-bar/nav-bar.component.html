@@ -1,6 +1,9 @@
 <mat-toolbar color="primary">
     <span>My App</span>
     <span class="example-spacer"></span>
+    <button mat-icon-button  *ngIf="isSpecificUserIdPresent()" (click)="searchClick()">
+      <mat-icon>search</mat-icon>
+    </button>
     <button mat-icon-button class="example-icon material-icon" aria-label="Example icon-button with settings icon" (click)="goToProfile()">
       <mat-icon>face</mat-icon>
     </button>

@@ -9,6 +9,7 @@ import { DoctorProfileComponent } from './pages/doctor-profile/doctor-profile.co
 import { PatientDashboardComponent } from './pages/patient-dashboard/patient-dashboard.component';
 import { PatientProfileComponent } from './pages/patient-profile/patient-profile.component';
 import { DoctorProfileCreationComponent } from './pages/doctor-profile-creation/doctor-profile-creation.component';
+import { DoctorTableComponent } from './pages/doctor-table/doctor-table.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,10 @@ const routes: Routes = [
   {
     path: 'doctor-profile-creation',
     component: DoctorProfileCreationComponent
+  },
+  {
+    path: 'doctor-table',
+    component: DoctorTableComponent
   },
   {
     path:'',
