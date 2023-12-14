@@ -37,7 +37,11 @@ def signup():
         signup_response = user_api_handler.add(query_response.user_id)
 
     except Exception as e:
-        return handle_error(e, f"Error[{type(e)}]{str(e)}", "api/user/signup")
+        return handle_error(e,
+                            "User already exists.",
+                            f"Error[{type(e)}]{str(e)}",
+                            "api/user/signup",
+                            500)
     return jsonify(signup_response), 200
 
 @user_api.route('/login', methods=["POST"])
