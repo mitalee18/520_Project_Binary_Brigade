@@ -22,7 +22,7 @@ class AppointmentApiHandler:
         doctor_appointments = database.query_multiple_by_id(Appointments, 'doctor_id', doctor_id)
         booked_time = []
         for appointment in doctor_appointments:
-            booked_time.append(appointment.datetime)
+            booked_time.append({'appointment_id': appointment.appointment_id, 'datetime': appointment.datetime})
         print(len(booked_time))
         print('get_doctor_booked_time:: end')
         return booked_time
@@ -32,7 +32,7 @@ class AppointmentApiHandler:
         patient_appointments = database.query_multiple_by_id(Appointments, 'patient_id', patient_id)
         booked_time = []
         for appointment in patient_appointments:
-            booked_time.append(appointment.datetime)
+            booked_time.append({'appointment_id': appointment.appointment_id, 'datetime': appointment.datetime})
         print(len(booked_time))
         print('get_patient_booked_time:: end')
         return booked_time
@@ -41,7 +41,8 @@ class AppointmentApiHandler:
         print('get_available_time:: start')
         doctor_id = user_id
         # Get all booked time slots
-        booked_time = self.get_doctor_booked_time(doctor_id)
+        booked_time_json = self.get_doctor_booked_time(doctor_id)
+        booked_time = [ele['datetime'] for ele in booked_time_json]
         # Get all available time slots
         start_time = datetime(2023, 11, 1, 8, 0, 0)
         end_time = datetime(2023, 11, 17, 17, 0, 0)
@@ -68,10 +69,11 @@ class AppointmentApiHandler:
         doctor_id = data['doctor_id']
         datetime = data['datetime']
         # Get all bookings for the doctor
-        doctor_bookings = self.get_doctor_booked_time(doctor_id)
-        print(doctor_bookings)
+        doctor_bookings_json = self.get_doctor_booked_time(doctor_id)
+        doctor_bookings = [ele['datetime'] for ele in doctor_bookings_json]
         # Get all bookings for the patient
-        patient_bookings = self.get_patient_booked_time(patient_id)
+        patient_bookings_json = self.get_patient_booked_time(patient_id)
+        patient_bookings = [ele['datetime'] for ele in patient_bookings_json]
         # Check if the doctor is available
         if datetime not in doctor_bookings:
             # Check if the patient is available
@@ -85,4 +87,9 @@ class AppointmentApiHandler:
         print('book_appointment:: end')
         return ret_val
 
-
+    def get_patient_schedule(self, user_id):
+        print('get_patient_schedule:: start')
+        patient_id = user_id
+        patient_schedule = self.get_patient_booked_time(patient_id)
+        print('get_patient_schedule:: end')
+        return patient_schedule
