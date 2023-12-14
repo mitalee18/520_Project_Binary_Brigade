@@ -114,6 +114,23 @@ class PatientApiHandler:
         print('get_patient_medical_history:: end')
         return patient_medical_history_details
 
+    def edit_patient_medical_history(self, data):
+        print('edit_patient_medical_history:: start')
+        user_id = data['user_id']
+        allergies = data['allergies']
+        medical_conditions = data['medical_conditions']
+        prescribed_medication = data['prescribed_medication']
+        surgical_history = data['surgical_history']
+        family_medical_history = data['family_medical_history']
+        update_date = int(datetime.datetime.utcnow().strftime('%s'))
+        print('edit_patient_medical_history:: inserting to db')
+        database.edit_instance(PatientMedicalHistory, user_id=user_id, allergies=allergies, medical_conditions=medical_conditions,
+                              prescribed_medication=prescribed_medication, surgical_history=surgical_history,
+                              family_medical_history=family_medical_history, update_date=update_date)
+        print('edit_patient_medical_history:: inserted to db')
+        print('edit_patient_medical_history:: end')
+        return 1
+
     def delete_patient_medical_history(self, user_id):
         print('delete_patient_medical_history:: start')
         try:
@@ -164,6 +181,30 @@ class PatientApiHandler:
             })
         print('get_patient_document:: end')
         return patient_document_details
+
+    def edit_patient_document(self, data):
+        print('edit_patient_document:: start')
+        try:
+            # get the documents from the payload
+            print(data['documents'], type(data['documents']))
+            documents = hf.convert_string_of_list_of_json_to_list_of_json(data['documents'])
+            print(documents)
+            for document in documents:
+                print(document)
+                user_id = document['user_id']
+                file_link = document['file_link']
+                file_name = document['file_name']
+                description = document['description']
+                update_date = int(datetime.datetime.utcnow().strftime('%s'))
+                print('edit_patient_document:: inserting to db')
+                database.add_instance(PatientDocument, user_id=user_id, file_link=file_link,
+                                      file_name=file_name, description=description, update_date=update_date)
+                print('edit_patient_document:: inserted to db')
+            print('edit_patient_document:: end')
+        except Exception as e:
+            print(e)
+            raise e
+        return 1
 
     def delete_patient_document(self, user_id):
         print('delete_patient_document:: start')
@@ -232,4 +273,25 @@ class PatientApiHandler:
         patient_document_details = self.get_patient_document(user_id)
         print('get_profile:: end')
         return patient_details | patient_medical_history_details | {'documents': patient_document_details}
+
+    def edit_profile(self):
+        print('edit_profile:: start')
+        data = json.loads(request.data.decode())
+        # Add to patient table
+        self.add_patient(data) # Edits all patient table field
+        try:
+            # Add to patient medical history table
+            self.edit_patient_medical_history(data)
+            if data['documents'] is not None:
+                try:
+                    # Add to patient document table
+                    self.edit_patient_document(data)
+                except Exception as e:
+                    # revert to past snapshot patient medical history table
+                    raise e
+        except Exception as e:
+            # revert to past snapshot patient table
+            raise e
+        print('edit_profile:: end')
+        return 1
 
