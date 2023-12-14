@@ -8,10 +8,7 @@ import { PagenotfoundComponent } from './pages/pagenotfound/pagenotfound.compone
 import { ProfilecreationComponent } from './pages/profilecreation/profilecreation.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { InputTextModule } from 'primeng/inputtext';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FileUploadModule } from 'primeng/fileupload';
@@ -19,11 +16,8 @@ import {HttpClientModule} from '@angular/common/http';
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-
-
 import { DoctorDashboardComponent } from './pages/doctor-dashboard/doctor-dashboard.component';
 import { NavBarComponent } from './pages/nav-bar/nav-bar.component';
-import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import { OrderListModule } from 'primeng/orderlist';
 import { DoctorProfileComponent } from './pages/doctor-profile/doctor-profile.component';
@@ -32,6 +26,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import {MatRadioModule} from '@angular/material/radio';
 import { PatientDashboardComponent } from './pages/patient-dashboard/patient-dashboard.component';
 import { PatientProfileComponent } from './pages/patient-profile/patient-profile.component';
+import { DoctorProfileCreationComponent } from './pages/doctor-profile-creation/doctor-profile-creation.component';
 
 
 @NgModule({
@@ -44,7 +39,8 @@ import { PatientProfileComponent } from './pages/patient-profile/patient-profile
     DoctorDashboardComponent,
     DoctorProfileComponent,
     PatientDashboardComponent,
-    PatientProfileComponent
+    PatientProfileComponent,
+    DoctorProfileCreationComponent
   ],
   imports: [
     BrowserModule,
@@ -60,9 +56,7 @@ import { PatientProfileComponent } from './pages/patient-profile/patient-profile
     HttpClientModule,
     CardModule,
     DividerModule,
-    ConfirmDialogModule
-
-    MatToolbarModule,
+    ConfirmDialogModule,
     MatButtonModule,
     NavBarComponent,
     OrderListModule,

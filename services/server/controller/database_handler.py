@@ -40,8 +40,8 @@ def add_instance(model, **kwargs):
         raise e
 
 
-def delete_instance_by_user_id(model, id):
-    model.query.filter_by(id=id).delete()
+def delete_instance_by_user_id(model, user_id):
+    model.query.filter_by(user_id=user_id).delete()
     commit_changes()
 
 

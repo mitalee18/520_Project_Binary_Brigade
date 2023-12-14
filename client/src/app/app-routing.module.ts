@@ -8,6 +8,7 @@ import { ProfilecreationComponent } from './pages/profilecreation/profilecreatio
 import { DoctorProfileComponent } from './pages/doctor-profile/doctor-profile.component';
 import { PatientDashboardComponent } from './pages/patient-dashboard/patient-dashboard.component';
 import { PatientProfileComponent } from './pages/patient-profile/patient-profile.component';
+import { DoctorProfileCreationComponent } from './pages/doctor-profile-creation/doctor-profile-creation.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,14 @@ const routes: Routes = [
   {
     path: 'patient-profile',
     component: PatientProfileComponent
+  },
+  {
+    path: 'doctor-profile',
+    component: DoctorProfileComponent
+  },
+  {
+    path: 'doctor-profile-creation',
+    component: DoctorProfileCreationComponent
   },
   {
     path:'',

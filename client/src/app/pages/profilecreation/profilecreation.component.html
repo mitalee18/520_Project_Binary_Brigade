@@ -1,159 +1,162 @@
-<div class="parent">
-    <div class="row">
-        <label aria-hidden="true" class="page-title">Patient Profile Creation</label>
-    </div>
-    <p-card>
-        <div class="row">
-        
-            <div class="col">
-                <form>
-                    <input type="text" pInputText placeholder="First Name" [(ngModel)]="firstNameValue" [ngModelOptions]="{standalone: true}" required="true" />
-                    <input type="text" pInputText placeholder="Prefilled Email" [(ngModel)]="emailValue" [ngModelOptions]="{standalone: true}" disabled/>
-                    <p-dropdown [options]="genders"  [(ngModel)]="selectedGender" [showClear]="true" optionLabel="name" placeholder="Select a Gender" ></p-dropdown>
-                    <input type="text" pInputText placeholder="Health Insurance Number" [(ngModel)]="healthInsuranceValue" [ngModelOptions]="{standalone: true}" required="true" />
-                </form>
-            </div>
-            <div class="col">
-                <form>
-                    <input type="text" pInputText placeholder="Last Name" [(ngModel)]="lastNameValue" [ngModelOptions]="{standalone: true}" required="true" />
-                    <input type="text" pInputText placeholder="Contact Number" [(ngModel)]="contactNumberValue"  [ngModelOptions]="{standalone: true}" required="true" />
-                    <p-calendar [(ngModel)]="dateOfBirthValue" dateFormat="dd.mm.yy" placeholder="Date of Birth" [showIcon]="true"></p-calendar>
-                    <input type="text" pInputText placeholder="Confirm Health Insurance Number" [(ngModel)]="confirmHealthInsuranceValue" [ngModelOptions]="{standalone: true}" required="true" />
-                </form>
-            </div>
-        </div>  
-        <br>
-        <div class="row">
-            <form>
-            <textarea rows="3" cols="50" pInputTextarea placeholder="Address" [autoResize]="true"></textarea>
-            </form>
-        </div>
-    </p-card>
-    <div class="row">
-            <form [formGroup]="emergencyContactList">
-                <div style="display: inline-flex; align-items: center;">
-                    <label class="page-label">Emergency Contact </label><button (click)="addEmergencyContact()">+</button>
+<p-card class="patient-personal-information" header="Personal Information">
+    <div class="content">
+        <form  [formGroup] = "patientDataForm" class="justify-content-center">
+            <div class="row">
+                <div class="row-item">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" pInputText class="form-control" formControlName="first_name"/>
                 </div>
-                <p-card>
-                    <div formArrayName="emergencyContact">
-                        <div
-                            *ngFor="let emergencyContactGroup of emergencyContact?.controls; let i = index"
-                            [formGroupName]="i"
-                        >
-                            <div class="row p-0">
-                                    <!-- <label>emergencyContact - {{i + 1}}</label> -->
-                                <div class="col">
-                                    <input type="text" pInputText placeholder="name" />
-                                </div>
-                                <div class="col">
-                                    <input type="text" pInputText placeholder="number" />
-                                </div>
+                <div class="row-item">
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" pInputText class="form-control" formControlName="last_name"/>
+                </div>
+                <div class="row-item">
+                    <label for="email_id">Email:</label>
+                    <input type="email" pInputText class="form-control" formControlName="email_id" />
+                </div>
+                <div class="row-item">
+                    <label for="address">Address:</label>
+                    <input type="text" pInputText class="form-control" formControlName="address" />
+                </div>
+                <div class="row-item">
+                    <label for="contact_no">Contact:</label>
+                    <input type="text" pInputText  class="form-control" formControlName="contact_no" />
+                </div>
+                <div class="row-item">
+                    <label for="dob">Birth Date:</label>
+                    <p-calendar formControlName="dob"></p-calendar>
+                </div>
+                <div class="row-item">
+                    <label for="gender">Gender:</label>
+                    <input type="text" pInputText class="form-control" formControlName="gender"/>
+                </div>
+                <div class="row-item">
+                    <label for="family_medical_history">Family Medical History:</label>
+                    <input type="text" pInputText class="form-control" formControlName="family_medical_history"/>
+                </div>
+                <div class="row-item">
+                    <label for="health_insurance">Health Insaurance number:</label>
+                    <input type="text" pInputText class="form-control" formControlName="health_insurance"/>
+                </div>
+                <div class="row-item">
+                    <label for="allergies">Allergies:</label>
+                    <input type="text" pInputText class="form-control" formControlName="allergies" />
+                </div>
+                <div class="row-item">
+                    <label for="medical_conditions">Medical Conditions:</label>
+                    <input type="text" pInputText class="form-control" formControlName="medical_conditions" />
+                </div>
+                <div class="row-item">
+                    <label for="prescribed_medication">Medical Conditions:</label>
+                    <input type="text" pInputText class="form-control" formControlName="prescribed_medication" />
+                </div>
+            </div>
+        </form>
+    </div>
+</p-card>
+
+<p-card header="Emergency Contact Information" class="medical-information col-md-4">
+    <div class="content patient-medical-information">
+        <div class="row">
+            <form class="patient-emergency-information" [formGroup]="emergencyContactList">
+                <button mat-raised-button (click)="addEmergencyContact()" color="primary">+</button>
+                <div formArrayName="emergencyContact">
+                    <div *ngFor="let group of emergencyContact.controls; let i = index" [formGroupName]="i">
+                        <div class="row" style="float: left;">
+                            <button (click)="removeEmergencyContact(i)" color="warn">-</button>
+                            <div class="row-item">
+                                <label for="name">Name:</label>
+                                <input type="text" pInputText formControlName="name"/>
+                            </div>
+                            <div class="row-item">
+                                <label for="contact_no">Contact number:</label>
+                                <input type="number" pInputText formControlName="contact_no"/>
+                            </div>
+                            <div class="row-item">
+                                <label for="email_id">Email:</label>
+                                <input type="email" pInputText formControlName="email_id"/>
                             </div>
                         </div>
-                        </div>
-                </p-card>
-                
+                    </div>
+                </div>
             </form>
-    </div>
-    <hr class="page-hr-line">
-    <label class="page-label"><i>Medical History</i></label>
-    <br>   
-    <div class="row">
-        <form>
-            <textarea rows="3" cols="50" pInputTextarea placeholder="Allergies" [autoResize]="true"></textarea>
-        </form>
-    </div>
-    <div class="row">
-        <form [formGroup]="medicalConditionList">
-            <div style="display: inline-flex; align-items: center;">
-                <label class="page-label">Medical Conditions </label><button (click)="addMedicalCondition()">+</button>
-            </div>
-            <p-card>
-                <div formArrayName="medicalCondition">
-                    <div
-                        *ngFor="let medicalConditionGroup of medicalCondition?.controls; let i = index"
-                        [formGroupName]="i"
-                    >
-                        <div class="row p-0">
-                            <input type="text" pInputText placeholder="Condition Name" />
-                        </div>
-                    </div>
-                    </div>
-            </p-card>          
-        </form>
-    </div>
-    <div class="row">
-        <form [formGroup]="medicationList">
-            <div style="display: inline-flex; align-items: center;">
-                <label class="page-label">Medication </label><button (click)="addMedication()">+</button>
-            </div>
-            <p-card>
-                <div formArrayName="medication">
-                    <div
-                        *ngFor="let medicationGroup of medication?.controls; let i = index"
-                        [formGroupName]="i"
-                    >
-                    <div class="row p-0">
-                            <!-- <label>emergencyContact - {{i + 1}}</label> -->
-                        <div class="col">
-                            <input type="text" pInputText placeholder="Medication Name" />
-                        </div>
-                        <div class="col">
-                            <input type="text" pInputText placeholder="Medication Dosage" />
-                        </div>
-                    </div>
-                    </div>
-                    </div>
-            </p-card>
-        </form>
-    </div>
-    <div class="row">
-        <form [formGroup]="surgeryList">
-            <div style="display: inline-flex; align-items: center;">
-                <label class="page-label">Surgery </label><button (click)="addSurgery()">+</button>
-            </div>
-            <p-card>
-                <div formArrayName="surgery">
-                    <div
-                        *ngFor="let surgeryGroup of surgery?.controls; let i = index"
-                        [formGroupName]="i"
-                    >
-                    <div class="row p-0">
-                            <!-- <label>emergencyContact - {{i + 1}}</label> -->
-                        <div class="col">
-                            <p-calendar dateFormat="dd.mm.yy" placeholder="Surgery Date" [showIcon]="true"></p-calendar>
-                        </div>
-                        <div class="col">
-                            <input type="text" pInputText placeholder="Surgery Name" />
-                        </div>
-                        <div class="col">
-                            <input type="text" pInputText placeholder="Doctor Name" />
-                        </div>
-                    </div>
-                    </div>
-                    </div>
-            </p-card>    
-        </form>
-    </div>
-    <p-divider></p-divider>
-    <div class="row">
-        <form>
-            <label class="page-label">Family Medical History</label>
-            <textarea rows="3" cols="50" pInputTextarea placeholder="Family Medical History" [autoResize]="true"></textarea>
-        </form>
-    </div>
-    <p-divider></p-divider>
-    <div class="row">
-        <div class="col">
-            <label class="page-label">Upload Medical Documents</label>
-        </div>
-        <div class="col">
-            <p-fileUpload size="small" mode="basic" [multiple]="true" name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php" accept=".pdf" [maxFileSize]="1000000" (onUpload)="onUpload($event)" [auto]="true" chooseLabel="Browse"></p-fileUpload>
         </div>
     </div>
-    <p-divider></p-divider>
-    <div class="row">
-        <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
-        <p-button (click)="confirmSubmit()" label="Submit"></p-button>
+</p-card>
+
+<p-card header="Medicine Information" class="medicine-information col-md-4">
+    <div class="content patient-medicine-information">
+        <div class="row">
+            <form class="patient-medicine-information" [formGroup]="prescribedMedicationList">
+                <button mat-raised-button (click)="addMedication()"  color="primary">+</button>
+                <div formArrayName="prescribedMedication">
+                    <div *ngFor="let group of prescribedMedication.controls; let i = index" [formGroupName]="i">
+                        <div class="row" style="float: left;">
+                            <button (click)="removeMedicine(i)" color="warn">-</button>
+                            <div class="row-item">
+                                <label for="medicine_name">Name:</label>
+                                <input type="text" pInputText formControlName="medicine_name"/>
+                            </div>
+                            <div class="row-item">
+                                <label for="medicine_dosage">Dosage:</label>
+                                <input type="text" pInputText formControlName="medicine_dosage"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+</p-card>
+
+<p-card header="Surgical History" class="medicine-information col-md-4">
+    <div class="content patient-medicine-information">
+        <div class="row">
+            <form class="patient-medicine-information" [formGroup]="surgicalHistoryList">
+                <button mat-raised-button (click)="addSurgicalHistory()"  color="primary">+</button>
+                <div formArrayName="surgicalHistory">
+                    <div *ngFor="let group of surgicalHistory.controls; let i = index" [formGroupName]="i">
+                        <div class="row" style="float: left;">
+                            <button (click)="removeMedicine(i)" color="warn">-</button>
+                            <div class="row-item">
+                                <label for="surgery_date">Surgery Date:</label>
+                                <p-calendar type="text" pInputText formControlName="surgery_date"></p-calendar>
+                            </div>
+                            <div class="row-item">
+                                <label for="doctor_name">Doctor Name:</label>
+                                <input type="text" pInputText formControlName="doctor_name"/>
+                            </div>
+                            <div class="row-item">
+                                <label for="surgery_name">Surgery Name:</label>
+                                <input type="text" pInputText formControlName="surgery_name"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</p-card>
+
+<p-card>
+    <form [formGroup]="patientDocumentsList">
+        <div formArrayName="patientDocuments">
+            <input type="file" multiple (change)="save($event)"/>
+            <div *ngFor="let group of patientDocuments.controls; let i = index" [formGroupName]="i">
+                <label for="file_name"  style="float: left;">File Name:</label>
+                <div style="float: left;">
+                    {{ group.get('file_name')?.value }}
+                </div>
+                <br>
+                <label for="file_link"  style="float: left;">File Link:</label>
+                <div style="float: left;">
+                    {{ group.get('file_link')?.value }}
+                </div>
+                <br>
+            </div>
+        </div>
+    </form>
+</p-card>
+
+<button mat-flat-button color="primary" (click)="onSubmitbtnClick()">Submit</button>
+

@@ -36,36 +36,64 @@ export class LoginComponent implements OnInit{
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       email: [''],
-      password: ['']
+      password: [''],
+      userType:['']
     });
     this.userFrom = this.formBuilder.group({
       email: [''],
       password: [''],
       confirmPassword: [''],
-      userType:""
+      userType:['']
     });
 
   }
 
   onSignUp(userForm: NgForm){
     this.signupValues = userForm.value;
-    console.log(this.signupValues);
+    if (this.signupValues.password === this.signupValues.confirm_password) {
+      this.sessionService.userSignup( this.signupValues.email, this.signupValues.password, this.signupValues.user_type)
+          .subscribe( 
+           response => {
+                  console.log("User is signedup in");
+                  console.log(response)
+                  if(this.signupValues.user_type == 0){
+                    this.router.navigateByUrl('/profilecreation');
+                  }
+                  else{
+                    this.router.navigateByUrl('/doctor-profile-creation');
+                  }
+
+                  localStorage.setItem('user_id', String(response.user_id));
+                  localStorage.setItem('user_type', String(this.signupValues.user_type));
+                  localStorage.setItem('email_id', response.email);
+                 
+              },
+              error =>{
+                console.log(error);
+              }
+          );
+  }
 
   }
   get f() { return this.loginForm.controls; }
 
   onLogin(userLogin: NgForm){
     const val = userLogin.value;
-    console.log(userLogin.value);
-    console.log(val.email);
-    console.log(val.user_type);
+    console.log(val);
     if (val.email && val.password) {
         this.sessionService.login(val.email, val.password)
             .subscribe( 
-             () => {
-                    console.log("User is logged in");
-                    this.router.navigateByUrl('/');
+             (response) => {
+                if(val.user_type === 0){
+                  this.router.navigateByUrl('/patient-dashboard');
                 }
+                else if(val.user_type === 1){
+                  this.router.navigateByUrl('/doctor-dashboard');
+                }
+                localStorage.setItem('user_type', String(val.user_type));
+                localStorage.setItem('email_id', val.email);
+                localStorage.setItem('user_id', String(response.user_id));
+             }
             );
     }
   }

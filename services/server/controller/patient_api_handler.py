@@ -143,6 +143,7 @@ class PatientApiHandler:
                 print('add_patient_document:: inserted to db')
             print('add_patient_document:: end')
         except Exception as e:
+            print(e)
             raise e
         return 1
     # Dummy payload for testing
