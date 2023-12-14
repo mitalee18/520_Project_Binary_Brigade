@@ -6,3 +6,16 @@
 .col-md-4{
     margin-right: 20px;
 }
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* This sets the container's height to fill the viewport */
+}
+
+p-card {
+  width: 100%; /* Make the card take full width of its parent column */
+  max-width: none; /* Remove the max-width if you want the card to be able to grow larger */
+  height: auto; /* Set height to auto to allow the card to grow as tall as its content */
+}
