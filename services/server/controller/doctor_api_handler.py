@@ -113,3 +113,11 @@ class DoctorApiHandler:
                                 'keywords': doctor.keywords})
         print('get_all_doctor:: end')
         return doctor_list
+
+    def edit_profile(self):
+        print('edit_profile:: start')
+        data = json.loads(request.data.decode())
+        # Add to patient table
+        self.add_doctor(data) # Edits all doctor table field
+        print('edit_profile:: end')
+        return 1
