@@ -90,6 +90,11 @@ class AppointmentApiHandler:
     def get_patient_schedule(self, user_id):
         print('get_patient_schedule:: start')
         patient_id = user_id
+        patient_found_flag = 0
+        result = database.query_multiple_by_user_id(Patient, patient_id)
+        if len(result) > 0:
+            patient_found_flag = 1
         patient_schedule = self.get_patient_booked_time(patient_id)
         print('get_patient_schedule:: end')
-        return patient_schedule
+        return {'patient_schedule': patient_schedule,
+                'patient_found_flag': patient_found_flag}
