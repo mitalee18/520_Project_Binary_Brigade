@@ -1,7 +1,10 @@
 import requests
 
+global_user_id = 0
+global_email_id = ""
+
 def test_signup():
-    print('______________ Starting Test #1 ______________')
+    print('================== Starting Test for Signup ==================')
     signup_base_url = 'http://localhost:8000/api/user/signup'
     signup_payload = {"email_id": "mitalee8@patient.com",
                       "password": "abc",
@@ -10,23 +13,40 @@ def test_signup():
     try:
         # test 1: patient
         response = requests.post(signup_base_url, json=signup_payload)
-        print(response.json())
+        # print(response.json())
         assert response.status_code == 200
         assert response.json()['email'] == signup_payload['email_id']
         assert response.json()['user_id'] > 30000
-        return print('______________ Test #1 Passed ______________')
+        global global_user_id, global_email_id
+        global_user_id = response.json()['user_id']
+        global_email_id = signup_payload['email_id']
+        print('______________ Test #1 Passed ______________')
+        # test 2: patient already exists
+        response = requests.post(signup_base_url, json=signup_payload)
+        assert response.json()['status'] == 500
+        assert response.json()['error']['message'] == 'User already exists.'
+        print('______________ Test #2 Passed ______________')
+        # test 3: patient id with different email
+        signup_payload["email_id"] = "mitalee3@patient.com"
+        # print(signup_payload)
+        response = requests.post(signup_base_url, json=signup_payload)
+        # print(response.json())
+        assert response.status_code == 200
+        assert response.json()['email'] == signup_payload['email_id']
+        assert response.json()['user_id'] == global_user_id + 1
+        print('______________ Test #3 Passed ______________')
     except AssertionError as e:
         print(e)
-        print('______________ Test #1 Failed ______________')
-        return
+        print('================== Test for Signup Failed ==================')
+    return
 
 def test_create_profile():
-    print('______________ Starting Test #2 ______________')
+    print('================== Starting Test for create-profile ==================')
     create_profile_base_url = 'http://localhost:8000/api/user/create-profile'
-    patient_payload = {'user_id': '30009',
+    patient_payload = {'user_id': global_user_id,
                        'first_name': 'Sahima',
                        'last_name': 'Srivastava',
-                       'email_id': 'mitalee8@patient.com',
+                       'email_id': global_email_id,
                        'contact_no': '999999',
                        'address': 'djkb vf..jgnf',
                        'age': 18,
@@ -40,7 +60,7 @@ def test_create_profile():
                        'prescribed_medication': "[{'medicine_name': 'acetaminophen', 'medicine_dosage': '500mg'}]",
                        'surgical_history': "[{'surgery_date': 1604188800, 'doctor_name': 'Dr. Smith', 'surgery_name': 'Appendix Removal'}]",
                        'family_medical_history': 'Has a case of diabetes',
-                       "documents" : "[{'file_link': 'http://dummyimage.com/image1.pdf','file_name': 'image1.pdf','description': 'A pdf file for testing', 'user_id': 30030}]"}
+                       "documents" : "[{'file_link': 'http://dummyimage.com/image1.pdf','file_name': 'image1.pdf','description': 'A pdf file for testing', 'user_id': "+str(global_user_id)+"}]"}
     doctor_payload = {'user_id': 800,
                       'user_type': 1,
                       'first_name': 'Raj',
@@ -55,39 +75,127 @@ def test_create_profile():
                       'update_date': 1683611126,
                       'qualifications': 'MBBS, MD',
                       'keywords': 'ENT, General Physician'}
-    admin_payload =  {'user_id': 299,
-                      'user_type': 2,
-                      'first_name': 'Sachin',
-                      'last_name': 'Tendulkar',
-                      'email_id': 'st@yahoo.com',
-                      'contact_no': '1234567890',
-                      'address': '948 Mumbai'}
     try:
-        # test 1: patient
+        # test 1: create signed up patient profile
         response = requests.post(create_profile_base_url, json=patient_payload)
-        print(response.json())
         assert response.status_code == 200
         assert response.json() == 1
-        print('test 1 passed')
-        # test 2: doctor
+        print('______________ Test #1 Passed ______________')
+        # test 2: create a non-signed up doctor profile
         response = requests.post(create_profile_base_url, json=doctor_payload)
-        assert response.status_code == 200
-        assert response.json() == 1
-        print('test 2 passed')
-        # test 3: admin
-        response = requests.post(create_profile_base_url, json=admin_payload)
-        assert response.status_code == 200
-        assert response.json() == 1
-        print('test 3 passed')
-        return print('______________ Test #2 Passed ______________')
+        assert response.json()['status'] == 500
+        assert response.json()['error']['message'] == 'Internal Server Error: Profile creation unsuccessful.'
+        print('______________ Test #2 Passed ______________')
+        # test 3: creating a profile for a patient who already has a profile
+        response = requests.post(create_profile_base_url, json=patient_payload)
+        assert response.json()['status'] == 500
+        assert response.json()['error']['message'] == 'Internal Server Error: Profile creation unsuccessful.'
+        print('______________ Test #3 Passed ______________')
     except AssertionError as e:
         print(e)
-        print('______________ Test #2 Failed ______________')
-        return
+        print('================== Test for create-profile Failed ==================')
+    return
+
+def test_get_profile():
+    print('================== Starting Test for get-profile ==================')
+    get_profile_base_url = 'http://localhost:8000/api/user/get-profile'
+    get_profile_url = get_profile_base_url + '?user_id=' + str(global_user_id) + '&user_type=0'
+    try:
+        # test 1: get profile of a patient
+        response = requests.get(get_profile_url)
+        # print(response.json())
+        assert response.status_code == 200
+        assert response.json()['user_id'] == global_user_id
+        assert response.json()['email_id'] == global_email_id
+        print('______________ Test #1 Passed ______________')
+        # test 2: get profile of a doctor
+        get_profile_url = get_profile_base_url + '?user_id=800&user_type=0'
+        response = requests.get(get_profile_url)
+        assert response.json()['status'] == 500
+        assert response.json()['error']['message'] == 'Internal Server Error: Profile could not be found.'
+        print('______________ Test #2 Passed ______________')
+        # test 3: get profile with correct id but incorrect user type
+        get_profile_url = get_profile_base_url + '?user_id=' + str(global_user_id) + '&user_type=1'
+        response = requests.get(get_profile_url)
+        assert response.json()['status'] == 500
+        assert response.json()['error']['message'] == 'Internal Server Error: Profile could not be found.'
+        print('______________ Test #3 Passed ______________')
+    except AssertionError as e:
+        print(e)
+        print('================== Test for get-profile Failed ==================')
+    return
+
+def test_get_all_doctors():
+    print('================== Starting Test for get-all-doctor ==================')
+    get_all_doctors_base_url = 'http://localhost:8000/api/doctor/get-all-doctor'
+    try:
+        # test 1: get all doctors
+        response = requests.get(get_all_doctors_base_url)
+        # print(response.json())
+        assert response.status_code == 200
+        assert len(response.json()[0]) > 0
+        print('______________ Test #1 Passed ______________')
+    except AssertionError as e:
+        print(e)
+        print('================== Test for get-all-doctors Failed ==================')
+    return
+
+def test_get_patient_schedule():
+    print('================== Starting Test for get-patient-schedule ==================')
+    get_patient_schedule_base_url = 'http://localhost:8000/api/patient/get-patient-schedule?user_id='
+    get_patient_schedule_url = get_patient_schedule_base_url + str(30002)
+    try:
+        # test 1: get patient schedule
+        response = requests.get(get_patient_schedule_url)
+        # print(response.json())
+        assert response.status_code == 200
+        assert len(response.json()) > 0
+        assert len(response.json()[0].keys()) == 2
+        print('______________ Test #1 Passed ______________')
+        # test 2: get patient schedule with incorrect user id
+        get_patient_schedule_url = get_patient_schedule_base_url + '100'
+        response = requests.get(get_patient_schedule_url)
+        assert response.json()['status'] == 400
+        assert response.json()['error']['message'] == 'Bad Request: User does not exist.'
+        print('______________ Test #2 Passed ______________')
+    except AssertionError as e:
+        print(e)
+        print('================== Test for get-patient-schedule Failed ==================')
+    return
+
+def test_get_available_time():
+    print('================== Starting Test for get-available-time ==================')
+    get_available_time_base_url = 'http://localhost:8000/api/doctor/get-available-time?user_id='
+    get_available_time_url = get_available_time_base_url + str(607)
+    try:
+        # test 1: get available time
+        response = requests.get(get_available_time_url)
+        assert response.status_code == 200
+        assert len(response.json()) > 0
+        print('______________ Test #1 Passed ______________')
+        # test 2: get available time with incorrect user id
+        get_available_time_url = get_available_time_base_url + '100'
+        response = requests.get(get_available_time_url)
+        assert response.json()['status'] == 400
+        assert response.json()['error']['message'] == 'Bad Request: Doctor does not exist.'
+        print('______________ Test #2 Passed ______________')
+    except AssertionError as e:
+        print(e)
+        print('================== Test for get-available-time Failed ==================')
+    return
 
 if __name__ == "__main__":
-    # print(test_create_profile())
-    print(test_signup())
+    test_signup()
+    test_create_profile()
+    test_get_profile()
+    # executing data dump for some dummy data
+    from services.server.controller import data_dump
+    data_dump.dump_data()
+    test_get_all_doctors()
+    test_get_patient_schedule()
+    test_get_available_time()
+
+
 
 # postman_patient_payload = {
 # "address": "129 Commercial Street",

@@ -14,19 +14,19 @@ appointments_csv_path = '../data/appointments.csv'
 
 def read_csv_and_insert_to_db(table_name,csv_file_path):
     # Read CSV file into a pandas DataFrame
-    print('Reading CSV file to DataFrame...')
+    # print('Reading CSV file to DataFrame...')
     df = pd.read_csv(csv_file_path)
-    print(df.shape)
+    # print(df.shape)
     # print(df.head())
     # Use pandas to_sql function to insert the DataFrame into the PostgreSQL database
-    print('Inserting records into DB...')
+    # print('Inserting records into DB...')
     df.to_sql(name=table_name, con=engine, if_exists = 'append', index=False)
-    print('Done!')
+    # print('Done!')
     return
 
 def read_csv_and_insert_to_db_for_arrayCols(table_name,csv_file_path,array_json_idx_list):
     # Read CSV file into a pandas DataFrame
-    print('Reading CSV file to DataFrame...')
+    # print('Reading CSV file to DataFrame...')
     df = pd.read_csv(csv_file_path)
     # for all columns in array_col_idx_list, convert data to json.dumps
     for col_idx in array_json_idx_list:
@@ -38,15 +38,30 @@ def read_csv_and_insert_to_db_for_arrayCols(table_name,csv_file_path,array_json_
             else:
                 value = []
             value = json.dumps(value)
-            print(value)
+            # print(value)
             df.iloc[index, col_idx] = value
 
 
-    print(df.head())
+    # print(df.head())
     # Use pandas to_sql function to insert the DataFrame into the PostgreSQL database
-    print('Inserting records into DB...')
+    # print('Inserting records into DB...')
     df.to_sql(name=table_name, con=engine, if_exists = 'append', index=False)
-    print('Done!')
+    # print('Done!')
+
+def dump_data():
+    try:
+        # Call the function to read CSV and insert into the database
+        read_csv_and_insert_to_db('login_details',login_details_csv_file_path)
+        read_csv_and_insert_to_db('patient',patient_csv_file_path)
+        read_csv_and_insert_to_db('admin',admin_csv_file_path)
+        read_csv_and_insert_to_db('doctor',doctor_csv_file_path)
+        read_csv_and_insert_to_db('patient_medical_history', patient_medical_history_csv_file_path)
+        read_csv_and_insert_to_db('patient_document', patient_document_csv_path)
+        read_csv_and_insert_to_db('appointments', appointments_csv_path)
+
+    except Exception as e:
+        print(f"Error: {e}")
+    return
 
 if __name__ == "__main__":
     try:
