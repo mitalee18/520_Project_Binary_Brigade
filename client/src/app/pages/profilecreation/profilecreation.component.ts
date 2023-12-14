@@ -49,8 +49,7 @@ export class ProfilecreationComponent implements OnInit{
           update_date: [''],
           allergies: [''],
           medical_conditions: [''],
-          contact_no: [''],
-          prescribed_medication: ['']
+          contact_no: ['']
       })
       this.patientDataForm.get('email_id')?.setValue(localStorage.getItem('email_id'));
 

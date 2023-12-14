@@ -5,6 +5,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar'
 import { MenubarModule } from 'primeng/menubar';
 import { Router } from '@angular/router';
+import { SessionService } from '../service/session.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -15,7 +16,8 @@ import { Router } from '@angular/router';
 })
 export class NavBarComponent {
 
-  constructor(private router: Router){}
+  constructor(private router: Router,
+    private sessionService: SessionService){}
 
   goToProfile(){
     if(localStorage.getItem('user_type') === '1'){
@@ -24,7 +26,11 @@ export class NavBarComponent {
     else if(localStorage.getItem('user_type') === '0'){
       this.router.navigate(['/patient-profile']);
     }
+  }
 
+  logout(){
+    this.sessionService.logout();
+    this.router.navigate(['/']);
   }
 
 }

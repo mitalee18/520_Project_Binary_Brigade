@@ -1,7 +1,7 @@
 <app-nav-bar></app-nav-bar>
-<p-card class="patient-personal-information" header="Edit your Personal Information">
+<p-card class="patient-personal-information" header="Personal Information">
     <div class="content">
-        <form  [formGroup] = "patientDataForm" class="justify-content-center"  (submit)="onSaveUser()">
+        <form  [formGroup] = "patientDataForm" class="justify-content-center">
             <div class="row">
                 <div class="row-item">
                     <label for="first_name">First Name:</label>
@@ -13,7 +13,7 @@
                 </div>
                 <div class="row-item">
                     <label for="email_id">Email:</label>
-                    <input type="text" pInputText class="form-control" formControlName="email_id" />
+                    <input type="email" pInputText class="form-control" formControlName="email_id" />
                 </div>
                 <div class="row-item">
                     <label for="address">Address:</label>
@@ -24,24 +24,28 @@
                     <input type="text" pInputText  class="form-control" formControlName="contact_no" />
                 </div>
                 <div class="row-item">
-                    <label for="dob">Date of Birth:</label>
-                    <input type="text" pInputText class="form-control" formControlName="dob" />
+                    <label for="dob">Birth Date:</label>
+                    <input type="text" pInputText  class="form-control" formControlName="dob" />
                 </div>
                 <div class="row-item">
                     <label for="gender">Gender:</label>
-                    <input type="text" pInputText nclass="form-control" formControlName="gender"/>
+                    <input type="text" pInputText class="form-control" formControlName="gender"/>
                 </div>
                 <div class="row-item">
                     <label for="family_medical_history">Family Medical History:</label>
-                    <input type="text" pInputText nclass="form-control" formControlName="family_medical_history"/>
+                    <input type="text" pInputText class="form-control" formControlName="family_medical_history"/>
                 </div>
                 <div class="row-item">
                     <label for="health_insurance">Health Insaurance number:</label>
-                    <input type="text" pInputText nclass="form-control" formControlName="health_insurance"/>
+                    <input type="text" pInputText class="form-control" formControlName="health_insurance"/>
                 </div>
                 <div class="row-item">
                     <label for="allergies">Allergies:</label>
-                    <input type="text" pInputText nclass="form-control" formControlName="allergies" />
+                    <input type="text" pInputText class="form-control" formControlName="allergies" />
+                </div>
+                <div class="row-item">
+                    <label for="medical_conditions">Medical Conditions:</label>
+                    <input type="text" pInputText class="form-control" formControlName="medical_conditions" />
                 </div>
             </div>
             <button mat-flat-button color="primary" type="submit">Save</button>
@@ -52,7 +56,7 @@
 <p-card header="Emergency Contact Information" class="medical-information col-md-4">
     <div class="content patient-medical-information">
         <div class="row">
-            <form class="patient-emergency-information" [formGroup]="emergencyContactList" (submit)="onSaveEmergencyContact()">
+            <form class="patient-emergency-information" [formGroup]="emergencyContactList">
                 <button mat-raised-button (click)="addEmergencyContact()" color="primary">+</button>
                 <div formArrayName="emergencyContact">
                     <div *ngFor="let group of emergencyContact.controls; let i = index" [formGroupName]="i">
@@ -64,16 +68,15 @@
                             </div>
                             <div class="row-item">
                                 <label for="contact_no">Contact number:</label>
-                                <input type="text" pInputText formControlName="contact_no"/>
+                                <input type="number" pInputText formControlName="contact_no"/>
                             </div>
                             <div class="row-item">
                                 <label for="email_id">Email:</label>
-                                <input type="text" pInputText formControlName="email_id"/>
+                                <input type="email" pInputText formControlName="email_id"/>
                             </div>
                         </div>
                     </div>
                 </div>
-                <button mat-flat-button color="primary" type="submit">Save</button>
             </form>
         </div>
     </div>
@@ -82,7 +85,7 @@
 <p-card header="Medicine Information" class="medicine-information col-md-4">
     <div class="content patient-medicine-information">
         <div class="row">
-            <form class="patient-medicine-information" [formGroup]="prescribedMedicationList"  (submit)="onSavePrescibedMedication()">
+            <form class="patient-medicine-information" [formGroup]="prescribedMedicationList">
                 <button mat-raised-button (click)="addMedication()"  color="primary">+</button>
                 <div formArrayName="prescribedMedication">
                     <div *ngFor="let group of prescribedMedication.controls; let i = index" [formGroupName]="i">
@@ -108,12 +111,12 @@
 <p-card header="Surgical History" class="medicine-information col-md-4">
     <div class="content patient-medicine-information">
         <div class="row">
-            <form class="patient-medicine-information" [formGroup]="surgicalHistoryList" (submit)="onSaveSurgicalInformation()">
+            <form class="patient-medicine-information" [formGroup]="surgicalHistoryList">
                 <button mat-raised-button (click)="addSurgicalHistory()"  color="primary">+</button>
                 <div formArrayName="surgicalHistory">
                     <div *ngFor="let group of surgicalHistory.controls; let i = index" [formGroupName]="i">
                         <div class="row" style="float: left;">
-                            <button (click)="removeMedicine(i)" color="warn">-</button>
+                            <button (click)="removeSurgicalHistory(i)" color="warn">-</button>
                             <div class="row-item">
                                 <label for="surgery_date">Surgery Date:</label>
                                 <input type="text" pInputText formControlName="surgery_date"/>
@@ -136,7 +139,7 @@
 </p-card>
 
 <p-card>
-    <form [formGroup]="patientDocumentsList" (submit)="onSavePatientDocuments()">
+    <form [formGroup]="patientDocumentsList">
         <div formArrayName="patientDocuments">
             <input type="file" multiple (change)="save($event)"/>
             <div *ngFor="let group of patientDocuments.controls; let i = index" [formGroupName]="i">
@@ -156,3 +159,4 @@
     </form>
 </p-card>
 
+<button mat-flat-button color="primary" (click)="onSubmitbtnClick()">Submit</button>

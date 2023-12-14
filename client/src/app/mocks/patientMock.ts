@@ -17,11 +17,11 @@ const FAKE_PATIENT_DATA: Patient = {
             }
         ], 
         email_id: "temp@gmail.com",
-        emergency_contact: {
+        emergency_contact: [{
                 contact_no: "9999",
                 email_id: "temp@yahoo.com",
                 name: "Mitalee"
-            },
+            }],
         family_medical_history: "Has a case of diabetes",
         first_name: "Sahima",
         gender: 0,

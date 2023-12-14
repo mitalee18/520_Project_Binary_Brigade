@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Patient } from 'src/app/model/patient';
 import { FAKE_PATIENT_DATA } from 'src/app/mocks/patientMock';
-import { FormGroup, FormArray, FormControl} from '@angular/forms';
+import { FormGroup, FormArray, FormControl, FormBuilder} from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProfileService } from '../service/profile.service';
 
@@ -21,48 +21,54 @@ export class PatientProfileComponent implements OnInit{
   patientDocumentsList!: FormGroup;
 
 
-
   constructor(private router: Router,
-    private profileService: ProfileService){
-      const userString = localStorage.getItem("user_id") ?? "30000";
+    private profileService: ProfileService,
+    private formBuilder: FormBuilder){
+    
+  }
+
+  ngOnInit(): void {
+    const userString = localStorage.getItem("user_id") ?? "30000";
       const user_id = Math.floor(parseFloat(userString))
       this.profileService.getPatientProfile(user_id)
       .subscribe( 
         (response) => {
           this.patientData = response;
           console.log(this.patientData);
-      }
-  );
+          this.setFunction()
+      });
   }
+  setFunction(){
+    console.log(this.patientData);
+    this.patientDataForm = this.formBuilder.group({
+      first_name: [this.patientData.first_name],
+      last_name: [this.patientData.last_name],
+      address: [this.patientData.address],
+      dob: [this.caculateDate(this.patientData.dob ?? 1000000)],
+      age: [this.patientData.age],
+      email_id: [this.patientData.email_id],
+      gender: [this.patientData.gender === 1 ? 'Female' : 'Male'],
+      family_medical_history: [this.patientData.family_medical_history],
+      health_insurance:[this.patientData.health_insurance],
+      registration_date:[this.patientData.registration_date],
+      allergies: [this.patientData.allergies],
+      medical_conditions: [this.patientData.medical_conditions],
+      contact_no: [this.patientData.contact_no]
+  })
 
-  ngOnInit(): void {
-      this.patientDataForm = new FormGroup({
-        first_name: new FormControl(this.patientData.first_name),
-        last_name: new FormControl(this.patientData.last_name),
-        address: new FormControl(this.patientData.address),
-        dob: new FormControl(this.patientData.dob),
-        age: new FormControl(this.patientData.age),
-        email_id: new FormControl(this.patientData.email_id),
-        gender: new FormControl(this.patientData.gender),
-        family_medical_history: new FormControl(this.patientData.family_medical_history),
-        health_insurance: new FormControl(this.patientData.health_insurance),
-        registration_date: new FormControl(this.patientData.registration_date),
-        update_date: new FormControl(this.patientData.update_date),
-        allergies: new FormControl([this.patientData.allergies]),
-        medical_conditions: new FormControl([this.patientData.medical_conditions]),
-        contact_no: new FormControl(this.patientData.contact_no)
-      })
+    this.patientDataForm.get('first_name')?.setValue(this.patientData.first_name);
 
-      this.emergencyContactList = new FormGroup({
-            emergencyContact: new FormArray([
-              new FormGroup({
-                name:  new FormControl(''),
-                contact_no: new FormControl(''),
-                email_id: new FormControl('')
-              })
-            ])
-          });
+        this.emergencyContactList = new FormGroup({
+              emergencyContact: new FormArray([
+                new FormGroup({
+                  name:  new FormControl(''),
+                  contact_no: new FormControl(''),
+                  email_id: new FormControl('')
+                })
+              ])
+            });
       
+      console.log(this.patientData.emergency_contact);
       this.emergencyContactList.get('emergencyContact')?.setValue(this.patientData.emergency_contact);
       console.log('Form Data:', this.emergencyContactList.value);
 
@@ -105,9 +111,7 @@ export class PatientProfileComponent implements OnInit{
     });
     this.patientDocumentsList.get('patientDocuments')?.setValue(this.patientData.documents);
     console.log('Form Data:', this.patientDocumentsList.value);
-
   }
-
   get emergencyContact(): FormArray {
     return this.emergencyContactList?.get('emergencyContact') as FormArray;
   }
@@ -122,6 +126,15 @@ export class PatientProfileComponent implements OnInit{
 
   get patientDocuments(): FormArray{
     return this.patientDocumentsList?.get('patientDocuments') as FormArray;
+  }
+
+  caculateDate(epochTime: number): string{
+    const date = new Date(epochTime * 1000); // Convert to milliseconds
+    const mm = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const dd = String(date.getDate()).padStart(2, '0');
+    const yyyy = date.getFullYear();
+
+    return `${mm}/${dd}/${yyyy}`;
   }
 
   save(event: any): void{
@@ -141,7 +154,6 @@ export class PatientProfileComponent implements OnInit{
       )
     }
   }
-
 
   addEmergencyContact() {
     this.emergencyContact.push(
@@ -183,9 +195,11 @@ export class PatientProfileComponent implements OnInit{
 
   onSaveUser(){
     const obj = this.patientDocumentsList.value;
+    
   }
 
   onSaveEmergencyContact(){
+
 
   }
   onSavePrescibedMedication(){
@@ -196,6 +210,10 @@ export class PatientProfileComponent implements OnInit{
   }
 
   onSavePatientDocuments(){
+
+  }
+
+  onSubmitbtnClick(){
 
   }
 
