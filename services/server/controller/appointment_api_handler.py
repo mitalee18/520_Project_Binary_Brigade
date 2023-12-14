@@ -117,3 +117,21 @@ class AppointmentApiHandler:
         print('get_patient_schedule:: end')
         return {'patient_schedule': patient_schedule,
                 'patient_found_flag': patient_found_flag}
+
+    def get_doctor_patient(self, user_id):
+        doctor_id = user_id
+        doctor_found_flag = self.if_doctor_exists(doctor_id)
+        patient_details = []
+        if doctor_found_flag == 1:
+            doctor_appointments = database.query_multiple_by_id(Appointments, 'doctor_id', doctor_id)
+            for appointment in doctor_appointments:
+                patient_query = database.query_by_user_id(Patient, appointment.patient_id
+                patient = {'user_id': patient_query.user_id,
+                           'first_name': patient_query.first_name,
+                           'last_name': patient_query.last_name,
+                           'email_id': patient_query.email_id,}
+                patient_details.append(patient)
+        return {'patient_details': patient_details,
+                'doctor_found_flag': doctor_found_flag}
+
+
