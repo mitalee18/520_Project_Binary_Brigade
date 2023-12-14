@@ -39,7 +39,7 @@ class LoginDetails(db.Model):
 class Patient(db.Model):
     __tablename__ = "patient"
 
-    user_id = db.Column(db.Integer, db.Sequence('patient_seq_reg_id', start=30000, increment=1),primary_key=True)
+    user_id = db.Column(db.Integer, db.Sequence('patient_seq_reg_id', start=30021, increment=1),primary_key=True)
     first_name = db.Column(db.String(128))
     last_name = db.Column(db.String(128))
     email_id = db.Column(db.String(128), unique=True, nullable=False)
@@ -110,7 +110,7 @@ class PatientDocument(db.Model):
 class Doctor(db.Model):
     __tablename__ = "doctor"
 
-    user_id = db.Column(db.Integer, db.Sequence('doctor_seq_reg_id', start=600, increment=1),primary_key=True)
+    user_id = db.Column(db.Integer, db.Sequence('doctor_seq_reg_id', start=611, increment=1),primary_key=True)
     first_name = db.Column(db.String(128))
     last_name = db.Column(db.String(128))
     email_id = db.Column(db.String(128), unique=True, nullable=False)
@@ -145,7 +145,7 @@ class Doctor(db.Model):
 class Admin(db.Model):
     __tablename__ = "admin"
 
-    user_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer,db.Sequence('admin_seq_reg_id', start=6, increment=1), primary_key=True)
     first_name = db.Column(db.String(128))
     last_name = db.Column(db.String(128))
     email_id = db.Column(db.String(128), unique=True, nullable=False)
@@ -165,7 +165,7 @@ class Admin(db.Model):
 class Appointments(db.Model):
     __tablename__ = "appointments"
 
-    appointment_id = db.Column(db.Integer,db.Sequence('appointment_seq_reg_id', start=1, increment=1), primary_key=True)
+    appointment_id = db.Column(db.Integer,db.Sequence('appointment_seq_reg_id', start=21, increment=1), primary_key=True)
     patient_id = db.Column(db.Integer, db.ForeignKey('patient.user_id'), nullable=False)
     doctor_id = db.Column(db.Integer, db.ForeignKey('doctor.user_id'), nullable=False)
     datetime = db.Column(db.Integer, nullable=False)
