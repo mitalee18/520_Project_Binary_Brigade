@@ -3,6 +3,7 @@ import json
 from sqlalchemy.dialects.postgresql import JSON, ARRAY
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
+import time
 
 
 db = SQLAlchemy()
@@ -67,6 +68,7 @@ class Patient(db.Model):
         self.gender = gender
         self.health_insurance = health_insurance
         self.update_date = update_date
+        self.registration_date = int(time.time())
 
 class PatientMedicalHistory(db.Model):
     __tablename__ = "patient_medical_history"

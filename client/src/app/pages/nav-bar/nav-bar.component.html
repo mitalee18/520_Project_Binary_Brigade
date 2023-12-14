@@ -1,10 +1,10 @@
 <mat-toolbar color="primary">
     <span>My App</span>
     <span class="example-spacer"></span>
-    <button mat-icon-button class="example-icon material-icon" aria-label="Example icon-button with settings icon">
+    <button mat-icon-button class="example-icon material-icon" aria-label="Example icon-button with settings icon" (click)="goToProfile()">
       <mat-icon>face</mat-icon>
     </button>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" (click)="logout()">
       <mat-icon>logout</mat-icon>
     </button>
   </mat-toolbar>
