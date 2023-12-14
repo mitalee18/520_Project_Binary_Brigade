@@ -1,0 +1,54 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .calender,
+  .buttons-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px; /* Adjust as needed */
+  }
+  
+  .calender {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .buttons-container {
+    flex-wrap: wrap;
+  }
+  
+  .appointment {
+    flex-basis: calc(33.333% - 20px); /* Smaller width for the buttons with adjusted margin */
+    margin: 10px; /* Provides more spacing between buttons */
+    max-width: 120px; /* Set a max-width for larger screens if you want all buttons to be the same width */
+  }
+  
+  button {
+    width: 100%; /* Makes button expand to fill the .appointment div */
+    padding: 6px 12px; /* Smaller padding for the buttons */
+    font-size: 14px; /* Smaller font-size for the text inside the buttons */
+    margin-bottom: 10px; /* Space below each button */
+    text-overflow: ellipsis; /* Ensures text doesn't overflow */
+    overflow: hidden; /* Hide overflow */
+    white-space: nowrap; /* Keep the text in a single line */
+  }
+  
+  /* Media query to handle smaller screens, adjusting to a single column */
+  @media (max-width: 768px) {
+    .appointment {
+      flex-basis: 100%;
+      max-width: none; /* Allows the button to expand to full width on smaller screens */
+    }
+  }
+
+  .submit-btn {
+    padding: 6px 12px; /* Smaller padding */
+    font-size: 0.8rem; /* Smaller font size */
+    margin-top: 10px; /* Spacing above the submit button */
+    max-width: 100px; /* Maximum width for the submit button */
+  }

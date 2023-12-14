@@ -1,8 +1,6 @@
-import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import {  Router } from '@angular/router';
 import { SessionService } from '../service/session.service';
-import { Subscription } from 'rxjs';
 import { OnInit } from '@angular/core';
 import { FormBuilder, NgForm } from '@angular/forms';
 import { Login } from '../../model/login';

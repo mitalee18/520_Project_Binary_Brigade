@@ -46,4 +46,13 @@ export class NavBarComponent {
     this.router.navigate(['/doctor-table']);
   }
 
+  homeClick(){
+    if(localStorage.getItem('user_type') === '1'){
+      this.router.navigate(['/doctor-dashboard']);
+    }
+    else if(localStorage.getItem('user_type') === '0'){
+      this.router.navigate(['/patient-dashboard']);
+    }
+  }
+
 }
