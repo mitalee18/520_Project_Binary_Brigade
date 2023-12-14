@@ -98,6 +98,25 @@ def get_profile():
                             "api/user/get-profile")
     return jsonify(profile), 200
 
+@user_api.route('/edit-profile', methods=['POST'])
+@cross_origin(origin='localhost')
+def edit_profile():
+    try:
+        user_type = request.json.get('user_type')
+        print(user_type, type(user_type))
+        if user_type==0:
+            profile = patient_api_handler.edit_profile()
+        elif user_type==1:
+            profile = doctor_api_handler.edit_profile()
+        elif user_type==2:
+            profile = admin_api_handler.edit_profile()
+    except Exception as e:
+        return handle_error(e,
+                            "Internal Server Error: Profile editing unsuccessful.",
+                            f"Error[{type(e)}]{str(e)}",
+                            "api/user/edit-profile")
+    return jsonify(profile), 200
+
 @user_api.app_errorhandler(Exception)
 def handle_error(error, messg="Unknown Error", error_trace="Unknown Error", api_name="user_api/", code=500):
     response = {
