@@ -169,15 +169,21 @@ class PatientApiHandler:
         database.delete_instance_by_user_id(PatientDocument, user_id)
         print('delete_patient_document:: end')
         return 1
-    
+
+    def if_patient_exists(self, email_id):
+        result = database.query_multiple_by_id(Patient, 'email_id', email_id)
+        if len(result) > 0:
+            return 1
+        else:
+            return 0
+
     def signup(self):
         data = json.loads(request.data.decode())
         email_id = data["email_id"]
         update_date = int(time.time())
-
         database.add_instance(Patient, email_id=email_id, update_date=update_date, first_name=None, last_name=None,
-                              contact_no=None, address=None, age=None, dob=None, gender=None, user_id=None,
-                              emergency_contact='{}', health_insurance=None)
+                                  contact_no=None, address=None, age=None, dob=None, gender=None, user_id=None,
+                                  emergency_contact='{}', health_insurance=None)
 
         query_response = database.query(Patient, email_id)
         print(query_response)
