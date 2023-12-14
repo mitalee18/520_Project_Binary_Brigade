@@ -48,3 +48,12 @@ export interface Doctor{
     update_date?:number,
 
 }
+
+export interface GetAllDoctor{
+    email_id : string;
+    first_name : string,
+    keywords : string,
+    last_name : string,
+    qualifications : string,
+    user_id : number
+}

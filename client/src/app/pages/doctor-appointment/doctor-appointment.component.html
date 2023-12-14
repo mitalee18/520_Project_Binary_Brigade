@@ -1,0 +1,14 @@
+<app-nav-bar></app-nav-bar>
+<div class="container">
+    <div class="calender">
+        <p-calendar #datePicker [(ngModel)]="selectedDate"   [showIcon]="true" type="text" dateFormat="yy-mm-dd"></p-calendar>
+        <button class="submit-btn" mat-raised-button color="basic" (click)="onDateSelected(selectedDate)">submit</button>
+    </div>
+    <div class="buttons-container">
+    <div class="appointment" *ngFor="let timeSlot of availableTimeSlotsFormatted" (click)="onTimeSlotSelected(timeSlot)">
+        <button mat-raised-button color="primary">{{ timeSlot }}</button>
+    </div>
+    </div>
+</div>
+
+  

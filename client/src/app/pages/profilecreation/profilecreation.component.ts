@@ -41,7 +41,7 @@ export class ProfilecreationComponent implements OnInit{
           address: [''],
           dob: [''],
           age: [''],
-          email_id: localStorage.getItem('email'),
+          email_id: [localStorage.getItem('email_id')],
           gender: [''],
           family_medical_history: [''],
           health_insurance:[''],
@@ -49,7 +49,8 @@ export class ProfilecreationComponent implements OnInit{
           update_date: [''],
           allergies: [''],
           medical_conditions: [''],
-          contact_no: ['']
+          contact_no: [''],
+          prescribed_medication: ['']
       })
       this.patientDataForm.get('email_id')?.setValue(localStorage.getItem('email_id'));
 
@@ -260,6 +261,7 @@ export class ProfilecreationComponent implements OnInit{
       response => {
              console.log("User is created in");
              console.log(response)
+             this.router.navigateByUrl("/patient-dashboard")
             
          },
       error =>{
