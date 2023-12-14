@@ -99,3 +99,17 @@ class DoctorApiHandler:
         doctor_details = self.get_doctor(user_id)
         print('get_profile:: end')
         return doctor_details
+
+    def get_all_doctor(self):
+        print('get_all_doctor:: start')
+        doctor_db_list = database.get_all(Doctor)
+        doctor_list = []
+        for doctor in doctor_db_list:
+            doctor_list.append({'user_id': doctor.user_id,
+                                'first_name': doctor.first_name,
+                                'last_name': doctor.last_name,
+                                'email_id': doctor.email_id,
+                                'qualifications': doctor.qualifications,
+                                'keywords': doctor.keywords})
+        print('get_all_doctor:: end')
+        return doctor_list
