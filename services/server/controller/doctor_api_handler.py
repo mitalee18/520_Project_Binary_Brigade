@@ -99,4 +99,3 @@ class DoctorApiHandler:
         doctor_details = self.get_doctor(user_id)
         print('get_profile:: end')
         return doctor_details
-

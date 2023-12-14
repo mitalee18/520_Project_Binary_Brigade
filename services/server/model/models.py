@@ -167,13 +167,12 @@ class Admin(db.Model):
 class Appointments(db.Model):
     __tablename__ = "appointments"
 
-    appointment_id = db.Column(db.Integer, primary_key=True)
+    appointment_id = db.Column(db.Integer,db.Sequence('appointment_seq_reg_id', start=1, increment=1), primary_key=True)
     patient_id = db.Column(db.Integer, db.ForeignKey('patient.user_id'), nullable=False)
     doctor_id = db.Column(db.Integer, db.ForeignKey('doctor.user_id'), nullable=False)
     datetime = db.Column(db.Integer, nullable=False)
 
-    def __init__(self, appointment_id, patient_id,  doctor_id, datetime):
-        self.appointment_id = appointment_id
+    def __init__(self, patient_id,  doctor_id, datetime):
         self.patient_id = patient_id
         self.doctor_id = doctor_id
         self.datetime = datetime
