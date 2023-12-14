@@ -19,17 +19,23 @@ def hello():
 
 @patient_api.route('/get-patient-schedule', methods=['GET'])
 @cross_origin(origin='localhost')
-def fetch():
+def get_patient_schedule():
     try:
         user_id = int(request.args.get('user_id'))  # read into integer type
         all_patients = appointment_api_handler.get_patient_schedule(user_id)
+        if all_patients['patient_found_flag'] == 0:
+            return handle_error(Exception('Bad Request: User does not exist.'),
+                                'Bad Request: User does not exist.',
+                                'Bad Request: User does not exist.',
+                                "api/patient/get-patient-schedule",
+                                400)
     except Exception as e:
         return handle_error(e,
                             'Internal Server Error: Please try again.',
                             f"Error[{type(e)}]{str(e)}",
                             "api/patient/get-patient-schedule",
                             500)
-    return jsonify(all_patients), 200
+    return jsonify(all_patients['patient_schedule']), 200
 
 
 @patient_api.app_errorhandler(Exception)
