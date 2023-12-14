@@ -4,46 +4,24 @@
     <div class="block-div">
         <p-card header="Upcoming Appointments" class="col-md-4">
             <div class="card xl:flex xl:justify-content-center">
-                <p-orderList [value]="appointmentInfo" [listStyle]="{ height: '25rem', width: '15rem' }" header="Appointments">
-                    <ng-template let-appointmentInfo pTemplate="item">
+                <p-orderList [value]="scheduleData" [listStyle]="{ height: '25rem', width: '23rem' }" header="Upcoming Appointments">
+                    <ng-template let-scheduleData pTemplate="item">
                         <div class="flex flex-wrap p-2 align-items-center gap-3">
                             <div class="flex-2 flex flex-column gap-2">
-                                <span class="font-bold">{{ appointmentInfo.name }}</span>
-                                <div class="flex align-items-center gap-2">
+                                <span class="font-bold">{{ scheduleData.datetime }}</span>
+                                <div class="flex align-items-center gap-2" style="width: 100px;">
                                     <i class="pi pi-tag text-sm"></i>
-                                    <span>{{ appointmentInfo.time }}</span>
+                                    <span>{{ scheduleData.doctor_name }}</span>
                                 </div>
+                                <span>
+                                    <p-button class="cancel-button" (click)="cancelAppointment(scheduleData.appointment_id)" label="Cancel"severity="danger"></p-button>
+                                </span>
+                                
                             </div>
                         </div>
                     </ng-template>
                 </p-orderList>
             </div>
-        </p-card>
-
-        <p-card header="Current Patients" class="col-md-4">
-            <div class="card xl:flex xl:justify-content-center">
-                <p-orderList [value]="currentPatients" [listStyle]="{ height: '25rem', width: '15rem' }" header="Current Patients">
-                    <ng-template let-currentPatients pTemplate="item">
-                        <div class="flex flex-wrap p-2 align-items-center gap-3">
-                            <div class="flex-2 flex flex-column gap-2">
-                                <span class="font-bold">{{ currentPatients.first_name }}</span>&nbsp;
-                                <span>{{ currentPatients.last_name }}</span>
-                                <div class="flex align-items-center gap-2">
-                                    <i class="pi pi-tag text-sm"></i>
-                                    <span>{{ currentPatients.email }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </ng-template>
-                </p-orderList>
-            </div>
-        </p-card>
-
-
-        <p-card header="Profile" class="col-md-4">
-            <p >
-               Name
-            </p>
         </p-card>
     </div>
 </div>

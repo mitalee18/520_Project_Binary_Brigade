@@ -70,3 +70,15 @@ export interface CreatePatientRequest{
     documents?: string;
     user_type?: number;
 }
+
+export interface GetPatientSchedule{
+    appointment_id: number;
+    datetime: number;
+    doctor_name: string;
+}
+
+export interface PatientSchedule{
+    appointment_id: number;
+    datetime: string;
+    doctor_name:string;
+}

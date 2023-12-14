@@ -6,3 +6,40 @@
 .col-md-4{
     margin-right: 20px;
 }
+
+.cancel-button{
+  padding-left: 50%;
+}
+
+/* Custom styles for the cancel button */
+.custom-cancel-button {
+  font-size: 12px; /* Smaller font size */
+  padding: 2px 6px; /* Smaller padding to reduce the overall size */
+  background-color: #007bff; /* Example blue color */
+  border: 1px solid #007bff; /* Same color border */
+  border-radius: 4px; /* Rounded corners, adjust as needed */
+}
+
+/* Style for the button text */
+.custom-cancel-button .p-button-label {
+  color: white; /* White text color */
+}
+
+/* Additional style adjustments for hover state */
+.custom-cancel-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  border-color: #0056b3; /* Same for border */
+}
+
+.container {
+  display: flex;
+  justify-content: center; /* Centers the child horizontally */
+  align-items: center; /* Centers the child vertically */
+  height: 100vh; /* Make sure the container is full height of the viewport */
+}
+
+.block-div {
+  display: flex;
+  justify-content: center; /* This will center the .block-div content */
+  width: 100%; /* Use full width to center content within */
+}

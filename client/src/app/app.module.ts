@@ -32,6 +32,8 @@ import { TableModule } from 'primeng/table';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DoctorAppointmentComponent } from './pages/doctor-appointment/doctor-appointment.component';
 import {ImageModule} from 'primeng/image';
+import { ButtonModule } from 'primeng/button';
+
 
 
 @NgModule({
@@ -71,7 +73,8 @@ import {ImageModule} from 'primeng/image';
     MatRadioModule,
     TableModule,
     MultiSelectModule,
-    ImageModule
+    ImageModule,
+    ButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
