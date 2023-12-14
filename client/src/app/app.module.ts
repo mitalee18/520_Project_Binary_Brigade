@@ -27,6 +27,13 @@ import {MatRadioModule} from '@angular/material/radio';
 import { PatientDashboardComponent } from './pages/patient-dashboard/patient-dashboard.component';
 import { PatientProfileComponent } from './pages/patient-profile/patient-profile.component';
 import { DoctorProfileCreationComponent } from './pages/doctor-profile-creation/doctor-profile-creation.component';
+import { DoctorTableComponent } from './pages/doctor-table/doctor-table.component';
+import { TableModule } from 'primeng/table';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { DoctorAppointmentComponent } from './pages/doctor-appointment/doctor-appointment.component';
+import {ImageModule} from 'primeng/image';
+import { ButtonModule } from 'primeng/button';
+
 
 
 @NgModule({
@@ -40,7 +47,9 @@ import { DoctorProfileCreationComponent } from './pages/doctor-profile-creation/
     DoctorProfileComponent,
     PatientDashboardComponent,
     PatientProfileComponent,
-    DoctorProfileCreationComponent
+    DoctorProfileCreationComponent,
+    DoctorTableComponent,
+    DoctorAppointmentComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +70,11 @@ import { DoctorProfileCreationComponent } from './pages/doctor-profile-creation/
     NavBarComponent,
     OrderListModule,
     MatFormFieldModule,
-    MatRadioModule
+    MatRadioModule,
+    TableModule,
+    MultiSelectModule,
+    ImageModule,
+    ButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

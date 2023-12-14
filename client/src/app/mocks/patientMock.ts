@@ -1,4 +1,4 @@
-import { Patient,CreatePatientRequest } from "../model/patient"
+import { Patient,CreatePatientRequest,GetPatientSchedule } from "../model/patient"
 
 export 
 
@@ -75,6 +75,32 @@ const FAKE_PATIENT_REQUEST_DATE: CreatePatientRequest = {
         "documents": "[{'description': 'Age-rel osteopor w current path fx, unsp femur, sequela', 'file_link': 'http://dunnyimage.com/image7-png','file_name': 'xray', 'user_id': 30008}]",
         "surgical_history": "[{'doctor_name': 'Dr. Smith','surgery_date': 1604188800,'surgery_name': 'Appendix Removal'}]",
     }
+
+export const FAKE_PATIENT_APPOINTMENT_DATA: GetPatientSchedule[] = [
+    {
+        "appointment_id": 1,
+        "datetime": 1698825600,
+        "doctor_name": "David Muller"
+    },
+    {
+        "appointment_id": 2,
+        "datetime": 1702580202,
+        "doctor_name": "Harry Potter"
+    },
+    {
+        "appointment_id": 3,
+        "datetime": 1702580202,
+        "doctor_name": "James Bond"
+    },
+    {
+        "appointment_id": 4,
+        "datetime": 1702580202,
+        "doctor_name": "Haryy Potter"
+    },
+
+
+]
+
 
 
 

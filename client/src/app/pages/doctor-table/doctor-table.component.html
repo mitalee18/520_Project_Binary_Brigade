@@ -1,0 +1,81 @@
+<app-nav-bar></app-nav-bar>
+
+<p-table
+    #dt1
+    [value]="doctors"
+    dataKey="id"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [loading]="loading"
+    [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [globalFilterFields]="['first_name', 'last_name', 'keywords', 'qualifications']"
+>
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+            <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text"  (input)="dt1.filterGlobal($event.target, 'contains')"  placeholder="Search keyword" />
+            </span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="min-width:15rem">
+                <div class="flex align-items-center">
+                    First Name
+                    <p-columnFilter type="text" field="first_name" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th style="min-width:15rem">
+                <div class="flex align-items-center">
+                    Last Name
+                    <p-columnFilter type="text" field="last_name" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th style="min-width:15rem">
+                <div class="flex align-items-center">
+                   Keywords
+                    <p-columnFilter type="text" field="keywords" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th style="min-width:15rem">
+                <div class="flex align-items-center">
+                    Qualifications
+                    <p-columnFilter type="text" field="qualifications" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th style="min-width: 15rem;">
+                <div  class="flex align-items-center">
+                    Schedule Appointment
+                </div>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-doctor>
+        <tr>
+            <td>
+                {{ doctor.first_name }}
+            </td>
+            <td>
+                <span class="ml-1 vertical-align-middle">{{ doctor.last_name }}</span>
+            </td>
+            <td>
+                 <span class="ml-1 vertical-align-middle">{{ doctor.keywords }}</span>
+            </td>
+            <td>
+                 <span class="ml-1 vertical-align-middle">{{ doctor.qualifications }}</span>
+            </td>
+            <td>
+                <button mat-flat-button (click)="openDoctorAppointments(doctor.user_id)" color="primary">Schedule</button>
+           </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="7">No doctors found.</td>
+        </tr>
+    </ng-template>
+</p-table>
