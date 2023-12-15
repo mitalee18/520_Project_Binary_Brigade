@@ -3,13 +3,13 @@ from sqlalchemy import create_engine
 import json, ast
 
 engine = create_engine('postgresql://hello_flask:hello_flask@localhost:5434/hello_flask_dev')
-login_details_csv_file_path = '/Users/mitaleeminde/Documents/520/Project/latest_project2/520_Project_Binary_Brigade/services/server/data/login_details.csv'
-patient_csv_file_path = '/Users/mitaleeminde/Documents/520/Project/latest_project2/520_Project_Binary_Brigade/services/server/data/patient.csv'
-admin_csv_file_path = '/Users/mitaleeminde/Documents/520/Project/latest_project2/520_Project_Binary_Brigade/services/server/data/admin.csv'
-doctor_csv_file_path = '/Users/mitaleeminde/Documents/520/Project/latest_project2/520_Project_Binary_Brigade/services/server/data/doctor.csv'
-patient_medical_history_csv_file_path = '/Users/mitaleeminde/Documents/520/Project/latest_project2/520_Project_Binary_Brigade/services/server/data/patient_medical_history.csv'
-patient_document_csv_path = '/Users/mitaleeminde/Documents/520/Project/latest_project2/520_Project_Binary_Brigade/services/server/data/patient_document.csv'
-appointments_csv_path = '/Users/mitaleeminde/Documents/520/Project/latest_project2/520_Project_Binary_Brigade/services/server/data/appointments.csv'
+login_details_csv_file_path = '../data/login_details.csv'
+patient_csv_file_path = '../data/patient.csv'
+admin_csv_file_path = '../data/admin.csv'
+doctor_csv_file_path = '../data/doctor.csv'
+patient_medical_history_csv_file_path = '../data/patient_medical_history.csv'
+patient_document_csv_path = '../data/patient_document.csv'
+appointments_csv_path = '../data/appointments.csv'
 
 
 def read_csv_and_insert_to_db(table_name,csv_file_path):
