@@ -1,5 +1,12 @@
 # 520_Project_Binary_Brigade
 
+# About this project
+
+Description: The Patient Tracker project encompasses a comprehensive set of functions, including appointment scheduling, patient record management, and dashboard view. The primary audience for the Patient Tracker project includes patients, healthcare providers and administrators.
+
+Motivation: The motivation behind the Patient Tracker project is to rectify the significant drawbacks of manual paperwork in healthcare. It addresses the inefficiencies of manual healthcare paperwork, which consumes resources and poses risks to patient safety due to data entry errors. It seeks to expedite the transition to digital systems to enhance data accuracy, provide timely information access, and ensure secure patient record management.
+
+
 # Client-Server Architecture
 
 This project follows a client-server architecture, where the frontend (client) and backend (server API) components are kept
@@ -27,14 +34,13 @@ server API using HTTP requests, enabling a seamless interaction between the user
     * Run `\dt` to see the tables
     * Run `\q` to exit the database
 6. Run `docker-compose down -v ` to remove the containers and volumes
-   Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+7. Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files. (this will load login page)
 
 ## Client Setup
 1. All files related to frontend are in client folder
 2. Run `ng generate component component-name` to generate a new component.
 3. Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 4. Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-5. Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
 ## Relevant Server Files
 1. `Dockerfile` - Containerises the flask based server
