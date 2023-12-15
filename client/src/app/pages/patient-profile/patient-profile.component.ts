@@ -24,8 +24,7 @@ export class PatientProfileComponent implements OnInit{
 
   constructor(private router: Router,
     private profileService: ProfileService,
-    private formBuilder: FormBuilder){
-    
+     ){
   }
 
   ngOnInit(): void {
@@ -43,21 +42,34 @@ export class PatientProfileComponent implements OnInit{
 
 
   setFunction(){
-    this.patientDataForm = this.formBuilder.group({
-      last_name: [this.patientData.last_name],
-      first_name: [this.patientData.first_name],
-      address: [this.patientData.address],
-      dob: [this.caculateDate(this.patientData.dob ?? 1000000)],
-      age: [this.patientData.age],
-      email_id: [this.patientData.email_id],
-      gender: [this.patientData.gender === 1 ? 'Female' : 'Male'],
-      family_medical_history: [this.patientData.family_medical_history],
-      health_insurance:[this.patientData.health_insurance],
-      registration_date:[this.patientData.registration_date],
-      allergies: [this.patientData.allergies],
-      medical_conditions: [this.patientData.medical_conditions],
-      contact_no: [this.patientData.contact_no]
+    this.patientDataForm = new FormGroup({
+      last_name: new FormControl(''),
+      first_name: new FormControl(''),
+      address: new FormControl(''),
+      dob: new FormControl(''),
+      age: new FormControl(''),
+      email_id: new FormControl(''),
+      gender: new FormControl(''),
+      family_medical_history:new FormControl(''),
+      health_insurance:new FormControl(''),
+      registration_date:new FormControl(''),
+      allergies: new FormControl(''),
+      medical_conditions: new FormControl(''),
+      contact_no:new FormControl('')
   })
+  this.patientDataForm.get('last_name')?.setValue(this.patientData.last_name);
+  this.patientDataForm.get('first_name')?.setValue(this.patientData.first_name);
+  this.patientDataForm.get('address')?.setValue(this.patientData.address);
+  this.patientDataForm.get('dob')?.setValue(this.patientData.dob);
+  this.patientDataForm.get('age')?.setValue(this.patientData.age);
+  this.patientDataForm.get('email_id')?.setValue(this.patientData.email_id);
+  this.patientDataForm.get('gender')?.setValue(this.patientData.gender === 1 ? 'Female' : 'Male');
+  this.patientDataForm.get('family_medical_history')?.setValue(this.patientData.family_medical_history);
+  this.patientDataForm.get('health_insurance')?.setValue(this.patientData.health_insurance);
+  this.patientDataForm.get('registration_date')?.setValue(this.patientData.registration_date);
+  this.patientDataForm.get('allergies')?.setValue(this.patientData.allergies);
+  this.patientDataForm.get('medical_conditions')?.setValue(this.patientData.medical_conditions);
+  this.patientDataForm.get('contact_no')?.setValue(this.patientData.contact_no);
 
     this.emergencyContactList = new FormGroup({
           emergencyContact: new FormArray([
