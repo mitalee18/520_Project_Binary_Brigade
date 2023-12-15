@@ -8,6 +8,7 @@ import json
 import time
 from passlib.hash import pbkdf2_sha256
 from flask_jwt_extended import (create_access_token)
+from flask import current_app as app
 
 class UserApiHandler:
 

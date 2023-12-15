@@ -11,12 +11,16 @@ from config.config import SwaggerConfig
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS, cross_origin
 from waitress import serve
+import logging
 
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object("config.config.DBConfig")
+    # Configure the logging
+    logging.basicConfig(filename='app.log', level=logging.INFO)
     print(app.config)
+
 
     #blueprint registered
     app.register_blueprint(user_api)

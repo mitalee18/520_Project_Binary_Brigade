@@ -8,6 +8,7 @@ import json
 import time
 import datetime
 import helper_functions as hf
+from flask import current_app as app
 
 class PatientApiHandler:
     def default(self):
@@ -17,6 +18,7 @@ class PatientApiHandler:
 
     def add_patient(self, data):
         print('add_patient:: start')
+        app.logger.info("add_patient:: start")
         user_id = data['user_id']
         first_name = data['first_name']
         last_name = data['last_name']
@@ -30,17 +32,21 @@ class PatientApiHandler:
         gender = data['gender']
         update_date = int(datetime.datetime.utcnow().strftime('%s'))
         print('add_patient:: inserting to db')
+        app.logger.info("add_patient:: inserting to db")
         database.edit_instance(Patient, user_id = user_id, first_name=first_name, last_name=last_name,
                               email_id=email_id, contact_no=contact_no,
                               emergency_contact=emergency_contact,
                               address=address, age=age, dob=dob, health_insurance=health_insurance,
                               gender=gender, update_date=update_date)
         print('add_patient:: inserted to db')
+        app.logger.info("add_patient:: inserted to db")
         print('add_patient:: end')
+        app.logger.info("add_patient:: end")
         return 1
 
     def get_patient(self, user_id):
         print('get_patient:: start')
+        app.logger.info("get_patient:: start")
         patient = database.query_by_user_id(Patient, user_id)
         emergency_contact = hf.convert_dict_to_list_of_json(patient.emergency_contact)
         patient_details = {
@@ -59,21 +65,27 @@ class PatientApiHandler:
             "health_insurance": patient.health_insurance
         }
         print('get_patient:: end')
+        app.logger.info("get_patient:: end")
         return patient_details
 
     def delete_patient(self, user_id):
         print('delete_patient:: start')
+        app.logger.info("delete_patient:: start")
         database.delete_instance_by_user_id(Patient, user_id)
         print('delete_patient:: end')
+        app.logger.info("delete_patient:: end")
         return 1
     def get_patient_user_id(self, email_id):
         print('get_patient_user_id:: start')
+        app.logger.info("get_patient_user_id:: start")
         patient = database.query(Patient, email_id)
         print('get_patient_user_id:: end')
+        app.logger.info("get_patient_user_id:: end")
         return patient.user_id
 
     def add_patient_medical_history(self, data):
         print('add_patient_medical_history:: start')
+        app.logger.info("add_patient_medical_history:: start")
         user_id = data['user_id']
         allergies = data['allergies']
         medical_conditions = data['medical_conditions']
@@ -82,11 +94,14 @@ class PatientApiHandler:
         family_medical_history = data['family_medical_history']
         update_date = int(datetime.datetime.utcnow().strftime('%s'))
         print('add_patient_medical_history:: inserting to db')
+        app.logger.info("add_patient_medical_history:: inserting to db")
         database.add_instance(PatientMedicalHistory, user_id=user_id, allergies=allergies, medical_conditions=medical_conditions,
                               prescribed_medication=prescribed_medication, surgical_history=surgical_history,
                               family_medical_history=family_medical_history, update_date=update_date)
         print('add_patient_medical_history:: inserted to db')
+        app.logger.info("add_patient_medical_history:: inserted to db")
         print('add_patient_medical_history:: end')
+        app.logger.info("add_patient_medical_history:: end")
         return 1
     # Dummy payload for testing
     # patient_medical_payload = {'user_id': '30030', 'allergies': 'peanuts,sesame',
@@ -97,6 +112,7 @@ class PatientApiHandler:
 
     def get_patient_medical_history(self, user_id):
         print('get_patient_medical_history:: start')
+        app.logger.info("get_patient_medical_history:: start")
         patient_medical_history = database.query_by_user_id(PatientMedicalHistory, user_id)
         allergies = hf.convert_comma_seperated_string_to_list(patient_medical_history.allergies)
         medical_conditions = hf.convert_comma_seperated_string_to_list(patient_medical_history.medical_conditions)
@@ -112,10 +128,12 @@ class PatientApiHandler:
             "update_date": patient_medical_history.update_date
         }
         print('get_patient_medical_history:: end')
+        app.logger.info("get_patient_medical_history:: end")
         return patient_medical_history_details
 
     def edit_patient_medical_history(self, data):
         print('edit_patient_medical_history:: start')
+        app.logger.info("edit_patient_medical_history:: start")
         user_id = data['user_id']
         allergies = data['allergies']
         medical_conditions = data['medical_conditions']
@@ -124,41 +142,53 @@ class PatientApiHandler:
         family_medical_history = data['family_medical_history']
         update_date = int(datetime.datetime.utcnow().strftime('%s'))
         print('edit_patient_medical_history:: inserting to db')
+        app.logger.info("edit_patient_medical_history:: inserting to db")
         database.edit_instance(PatientMedicalHistory, user_id=user_id, allergies=allergies, medical_conditions=medical_conditions,
                               prescribed_medication=prescribed_medication, surgical_history=surgical_history,
                               family_medical_history=family_medical_history, update_date=update_date)
         print('edit_patient_medical_history:: inserted to db')
+        app.logger.info("edit_patient_medical_history:: inserted to db")
         print('edit_patient_medical_history:: end')
+        app.logger.info("edit_patient_medical_history:: end")
         return 1
 
     def delete_patient_medical_history(self, user_id):
         print('delete_patient_medical_history:: start')
+        app.logger.info("delete_patient_medical_history:: start")
         try:
             database.delete_instance_by_user_id(PatientMedicalHistory, user_id)
         except Exception as e:
             raise e
         print('delete_patient_medical_history:: end')
+        app.logger.info("delete_patient_medical_history:: end")
         return 1
 
     def add_patient_document(self, data):
         print('add_patient_document:: start')
+        app.logger.info("add_patient_document:: start")
         try:
             # get the documents from the payload
             print(data['documents'], type(data['documents']))
+            app.logger.info(data['documents'], type(data['documents']))
             documents = hf.convert_string_of_list_of_json_to_list_of_json(data['documents'])
             print(documents)
+            app.logger.info(documents)
             for document in documents:
                 print(document)
+                app.logger.info(document)
                 user_id = document['user_id']
                 file_link = document['file_link']
                 file_name = document['file_name']
                 description = document['description']
                 update_date = int(datetime.datetime.utcnow().strftime('%s'))
                 print('add_patient_document:: inserting to db')
+                app.logger.info("add_patient_document:: inserting to db")
                 database.add_instance(PatientDocument, user_id=user_id, file_link=file_link,
                                       file_name=file_name, description=description, update_date=update_date)
                 print('add_patient_document:: inserted to db')
+                app.logger.info("add_patient_document:: inserted to db")
             print('add_patient_document:: end')
+            app.logger.info("add_patient_document:: end")
         except Exception as e:
             print(e)
             raise e
@@ -168,6 +198,7 @@ class PatientApiHandler:
 
     def get_patient_document(self, user_id):
         print('get_patient_document:: start')
+        app.logger.info("get_patient_document:: start")
         patient_document = database.query_multiple_by_user_id(PatientDocument, user_id)
         patient_document_details = []
         for document in patient_document:
@@ -180,15 +211,19 @@ class PatientApiHandler:
                 "update_date": document.update_date
             })
         print('get_patient_document:: end')
+        app.logger.info("get_patient_document:: end")
         return patient_document_details
 
     def edit_patient_document(self, data):
         print('edit_patient_document:: start')
+        app.logger.info("edit_patient_document:: start")
         try:
             # get the documents from the payload
             print(data['documents'], type(data['documents']))
+            app.logger.info(data['documents'], type(data['documents']))
             documents = hf.convert_string_of_list_of_json_to_list_of_json(data['documents'])
             print(documents)
+            app.logger.info(documents)
             for document in documents:
                 print(document)
                 user_id = document['user_id']
@@ -197,10 +232,13 @@ class PatientApiHandler:
                 description = document['description']
                 update_date = int(datetime.datetime.utcnow().strftime('%s'))
                 print('edit_patient_document:: inserting to db')
+                app.logger.info("edit_patient_document:: inserting to db")
                 database.add_instance(PatientDocument, user_id=user_id, file_link=file_link,
                                       file_name=file_name, description=description, update_date=update_date)
                 print('edit_patient_document:: inserted to db')
+                app.logger.info("edit_patient_document:: inserted to db")
             print('edit_patient_document:: end')
+            app.logger.info("edit_patient_document:: end")
         except Exception as e:
             print(e)
             raise e
@@ -208,8 +246,10 @@ class PatientApiHandler:
 
     def delete_patient_document(self, user_id):
         print('delete_patient_document:: start')
+        app.logger.info("delete_patient_document:: start")
         database.delete_instance_by_user_id(PatientDocument, user_id)
         print('delete_patient_document:: end')
+        app.logger.info("delete_patient_document:: end")
         return 1
 
     def if_patient_exists(self, email_id):
@@ -229,10 +269,12 @@ class PatientApiHandler:
 
         query_response = database.query(Patient, email_id)
         print(query_response)
+        app.logger.info(query_response)
         return query_response
 
     def create_profile(self):
         print('create_profile:: start')
+        app.logger.info("create_profile:: start")
         data = json.loads(request.data.decode())
         # Add to patient table
         self.add_patient(data)
@@ -252,6 +294,7 @@ class PatientApiHandler:
             self.delete_patient(data['user_id'])
             raise e
         print('create_profile:: end')
+        app.logger.info("create_profile:: end")
         return 1
 
     # Dummy payload for testing
@@ -266,16 +309,21 @@ class PatientApiHandler:
 
     def get_profile(self, user_id):
         print('get_profile:: start')
+        app.logger.info("get_profile:: start")
         patient_details = self.get_patient(user_id)
         print(type(patient_details['emergency_contact']))
+        app.logger.info(type(patient_details['emergency_contact']))
         patient_medical_history_details = self.get_patient_medical_history(user_id)
         print(type(patient_medical_history_details['prescribed_medication']))
+        app.logger.info(type(patient_medical_history_details['prescribed_medication']))
         patient_document_details = self.get_patient_document(user_id)
         print('get_profile:: end')
+        app.logger.info("get_profile:: end")
         return patient_details | patient_medical_history_details | {'documents': patient_document_details}
 
     def edit_profile(self):
         print('edit_profile:: start')
+        app.logger.info("edit_profile:: start")
         data = json.loads(request.data.decode())
         # Add to patient table
         self.add_patient(data) # Edits all patient table field
@@ -293,5 +341,6 @@ class PatientApiHandler:
             # revert to past snapshot patient table
             raise e
         print('edit_profile:: end')
+        app.logger.info("edit_profile:: end")
         return 1
 

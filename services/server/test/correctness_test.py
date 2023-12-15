@@ -1,10 +1,12 @@
 import requests
+from app import logger
 
 global_user_id = 0
 global_email_id = ""
 
 def test_signup():
     print('================== Starting Test for Signup ==================')
+
     signup_base_url = 'http://localhost:8000/api/user/signup'
     signup_payload = {"email_id": "mitalee8@patient.com",
                       "password": "abc",

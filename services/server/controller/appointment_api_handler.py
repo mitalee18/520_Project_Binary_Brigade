@@ -6,6 +6,7 @@ import database_handler as database
 from model.models import *
 import json
 from datetime import datetime, timedelta
+from flask import current_app as app
 
 
 class AppointmentApiHandler:
@@ -33,27 +34,32 @@ class AppointmentApiHandler:
 
     def get_doctor_booked_time(self, doctor_id):
         print('get_doctor_booked_time:: start')
+        app.logger.info("get_doctor_booked_time:: start")
         doctor_appointments = database.query_multiple_by_id(Appointments, 'doctor_id', doctor_id)
         booked_time = []
         for appointment in doctor_appointments:
             booked_time.append({'appointment_id': appointment.appointment_id, 'datetime': appointment.datetime})
         print(len(booked_time))
         print('get_doctor_booked_time:: end')
+        logger.info("get_doctor_booked_time:: end")
         return booked_time
 
 
     def get_patient_booked_time(self, patient_id):
         print('get_patient_booked_time:: start')
+        app.logger.info("get_patient_booked_time:: start")
         patient_appointments = database.query_multiple_by_id(Appointments, 'patient_id', patient_id)
         booked_time = []
         for appointment in patient_appointments:
             booked_time.append({'appointment_id': appointment.appointment_id, 'datetime': appointment.datetime})
         print(len(booked_time))
         print('get_patient_booked_time:: end')
+        app.logger.info("get_patient_booked_time:: end")
         return booked_time
 
     def get_available_time(self, user_id):
         print('get_available_time:: start')
+        app.logger.info("get_available_time:: start")
         doctor_id = user_id
         doctor_found_flag = self.if_doctor_exists(doctor_id)
         # Get all available time slots
@@ -76,11 +82,13 @@ class AppointmentApiHandler:
                 current_time += interval
             print(len(available_time))
         print('get_available_time:: end')
+        app.logger.info("get_available_time:: end")
         return {'available_time': available_time,
                 'doctor_found_flag': doctor_found_flag}
 
     def book_appointment(self):
         print('book_appointment:: start')
+        app.logger.info("book_appointment:: start")
         ret_val = 1
         data = json.loads(request.data.decode())
         patient_id = data['patient_id']
@@ -106,16 +114,19 @@ class AppointmentApiHandler:
             else:
                 ret_val = 0
         print('book_appointment:: end')
+        app.logger.info("book_appointment:: end")
         return {'ret_val': ret_val,
                 'patient_found_flag': patient_found_flag,
                 'doctor_found_flag': doctor_found_flag}
 
     def get_patient_schedule(self, user_id):
         print('get_patient_schedule:: start')
+        app.logger.info("get_patient_schedule:: start")
         patient_id = user_id
         patient_found_flag = self.if_patient_exists(patient_id)
         patient_schedule = self.get_patient_booked_time(patient_id)
         print('get_patient_schedule:: end')
+        app.logger.info("get_patient_schedule:: end")
         return {'patient_schedule': patient_schedule,
                 'patient_found_flag': patient_found_flag}
 
@@ -137,6 +148,7 @@ class AppointmentApiHandler:
 
     def get_doctor_schedule(self, user_id):
         print('get_doctor_schedule:: start')
+        app.logger.info("get_doctor_schedule:: start")
         doctor_id = user_id
         doctor_found_flag = self.if_doctor_exists(doctor_id)
         doctor_schedule = []
@@ -146,13 +158,16 @@ class AppointmentApiHandler:
                 appointment_query = database.query_multiple_by_id(Appointments, 'appointment_id', appointment['appointment_id'])
                 patient_query = database.query_by_user_id(Patient, appointment_query[0].patient_id)
                 print(patient_query)
+                app.logger.info(patient_query)
                 print(patient_query.first_name)
+                app.logger.info(patient_query.first_name)
                 doctor_schedule.append({'appointment_id': appointment['appointment_id'],
                                         'datetime': appointment['datetime'],
                                         'patient_id': patient_query.user_id,
                                         'first_name': patient_query.first_name,
                                         'last_name': patient_query.last_name})
         print('get_doctor_schedule:: end')
+        app.logger.info("get_doctor_schedule:: end")
         return {'doctor_schedule': doctor_schedule,
                 'doctor_found_flag': doctor_found_flag}
 

@@ -5,6 +5,7 @@ from controller.patient_api_handler import PatientApiHandler
 from controller.doctor_api_handler import DoctorApiHandler
 from controller.admin_api_handler import AdminApiHandler
 from flask_cors import cross_origin
+from flask import current_app as app
 
 
 
@@ -64,6 +65,7 @@ def login():
 def create_profile():
     try:
         user_type = request.json.get('user_type')
+        app.logger.info(f"User type: {user_type}")
         print(user_type, type(user_type))
         if user_type==0:
             profile = patient_api_handler.create_profile()

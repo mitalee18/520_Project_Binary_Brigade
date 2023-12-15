@@ -8,6 +8,7 @@ import json
 import time
 import datetime
 import helper_functions as hf
+from flask import current_app as app
 
 class DoctorApiHandler:
     def default():
@@ -16,6 +17,7 @@ class DoctorApiHandler:
 
     def add_doctor(self, data):
         print('add_doctor:: start')
+        app.logger.info("add_doctor:: start")
         user_id = data['user_id']
         first_name = data['first_name']
         last_name = data['last_name']
@@ -29,17 +31,21 @@ class DoctorApiHandler:
         qualifications = data['qualifications']
         keywords = data['keywords']
         print('add_doctor:: inserting to db')
+        app.logger.info("add_doctor:: inserting to db")
         database.edit_instance(Doctor, user_id=user_id, first_name=first_name, last_name=last_name,
                               email_id=email_id, contact_no=contact_no,
                               address=address, age=age, dob=dob,
                               gender=gender, update_date=update_date,
                               qualifications=qualifications, keywords=keywords)
         print('add_doctor:: inserted to db')
+        app.logger.info("add_doctor:: inserted to db")
         print('add_doctor:: end')
+        app.logger.info("add_doctor:: end")
         return 1
 
     def get_doctor(self, user_id):
         print('get_doctor:: start')
+        app.logger.info("get_doctor:: start")
         doctor = database.query_by_user_id(Doctor, user_id)
         qualifications = hf.convert_comma_seperated_string_to_list(doctor.qualifications)
         keywords = hf.convert_comma_seperated_string_to_list(doctor.keywords)
@@ -60,12 +66,15 @@ class DoctorApiHandler:
             "keywords": doctor.keywords
         }
         print('get_doctor:: end')
+        app.logger.info("get_doctor:: end")
         return doctor_details
 
     def delete_doctor(self, user_id):
         print('delete_doctor:: start')
+        app.logger.info("delete_doctor:: start")
         database.delete_instance(Doctor, user_id)
         print('delete_doctor:: end')
+        app.logger.info("delete_doctor:: end")
         return 1
 
 
@@ -83,9 +92,11 @@ class DoctorApiHandler:
 
     def create_profile(self):
         print('create_profile:: start')
+        app.logger.info("create_profile:: start")
         data = json.loads(request.data.decode())
         self.add_doctor(data)
         print('create_profile:: end')
+        app.logger.info("create_profile:: end")
         return 1
 
     # Dummy data for testing
@@ -96,12 +107,15 @@ class DoctorApiHandler:
 
     def get_profile(self, user_id):
         print('get_profile:: start')
+        app.logger.info("get_profile:: start")
         doctor_details = self.get_doctor(user_id)
         print('get_profile:: end')
+        app.logger.info("get_profile:: end")
         return doctor_details
 
     def get_all_doctor(self):
         print('get_all_doctor:: start')
+        app.logger.info("get_all_doctor:: start")
         doctor_db_list = database.get_all(Doctor)
         doctor_list = []
         for doctor in doctor_db_list:
@@ -112,12 +126,15 @@ class DoctorApiHandler:
                                 'qualifications': doctor.qualifications,
                                 'keywords': doctor.keywords})
         print('get_all_doctor:: end')
+        app.logger.info("get_all_doctor:: end")
         return doctor_list
 
     def edit_profile(self):
         print('edit_profile:: start')
+        app.logger.info("edit_profile:: start")
         data = json.loads(request.data.decode())
         # Add to patient table
         self.add_doctor(data) # Edits all doctor table field
         print('edit_profile:: end')
+        app.logger.info("edit_profile:: end")
         return 1

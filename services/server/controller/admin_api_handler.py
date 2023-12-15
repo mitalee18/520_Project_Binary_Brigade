@@ -6,6 +6,7 @@ import database_handler as database
 from model.models import *
 import json
 import time
+from flask import current_app as app
 
 
 class AdminApiHandler:
@@ -16,6 +17,7 @@ class AdminApiHandler:
 
     def add_admin(self, data):
         print('add_admin:: start')
+        app.logger.info("add_admin:: start")
         user_id = data['user_id']
         first_name = data['first_name']
         last_name = data['last_name']
@@ -23,15 +25,19 @@ class AdminApiHandler:
         contact_no = data['contact_no']
         address = data['address']
         print('add_admin:: inserting to db')
+        app.logger.info("add_admin:: inserting to db")
         database.edit_instance(Admin, user_id=user_id, first_name=first_name, last_name=last_name,
                               email_id=email_id, contact_no=contact_no,
                               address=address)
         print('add_admin:: inserted to db')
+        app.logger.info("add_admin:: inserted to db")
         print('add_admin:: end')
+        app.logger.info("add_admin:: end")
         return 1
 
     def get_admin(self, user_id):
         print('get_admin:: start')
+        app.logger.info("get_admin:: start")
         admin = database.query_by_user_id(Admin, user_id)
         admin_details = {
             "user_id": admin.user_id,
@@ -43,6 +49,7 @@ class AdminApiHandler:
             "registration_date": admin.registration_date
         }
         print('get_admin:: end')
+        app.logger.info("get_admin:: end")
         return admin_details
 
 
@@ -54,13 +61,16 @@ class AdminApiHandler:
                               contact_no = None, address = None, user_id=None)
         query_response = database.query(Admin,email_id)
         print(query_response)
+        app.logger.info(f"query_response: {query_response}")
         return query_response
 
     def create_profile(self):
         print("create_profile:: start")
+        app.logger.info("create_profile:: start")
         data = json.loads(request.data.decode())
         self.add_admin(data)
         print("create_profile:: end")
+        app.logger.info("create_profile:: end")
         return 1
 
     # Dummy payload for testing
@@ -74,8 +84,10 @@ class AdminApiHandler:
 
     def get_profile(self, user_id):
         print("get_profile:: start")
+        app.logger.info("get_profile:: start")
         admin_details = self.get_admin(user_id)
         print("get_profile:: end")
+        app.logger.info("get_profile:: end")
         return admin_details
 
 

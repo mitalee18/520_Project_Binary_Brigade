@@ -1,6 +1,7 @@
 import pandas as pd
 from sqlalchemy import create_engine
 import json, ast
+from flask import current_app as app
 
 engine = create_engine('postgresql://hello_flask:hello_flask@localhost:5434/hello_flask_dev')
 login_details_csv_file_path = '../data/login_details.csv'
