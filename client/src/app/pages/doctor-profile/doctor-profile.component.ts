@@ -4,6 +4,11 @@ import { DoctorGetProfile } from 'src/app/model/doctor';
 import { ProfileService } from '../service/profile.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
+/**
+ * Angular component for displaying and updating a doctor's profile.
+ * Manages the retrieval and rendering of doctor profile information.
+ */
+
 @Component({
   selector: 'app-doctor-profile',
   templateUrl: './doctor-profile.component.html',
@@ -13,8 +18,19 @@ export class DoctorProfileComponent implements OnInit{
   doctorDataForm: FormGroup;
   doctorData: DoctorGetProfile;
 
+  /**
+   * Constructor for DoctorProfileComponent.
+   * @param profileService - Service for fetching and updating doctor profile information.
+   * @param formBuilder - Angular FormBuilder service for working with forms.
+   */
+
   constructor(private profileService: ProfileService,
     private formBuilder: FormBuilder){}
+
+  /**
+   * Lifecycle hook called after the component is initialized.
+   * Initializes the doctorDataForm and retrieves the doctor's profile information.
+   */
 
   ngOnInit(): void {
     this.doctorDataForm = this.formBuilder.group({
@@ -40,6 +56,9 @@ export class DoctorProfileComponent implements OnInit{
       this.setFormData();
   });
   }
+ /**
+   * Sets the form data based on the retrieved doctor profile information.
+   */
 
   setFormData(){
       console.log(this.doctorData);
@@ -56,9 +75,15 @@ export class DoctorProfileComponent implements OnInit{
         qualifications: [this.doctorData.qualifications],
         keywords: [this.doctorData.keywords]
     })
-  
+
 
   }
+
+  /**
+   * Calculates a human-readable date string from an epoch time.
+   * @param epochTime - Epoch time to be converted to a date string.
+   * @returns A formatted date string (MM/DD/YYYY).
+   */
 
   calculateDate(epochTime: number): string{
     const date = new Date(epochTime * 1000); // Convert to milliseconds
@@ -69,6 +94,9 @@ export class DoctorProfileComponent implements OnInit{
   }
 
 
+  /**
+   * Event handler for the form submission button click.
+   */
 
   onSubmitbtnClick():void{
 

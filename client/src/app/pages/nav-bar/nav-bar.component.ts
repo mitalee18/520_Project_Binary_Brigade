@@ -8,6 +8,11 @@ import { MenubarModule } from 'primeng/menubar';
 import { Router } from '@angular/router';
 import { SessionService } from '../service/session.service';
 
+/**
+ * Angular component for the navigation bar of the application.
+ * Manages navigation links, user-specific functionality, and session logout.
+ */
+
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
@@ -17,8 +22,17 @@ import { SessionService } from '../service/session.service';
 })
 export class NavBarComponent {
 
+  /**
+   * Constructor for NavBarComponent.
+   * @param router - Angular Router service for navigation.
+   * @param sessionService - Service for managing user sessions.
+   */
   constructor(private router: Router,
     private sessionService: SessionService){}
+
+  /**
+   * Navigates to the user's profile page based on their user type.
+   */
 
   goToProfile(){
     if(localStorage.getItem('user_type') === '1'){
@@ -29,10 +43,19 @@ export class NavBarComponent {
     }
   }
 
+  /**
+   * Logs the user out of the session and navigates to the home page.
+   */
+
   logout(){
     this.sessionService.logout();
     this.router.navigate(['/']);
   }
+
+  /**
+   * Checks if the user type is 'Patient'.
+   * @returns True if the user type is 'Patient', otherwise false.
+   */
 
   isSpecificUserIdPresent(): boolean{
     if(localStorage.getItem('user_type') === '0'){
@@ -41,10 +64,17 @@ export class NavBarComponent {
     return false;
 
   }
+  /**
+   * Navigates to the doctor table page.
+   */
 
   searchClick(){
     this.router.navigate(['/doctor-table']);
   }
+
+  /**
+   * Navigates to the home page based on the user type.
+   */
 
   homeClick(){
     if(localStorage.getItem('user_type') === '1'){
