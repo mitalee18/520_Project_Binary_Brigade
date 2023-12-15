@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DoctorService } from '../service/doctor.service';
 import { UtilityService } from '../service/utility.service';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-doctor-appointment',
@@ -17,7 +19,8 @@ export class DoctorAppointmentComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private doctorService: DoctorService,
-    private utilityService: UtilityService
+    private utilityService: UtilityService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -56,8 +59,12 @@ export class DoctorAppointmentComponent implements OnInit {
     );
   }
 
-  onTimeSlotSelected(timeSlot: string): void {
+  openDialog(): void {
     const userId = localStorage.getItem('user_id'); // Retrieve user_id from session storage
     const doctorId = this.route.snapshot.paramMap.get('doctor_id'); // Retrieve doctor_id from the URL
+
+    this.dialog.open(ConfirmDialogComponent, {
+      data: { message: "Do you want to confirm ?" }
+    });
   }
 }

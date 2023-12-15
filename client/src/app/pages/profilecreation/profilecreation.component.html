@@ -12,7 +12,7 @@
                 </div>
                 <div class="row-item">
                     <label for="email_id">Email:</label>
-                    <input type="email" pInputText class="form-control" formControlName="email_id" />
+                    <input type="email" pInputText class="form-control" formControlName="email_id" [disabled]="true" />
                 </div>
                 <div class="row-item">
                     <label for="address">Address:</label>
@@ -142,18 +142,6 @@
     <form [formGroup]="patientDocumentsList">
         <div formArrayName="patientDocuments">
             <input type="file" multiple (change)="save($event)"/>
-            <div *ngFor="let group of patientDocuments.controls; let i = index" [formGroupName]="i">
-                <label for="file_name"  style="float: left;">File Name:</label>
-                <div style="float: left;">
-                    {{ group.get('file_name')?.value }}
-                </div>
-                <br>
-                <label for="file_link"  style="float: left;">File Link:</label>
-                <div style="float: left;">
-                    {{ group.get('file_link')?.value }}
-                </div>
-                <br>
-            </div>
         </div>
     </form>
 </p-card>

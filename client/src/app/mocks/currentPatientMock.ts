@@ -2,20 +2,6 @@ import { CurrentPatients } from "../model/currentPatients"
 
 export const FAKE_CURRENT_PATIENTS_DATA: CurrentPatients[] = [
     { 
-        id: "1",
-        first_name: "Mitalee",
-        last_name: "Minde",
-        age: "26",
-        email: "mitaleeminde@gmail.com"
-    },
-    { 
-        id: "2",
-        first_name: "Sahima",
-        last_name: "Srivastava",
-        age: "23",
-        email: "sahima.srivastava@gmail.com"
-    },
-    { 
         id: "3",
         first_name: "Riya",
         last_name: "Parte",
