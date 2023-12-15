@@ -16,7 +16,7 @@ export class ProfileService {
   constructor(private http: HttpClient) { }
 
   createPatientProfile(postRequestData: CreatePatientRequest){
-    return this.http.post<CreatePatientRequest>(`${apiEndPoints.userApi}/create-profile`, postRequestData);
+    return this.http.post<Patient>(`${apiEndPoints.userApi}/create-profile`, postRequestData);
   }
 
 

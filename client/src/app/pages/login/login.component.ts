@@ -6,6 +6,8 @@ import { FormBuilder, NgForm } from '@angular/forms';
 import { Login } from '../../model/login';
 import { FormGroup } from '@angular/forms';
 import { Signup } from '../../model/signup';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 
 
 
@@ -27,7 +29,9 @@ export class LoginComponent implements OnInit{
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private dialog: MatDialog,
+ 
   ){}
 
 
@@ -44,6 +48,12 @@ export class LoginComponent implements OnInit{
       userType:['']
     });
 
+  }
+
+  private showErrorDialog(errorMessage: string) {
+    this.dialog.open(ErrorDialogComponent, {
+      data: { message: errorMessage }
+    });
   }
 
   onSignUp(userForm: NgForm){
@@ -67,7 +77,8 @@ export class LoginComponent implements OnInit{
                  
               },
               error =>{
-                console.log(error);
+                console.error('API error:', error);
+                this.showErrorDialog('Failed to sign up. ' + (error.error.message || 'Please try again later.'));
               }
           );
   }
@@ -81,7 +92,7 @@ export class LoginComponent implements OnInit{
     if (val.email && val.password) {
         this.sessionService.login(val.email, val.password)
             .subscribe( 
-             (response) => {
+             response => {
                 if(val.user_type === 0){
                   this.router.navigateByUrl('/patient-dashboard');
                 }
@@ -91,6 +102,10 @@ export class LoginComponent implements OnInit{
                 localStorage.setItem('user_type', String(val.user_type));
                 localStorage.setItem('email_id', val.email);
                 localStorage.setItem('user_id', String(response.user_id));
+             },
+             error => {
+              console.error('API error:', error);
+              this.showErrorDialog('Failed to sign up. ' + (error.error.message || 'Please try again later.'));
              }
             );
     }

@@ -6,6 +6,7 @@ import database_handler as database
 from model.models import *
 import json
 from datetime import datetime, timedelta
+import pytz
 
 
 class AppointmentApiHandler:
@@ -56,8 +57,9 @@ class AppointmentApiHandler:
         doctor_id = user_id
         doctor_found_flag = self.if_doctor_exists(doctor_id)
         # Get all available time slots
-        start_time = datetime(2023, 11, 1, 8, 0, 0)
-        end_time = datetime(2023, 11, 17, 17, 0, 0)
+        est_timezone = pytz.timezone('US/Eastern')
+        start_time = est_timezone.localize(datetime(2023, 12, 20, 8, 0, 0))
+        end_time = est_timezone.localize(datetime(2023, 12, 31, 17, 0, 0))
         interval = timedelta(hours=1)
         current_time = start_time
         available_time = []

@@ -33,6 +33,9 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { DoctorAppointmentComponent } from './pages/doctor-appointment/doctor-appointment.component';
 import {ImageModule} from 'primeng/image';
 import { ButtonModule } from 'primeng/button';
+import { ErrorDialogComponent } from './pages/error-dialog/error-dialog.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { ConfirmDialogComponent } from './pages/confirm-dialog/confirm-dialog.component';
 
 
 
@@ -49,7 +52,9 @@ import { ButtonModule } from 'primeng/button';
     PatientProfileComponent,
     DoctorProfileCreationComponent,
     DoctorTableComponent,
-    DoctorAppointmentComponent
+    DoctorAppointmentComponent,
+    ErrorDialogComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +79,8 @@ import { ButtonModule } from 'primeng/button';
     TableModule,
     MultiSelectModule,
     ImageModule,
-    ButtonModule
+    ButtonModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

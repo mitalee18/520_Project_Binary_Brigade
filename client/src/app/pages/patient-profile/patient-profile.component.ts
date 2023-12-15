@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Patient } from 'src/app/model/patient';
+import { CreatePatientRequest, Patient } from 'src/app/model/patient';
 import { FAKE_PATIENT_DATA } from 'src/app/mocks/patientMock';
 import { FormGroup, FormArray, FormControl, FormBuilder} from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,6 +14,7 @@ import { ProfileService } from '../service/profile.service';
 })
 export class PatientProfileComponent implements OnInit{
   patientData: Patient;
+  patientEdit: CreatePatientRequest;
   patientDataForm: FormGroup;
   emergencyContactList!: FormGroup;
   surgicalHistoryList!: FormGroup;
@@ -38,11 +39,13 @@ export class PatientProfileComponent implements OnInit{
           this.setFunction()
       });
   }
+
+
+
   setFunction(){
-    console.log(this.patientData);
     this.patientDataForm = this.formBuilder.group({
-      first_name: [this.patientData.first_name],
       last_name: [this.patientData.last_name],
+      first_name: [this.patientData.first_name],
       address: [this.patientData.address],
       dob: [this.caculateDate(this.patientData.dob ?? 1000000)],
       age: [this.patientData.age],
@@ -56,21 +59,18 @@ export class PatientProfileComponent implements OnInit{
       contact_no: [this.patientData.contact_no]
   })
 
-    this.patientDataForm.get('first_name')?.setValue(this.patientData.first_name);
-
-        this.emergencyContactList = new FormGroup({
-              emergencyContact: new FormArray([
-                new FormGroup({
-                  name:  new FormControl(''),
-                  contact_no: new FormControl(''),
-                  email_id: new FormControl('')
-                })
-              ])
-            });
+    this.emergencyContactList = new FormGroup({
+          emergencyContact: new FormArray([
+            new FormGroup({
+              name:  new FormControl(''),
+              contact_no: new FormControl(''),
+              email_id: new FormControl('')
+            })
+          ])
+        });
       
-      console.log(this.patientData.emergency_contact);
-      this.emergencyContactList.get('emergencyContact')?.setValue(this.patientData.emergency_contact);
-      console.log('Form Data:', this.emergencyContactList.value);
+    
+    this.emergencyContactList.get('emergencyContact')?.setValue(this.patientData.emergency_contact);
 
     this.prescribedMedicationList = new FormGroup({
       prescribedMedication: new FormArray([
@@ -82,7 +82,6 @@ export class PatientProfileComponent implements OnInit{
     });
 
     this.prescribedMedicationList.get('prescribedMedication')?.setValue(this.patientData.prescribed_medication);
-    console.log('Form Data:', this.prescribedMedicationList.value);
 
 
     this.surgicalHistoryList = new FormGroup({
@@ -110,7 +109,6 @@ export class PatientProfileComponent implements OnInit{
       ])  
     });
     this.patientDocumentsList.get('patientDocuments')?.setValue(this.patientData.documents);
-    console.log('Form Data:', this.patientDocumentsList.value);
   }
   get emergencyContact(): FormArray {
     return this.emergencyContactList?.get('emergencyContact') as FormArray;
@@ -213,7 +211,47 @@ export class PatientProfileComponent implements OnInit{
 
   }
 
+  
+
   onSubmitbtnClick(){
+    const convertToJsonString = (data: any): string => {
+      let jsonString = JSON.stringify(data);
+      jsonString = jsonString.replace(/"/g, "'");
+      return `"${jsonString}"`;
+  };
+  
+    const documents = convertToJsonString(this.patientData.documents);
+    const prescribed_medication = convertToJsonString(this.patientData.prescribed_medication);
+    const surgical_history = convertToJsonString(this.patientData.surgical_history);
+    this.patientEdit.first_name =  this.patientDataForm.get('first_name')?.value;
+    this.patientEdit.last_name =  this.patientDataForm.get('last_name')?.value;
+    this.patientEdit.address= this.patientDataForm.get('address')?.value
+    this.patientEdit.dob = Math.floor(Date.now() / 1000);
+    this.patientEdit.age=  this.patientDataForm.get('age')?.value,
+    this.patientEdit.email_id=  this.patientDataForm.get('email_id')?.value,
+    this.patientEdit.gender= this.patientDataForm.get('gender')?.value,
+    this.patientEdit.family_medical_history= this.patientDataForm.get('family_medical_history')?.value,
+    this.patientEdit.health_insurance =this.patientDataForm.get('health_insurance')?.value,
+    this.patientEdit.registration_date =this.patientDataForm.get('registration_date')?.value,
+    this.patientEdit.allergies= this.patientDataForm.get('allergies')?.value,
+    this.patientEdit.medical_conditions= this.patientDataForm.get('medical_conditions')?.value,
+    this.patientEdit.contact_no= this.patientDataForm.get('contact_no')?.value,
+    this.patientEdit.documents = documents;
+    this.patientEdit.prescribed_medication = prescribed_medication;
+    this.patientEdit.surgical_history = surgical_history;
+
+    
+    this.profileService.createPatientProfile(this.patientEdit)
+    .subscribe(
+      response =>{
+        console.log(response);
+      },
+      error =>{
+        console.log(error);
+      }
+    )
+
+
 
   }
 

@@ -8,7 +8,7 @@ export interface Patient{
     email_id?: string,
     emergency_contact:EmergencyContact[],
     family_medical_history?: string,
-    first_name?: string,
+    first_name: string,
     last_name?: string,
     gender?: number,
     health_insurance?: number,

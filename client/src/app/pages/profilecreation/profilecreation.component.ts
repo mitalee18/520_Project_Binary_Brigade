@@ -261,7 +261,7 @@ export class ProfilecreationComponent implements OnInit{
       response => {
              console.log("User is created in");
              console.log(response)
-             this.router.navigateByUrl("/patient-dashboard")
+             this.router.navigateByUrl("/")
             
          },
       error =>{

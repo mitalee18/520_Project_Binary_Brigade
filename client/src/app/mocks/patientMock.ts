@@ -49,7 +49,7 @@ const FAKE_PATIENT_REQUEST_DATE: CreatePatientRequest = {
         "allergies": "soy, eggs",
         "contact_no": "570-112-4812",
         "dob": 1577816800,
-        "documents": "[{'description': 'Age-rel osteopor w current path fx, unsp femur, sequela', 'file_link': 'http://dunnyimage.com/image7-png','file_name': 'xray', 'user_id': 30001}]",
+        "documents": "[{'description': 'Age-rel osteopor w current path fx, unsp femur, sequela', 'file_link': 'http://dunnyimage.com/image7-png','file_name': 'xray', 'user_id': 30025}]",
         "email_id": "mitalee@patient.com",
         "emergency_contact":{
             "contact_no": "1234567890",
@@ -72,32 +72,22 @@ const FAKE_PATIENT_REQUEST_DATE: CreatePatientRequest = {
 
 
  export  const FAKE_DOCUMENTS = {
-        "documents": "[{'description': 'Age-rel osteopor w current path fx, unsp femur, sequela', 'file_link': 'http://dunnyimage.com/image7-png','file_name': 'xray', 'user_id': 30008}]",
+        "documents": "[{'description': 'Age-rel osteopor w current path fx, unsp femur, sequela', 'file_link': 'http://dunnyimage.com/image7-png','file_name': 'xray', 'user_id': 30021}]",
         "surgical_history": "[{'doctor_name': 'Dr. Smith','surgery_date': 1604188800,'surgery_name': 'Appendix Removal'}]",
     }
 
 export const FAKE_PATIENT_APPOINTMENT_DATA: GetPatientSchedule[] = [
     {
-        "appointment_id": 1,
-        "datetime": 1698825600,
-        "doctor_name": "David Muller"
+        "appointment_id": 3,
+        "datetime": 1703066412,
+        "doctor_name": "Abramo Bazell"
     },
     {
         "appointment_id": 2,
-        "datetime": 1702580202,
+        "datetime": 1704024000,
         "doctor_name": "Harry Potter"
-    },
-    {
-        "appointment_id": 3,
-        "datetime": 1702580202,
-        "doctor_name": "James Bond"
-    },
-    {
-        "appointment_id": 4,
-        "datetime": 1702580202,
-        "doctor_name": "Haryy Potter"
-    },
-
+    }
+   
 
 ]
 
