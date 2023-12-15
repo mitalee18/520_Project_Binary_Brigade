@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_restful import Api
+# from flask_restful import Api
 from model.models import db
 import time
 from blueprint.user_blueprint import user_api
@@ -10,6 +10,7 @@ from blueprint.appointment_blueprint import appointment_api
 from config.config import SwaggerConfig
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS, cross_origin
+from waitress import serve
 
 
 def create_app():
@@ -44,6 +45,7 @@ def create_app():
 
 if __name__ == "__main__":
     app = create_app()
-    app.run(host="0.0.0.0", port=8081)
+    # app.run(host="0.0.0.0", port=8081)
+    serve(app, host="0.0.0.0", port=8081)
 
 
