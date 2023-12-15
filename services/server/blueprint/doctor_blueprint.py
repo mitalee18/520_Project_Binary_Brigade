@@ -91,6 +91,25 @@ def get_all_doctor():
                             code=500)
     return jsonify(ret_val), 200
 
+@doctor_api.route('/get-doctor-schedule', methods=['GET'])
+@cross_origin(origin='localhost')
+def get_doctor_schedule():
+    try:
+        user_id = int(request.args.get('user_id'))  # read into integer type
+        all_doctors = appointment_api_handler.get_doctor_schedule(user_id)
+        if all_doctors['doctor_found_flag'] == 0:
+            return handle_error(Exception('Bad Request: User does not exist.'),
+                                'Bad Request: User does not exist.',
+                                'Bad Request: User does not exist.',
+                                "api/patient/get-doctor-schedule",
+                                400)
+    except Exception as e:
+        return handle_error(e,
+                            'Internal Server Error: Please try again.',
+                            f"Error[{type(e)}]{str(e)}",
+                            "api/doctor/get-doctor-schedule",
+                            500)
+    return jsonify(all_doctors['doctor_schedule']), 200
 
 @doctor_api.app_errorhandler(Exception)
 def handle_error(error, messg="Unknown Error", error_trace="Unknown Error", api_name="doctor_api/", code=500):
